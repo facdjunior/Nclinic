@@ -13,11 +13,11 @@ import org.junit.Test;
 public class EnderecoDAOTest {
 
     @Test
-    @Ignore
+    //@Ignore
     public void salvar() {
 
         PessoaDAO pessoaDAO = new PessoaDAO();
-        Pessoa pessoa = pessoaDAO.buscar(5L);
+        Pessoa pessoa = pessoaDAO.buscar(21L);
 
         Endereco endereco = new Endereco();
 
@@ -25,7 +25,7 @@ public class EnderecoDAOTest {
         endereco.setBairro("Porto Novo");
         endereco.setDescricao("Rua Mato Grosso I");
         endereco.setCEP("29155-430");
-        endereco.setSequencia(3L);
+        endereco.setSequencia(5L);
         endereco.setComplemento("João teste Complemento");
         endereco.setDataCadastro(new Date());
         endereco.setNumero("561");

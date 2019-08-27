@@ -3,7 +3,6 @@ package br.com.nortesys.clinicplus.domain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -18,8 +17,7 @@ public class EstadoCivil extends GenericDomain {
     @Column(length = 80, nullable = false)
     private String Descricao;
 
-    @SequenceGenerator(name = "Sequencia", initialValue = 1)
-    private Long Sequencia;
+    private Integer Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -33,11 +31,11 @@ public class EstadoCivil extends GenericDomain {
         this.Descricao = Descricao;
     }
 
-    public Long getSequencia() {
+    public Integer getSequencia() {
         return Sequencia;
     }
 
-    public void setSequencia(Long Sequencia) {
+    public void setSequencia(Integer Sequencia) {
         this.Sequencia = Sequencia;
     }
 

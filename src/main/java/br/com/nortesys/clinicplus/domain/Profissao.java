@@ -17,9 +17,8 @@ import javax.persistence.TemporalType;
 @Entity
 public class Profissao extends GenericDomain {
 
-    @Column(unique = true, nullable = true)
-    @SequenceGenerator(name = "Sequencia", initialValue = 1)
-    private Long Sequencia;
+    @Column(unique = true, nullable = false)
+    private Integer Sequencia;
     
     @Column(length = 120, nullable = false)
     private String Descricao;
@@ -34,11 +33,11 @@ public class Profissao extends GenericDomain {
     @Column(length = 80)
     private String ConselhoProfissional;
 
-    public Long getSequencia() {
+    public Integer getSequencia() {
         return Sequencia;
     }
 
-    public void setSequencia(Long Sequencia) {
+    public void setSequencia(Integer Sequencia) {
         this.Sequencia = Sequencia;
     }
 

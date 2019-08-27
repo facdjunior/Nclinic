@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.omnifaces.util.Messages;
 
 /**
  *
@@ -15,13 +16,33 @@ public class EstadoCivilDAOTest {
     @Test
     @Ignore
     public void salvar() {
+        try {
 
-        EstadoCivil estadoCivil = new EstadoCivil();
-        estadoCivil.setDescricao("Casado");
-        estadoCivil.setDataCadastro(new Date());
+            EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
+//            estadoCivilDAO.sequencia();
+            EstadoCivil estadoCivil = new EstadoCivil();
 
-        EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
-        estadoCivilDAO.merge(estadoCivil);
+            if (estadoCivil.getSequencia() == null) {
+  //              estadoCivil.setSequencia(estadoCivilDAO.sequencia().getSequencia() + 1);
+                
+                estadoCivil.setDescricao("Viuvo");
+                estadoCivil.setDataCadastro(new Date());
+
+                estadoCivilDAO.merge(estadoCivil);
+                return;
+            }
+            estadoCivil.setSequencia(estadoCivil.getSequencia() + 1);
+            estadoCivil.setDescricao("Viuvo");
+            estadoCivil.setDataCadastro(new Date());
+
+            estadoCivilDAO.merge(estadoCivil);
+
+            System.out.println("Registro salvo com sucesso");
+        } catch (RuntimeException e) {
+
+            System.out.println("Erro ao salvar Registro" + e);
+
+        }
 
     }
 
@@ -53,6 +74,25 @@ public class EstadoCivilDAOTest {
             System.out.println(estadoCivil.getCodigo() + " - " + estadoCivil.getDescricao());
         }
     }
+
+ /*   @Test
+    @Ignore
+    public void sequencia() {
+        EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
+        EstadoCivil estadoCivil = estadoCivilDAO.sequencia();
+
+        //int estoqueAtual = produto.getQuantidade() - itemVenda.getQuantidade();
+        if (estadoCivil.getSequencia() == null) {
+            int Maximo = 0;
+            estadoCivil.setSequencia(Maximo + 1);
+
+            System.out.println(+estadoCivil.getCodigo() + "-" + estadoCivil.getSequencia());
+            return;
+        }
+
+        estadoCivil.setSequencia(estadoCivil.getSequencia() + 1);
+        System.out.println("Passou: " + estadoCivil.getCodigo() + "--" + estadoCivil.getSequencia());
+    }*/
 
     @Test
     @Ignore

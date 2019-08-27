@@ -14,7 +14,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-
 import org.hibernate.criterion.Order;
 
 public class GenericDAO<Entidade> {
@@ -59,7 +58,7 @@ public class GenericDAO<Entidade> {
             sessao.close();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<Entidade> listar(String campoOrdenacao) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
@@ -74,13 +73,13 @@ public class GenericDAO<Entidade> {
             sessao.close();
         }
     }
-    
 
     @SuppressWarnings("unchecked")
     public Entidade buscar(Long codigo) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             Criteria consulta = sessao.createCriteria(classe);
+
             consulta.add(Restrictions.idEq(codigo));
             Entidade resultado = (Entidade) consulta.uniqueResult();
             return resultado;
@@ -145,4 +144,21 @@ public class GenericDAO<Entidade> {
             sessao.close();
         }
     }
+
+ /*   @SuppressWarnings("unchecked")
+    public Entidade sequencia() {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Criteria consulta = sessao.createCriteria(classe);
+            consulta.createCriteria("select Sequencia from profissao order by Sequencia desc Limit 1");
+            consulta.addOrder(Order.asc("Sequencia"));
+            //   List<Entidade> resultado = consulta.list();
+            return (Entidade) consulta.list().get(0);
+        } catch (RuntimeException erro) {
+            throw erro;
+        } finally {
+            sessao.close();
+        }
+    }*/
+
 }

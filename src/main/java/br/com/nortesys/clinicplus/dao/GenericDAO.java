@@ -12,6 +12,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import org.hibernate.criterion.Order;
@@ -144,21 +145,4 @@ public class GenericDAO<Entidade> {
             sessao.close();
         }
     }
-
- /*   @SuppressWarnings("unchecked")
-    public Entidade sequencia() {
-        Session sessao = HibernateUtil.getSessionFactory().openSession();
-        try {
-            Criteria consulta = sessao.createCriteria(classe);
-            consulta.createCriteria("select Sequencia from profissao order by Sequencia desc Limit 1");
-            consulta.addOrder(Order.asc("Sequencia"));
-            //   List<Entidade> resultado = consulta.list();
-            return (Entidade) consulta.list().get(0);
-        } catch (RuntimeException erro) {
-            throw erro;
-        } finally {
-            sessao.close();
-        }
-    }*/
-
 }

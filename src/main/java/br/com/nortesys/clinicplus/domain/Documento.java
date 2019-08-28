@@ -2,13 +2,13 @@ package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,10 +26,6 @@ public class Documento extends GenericDomain {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Pessoa pessoa;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private TipoDocumento tipoDocumento;
 
     @Column(length = 120, nullable = false)
     private String descricao;
@@ -52,14 +48,6 @@ public class Documento extends GenericDomain {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
-    }
-
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
     }
 
     public String getDescricao() {

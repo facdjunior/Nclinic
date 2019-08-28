@@ -1,12 +1,13 @@
 package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,10 +21,6 @@ public class Endereco extends GenericDomain {
 
     @Column(nullable = false)
     private Long Sequencia;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
-    private Pessoa pessoa;
 
     @Column(length = 90)
     private String Bairro;
@@ -42,17 +39,27 @@ public class Endereco extends GenericDomain {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
+    
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Pessoa pessoa;
 
     @Column(length = 255)
     private String Observacao;
-
+    
     @Column(length = 12)
     private String Numero;
 
     @Column(length = 80)
     private String Complemento;
 
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
 
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
 
     public Long getSequencia() {
         return Sequencia;
@@ -133,13 +140,4 @@ public class Endereco extends GenericDomain {
     public void setComplemento(String Complemento) {
         this.Complemento = Complemento;
     }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
 }

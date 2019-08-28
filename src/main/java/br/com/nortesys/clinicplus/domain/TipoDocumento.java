@@ -1,13 +1,12 @@
 package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,17 +19,12 @@ import javax.persistence.TemporalType;
 @Entity
 public class TipoDocumento extends GenericDomain {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
-    private PessoaFisica pessoaFisica;
-
     @Column(nullable = false, length = 80)
     private String Descricao;
 
     private Boolean Ativo;
 
     @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,14 +33,6 @@ public class TipoDocumento extends GenericDomain {
 
     @Column(nullable = false, length = 80)
     private String Tipo;
-
-    public PessoaFisica getPessoaFisica() {
-        return pessoaFisica;
-    }
-
-    public void setPessoaFisica(PessoaFisica pessoaFisica) {
-        this.pessoaFisica = pessoaFisica;
-    }
 
     public String getDescricao() {
         return Descricao;

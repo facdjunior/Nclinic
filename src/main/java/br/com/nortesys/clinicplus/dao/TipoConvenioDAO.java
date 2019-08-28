@@ -1,6 +1,6 @@
 package br.com.nortesys.clinicplus.dao;
 
-import br.com.nortesys.clinicplus.domain.Documento;
+import br.com.nortesys.clinicplus.domain.TipoConvenio;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -10,25 +10,25 @@ import org.hibernate.criterion.Order;
  *
  * @author Francisco
  */
-public class DocumentoDAO extends GenericDAO<Documento>{
+public class TipoConvenioDAO extends GenericDAO<TipoConvenio>{
     
     @SuppressWarnings("unchecked")
-    public Documento listarSequencia() {
+    public TipoConvenio listarSequencia() {
 
         Session sessao = HibernateUtil.getSessionFactory().openSession();
 
         try {
 
-            Criteria consulta = sessao.createCriteria(Documento.class);
+            Criteria consulta = sessao.createCriteria(TipoConvenio.class);
             consulta.addOrder(Order.desc("Sequencia"));
             consulta.setMaxResults(1);
 
-            Documento documento = (Documento) consulta.uniqueResult();
+            TipoConvenio tipoConvenio = (TipoConvenio) consulta.uniqueResult();
 
             if (consulta == null) {
-                documento.setSequencia(1);
+                tipoConvenio.setSequencia(1);
             }
-            return documento;
+            return tipoConvenio;
 
         } catch (RuntimeException erro) {
             throw erro;

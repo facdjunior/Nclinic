@@ -1,16 +1,14 @@
 package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.ManyToAny;
 
 /**
  *
@@ -25,7 +23,6 @@ public class PessoaFisica extends GenericDomain {
     private Date DataNascimento;
 
     @Column(nullable = false)
-    @SequenceGenerator(name = "Sequencia", initialValue = 1)
     private Integer Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)

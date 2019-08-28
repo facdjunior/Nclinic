@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.omnifaces.util.Messages;
 
 /**
  *
@@ -14,7 +13,7 @@ import org.omnifaces.util.Messages;
 public class EstadoCivilDAOTest {
 
     @Test
-    //@Ignore
+    @Ignore
     public void salvar() {
         try {
 

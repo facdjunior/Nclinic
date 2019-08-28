@@ -36,7 +36,4 @@ public class TesteFilho extends GenericDomain{
     public void setDataCadastro(Date DataCadastro) {
         this.DataCadastro = DataCadastro;
     }
-    
-    
-    
 }

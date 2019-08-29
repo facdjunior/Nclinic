@@ -1,6 +1,5 @@
 package br.com.nortesys.clinicplus.dao;
 
-import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Contato;
 import br.com.nortesys.clinicplus.domain.Documento;
 import br.com.nortesys.clinicplus.domain.Endereco;
@@ -18,7 +17,7 @@ import org.junit.Test;
  *
  * @author Francisco
  */
-public class ClienteDAOTest {
+public class PessoaDAOTest {
 
     @Test
     @Ignore
@@ -45,7 +44,7 @@ public class ClienteDAOTest {
 
         if (resultadoPessoa == null) {
 
-            pessoa.setNome("Sérgio André Nicolas Fogaça");
+            pessoa.setNome("Isaac Nelson Ian Sales");
             pessoa.setDataCadastro(new Date());
             pessoa.setSequencia(1L);
             pessoa.setPessoaFisica(pessoaFisica);
@@ -55,83 +54,32 @@ public class ClienteDAOTest {
         } else {
 
             pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
-            pessoa.setNome("Bento Felipe Yago Figueiredo");
+            pessoa.setNome("Isaac Nelson Ian Sales");
             pessoa.setDataCadastro(new Date());
             pessoa.setPessoaFisica(pessoaFisica);
 
         }
         if (resultadoPFisica == null) {
 
-            String data = "21/04/1950";
+            String data = "19/10/1973";
             pessoaFisica.setDataCadastro(new Date());
             pessoaFisica.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(data));
             pessoaFisica.setEstadoCivil(estadoCivil);
             pessoaFisica.setGrauEscolaridade("2º Grau");
-            pessoaFisica.setNaturalidade("Manaus");
+            pessoaFisica.setNaturalidade("Araguaína");
             pessoaFisica.setSequencia(1);
             pessoaFisica.setSexo('F');
         } else {
 
-            String data = "21/04/1950";
+            String data = "19/10/1973";
             pessoaFisica.setDataCadastro(new Date());
             pessoaFisica.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(data));
             pessoaFisica.setEstadoCivil(estadoCivil);
             pessoaFisica.setGrauEscolaridade("2º Grau");
-            pessoaFisica.setNaturalidade("Manaus");
+            pessoaFisica.setNaturalidade("Araguaína");
             pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
-            pessoaFisica.setSexo('F');
+            pessoaFisica.setSexo('M');
         }
-
-        Contato contato = new Contato();
-        ContatoDAO contatoDAO = new ContatoDAO();
-        Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
-
-        if (resultadoContato == null) {
-
-            contato.setCelular("(92)98395-0668");
-            contato.setDataCadastro(new Date());
-            contato.setFone("(92)3906-2716");
-            contato.setPessoa(pessoa);
-            contato.setSequencia(1L);
-
-        } else {
-            contato.setCelular("(92)98395-0668");
-            contato.setDataCadastro(new Date());
-            contato.setFone("(92)3906-2716");
-            contato.setPessoa(pessoa);
-            contato.setSequencia(resultadoContato.getSequencia() + 1);
-        }
-
-        pessoaDAO.salvar(pessoa);
-        contatoDAO.merge(contato);
-
-        if (resultaEndereco == null) {
-
-            endereco.setAtivo(true);
-            endereco.setBairro("Monte das Oliveiras");
-            endereco.setDescricao("Rua Muiratinga");
-            endereco.setCEP("69093-129");
-            endereco.setSequencia(1L);
-            endereco.setComplemento("João teste Complemento");
-            endereco.setDataCadastro(new Date());
-            endereco.setNumero("310");
-            endereco.setObservacao("Manaus");
-            endereco.setPessoa(pessoa);
-
-        } else {
-
-            endereco.setAtivo(true);
-            endereco.setBairro("Monte das Oliveiras");
-            endereco.setDescricao("Rua Muiratinga");
-            endereco.setCEP("69093-129");
-            endereco.setSequencia(resultaEndereco.getSequencia() + 1);
-            endereco.setComplemento("João teste Complemento");
-            endereco.setDataCadastro(new Date());
-            endereco.setNumero("310");
-            endereco.setObservacao("Manaus");
-            endereco.setPessoa(pessoa);
-        }
-        enderecoDAO.merge(endereco);
 
         if (resultadoDocumento == null) {
             documento.setDataCadastro(new Date());
@@ -144,84 +92,123 @@ public class ClienteDAOTest {
             documento.setPessoa(pessoa);
             documento.setSequencia(resultadoDocumento.getSequencia() + 1);
         }
-        Cliente cliente = new Cliente();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
 
-        if (resultadoCliente == null) {
-            cliente.setDataCadastro(new Date());
-            cliente.setPessoa(pessoa);
-            cliente.setSequencia(1);
+        Contato contato = new Contato();
+        ContatoDAO contatoDAO = new ContatoDAO();
+        Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
+
+        if (resultadoContato == null) {
+
+            contato.setCelular("(63)99767-4649");
+            contato.setDataCadastro(new Date());
+            contato.setFone("(63)2615-6942");
+            contato.setPessoa(pessoa);
+            contato.setSequencia(1L);
+
         } else {
-            cliente.setDataCadastro(new Date());
-            cliente.setPessoa(pessoa);
-            cliente.setSequencia(resultadoCliente.getSequencia() + 1);
+            contato.setCelular("(63)99767-4649");
+            contato.setDataCadastro(new Date());
+            contato.setFone("(63)2615-6942");
+            contato.setPessoa(pessoa);
+            contato.setSequencia(resultadoContato.getSequencia() + 1);
         }
-        clienteDAO.merge(cliente);
+
+        pessoaDAO.salvar(pessoa);
+        contatoDAO.merge(contato);
+        documentoDAO.merge(documento);
+        if (resultaEndereco == null) {
+
+            endereco.setAtivo(true);
+            endereco.setBairro("Vila Norte");
+            endereco.setDescricao("Rua 12");
+            endereco.setCEP("77818-280");
+            endereco.setSequencia(1L);
+            endereco.setComplemento("Complemento");
+            endereco.setDataCadastro(new Date());
+            endereco.setNumero("179");
+            endereco.setObservacao("Manaus");
+            endereco.setPessoa(pessoa);
+
+        } else {
+
+            endereco.setAtivo(true);
+            endereco.setBairro("Vila Norte");
+            endereco.setDescricao("Rua 12");
+            endereco.setCEP("77818-280");
+            endereco.setSequencia(1L);
+            endereco.setComplemento("Complemento");
+            endereco.setDataCadastro(new Date());
+            endereco.setNumero("179");
+            endereco.setObservacao("Obs");
+            endereco.setPessoa(pessoa);
+        }
+        enderecoDAO.merge(endereco);
     }
 
     @Test
     @Ignore
     public void listar() {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> resultado = clienteDAO.listar();
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        List<Pessoa> resultado = pessoaDAO.listar();
 
         System.out.println("Total de Registros Encontrados: " + resultado.size());
 
-        for (Cliente cliente : resultado) {
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
+        for (Pessoa pessoa : resultado) {
+            System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
         }
     }
-
+    
     @Test
     @Ignore
     public void buscar() {
         //Long codigo = 3L;
 
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.buscar(1L);
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        Pessoa pessoa = pessoaDAO.buscar(3L);
 
-        if (cliente == null) {
+        if (pessoa == null) {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro encontrados:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome()+ "Data Nascimento: "+cliente.getPessoa().getPessoaFisica().getDataNascimento());
+            System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
         }
     }
-
+    
     @Test
     @Ignore
     public void excluir() {
         Long codigo = 3L;
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.buscar(codigo);
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        Pessoa pessoa = pessoaDAO.buscar(codigo);
 
-        if (cliente == null) {
+        if (pessoa == null) {
             System.out.println("Nenhum registro encontrado");
         } else {
-            clienteDAO.excluir(cliente);
+            pessoaDAO.excluir(pessoa);
             System.out.println("Registro removido:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
+            System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
         }
     }
-
+    
     @Test
     @Ignore
     public void editar() {
-        Long codigo = 1L;
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.buscar(codigo);
+        Long codigo = 3L;
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        Pessoa pessoa = pessoaDAO.buscar(codigo);
 
-        if (cliente == null) {
+        if (pessoa == null) {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro editado - Antes:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
+            System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
 
-            cliente.setDataCadastro(new Date());
-            
+            pessoa.setNome("Isaac Nelson Ian Sales Filho");
+            pessoa.setDataCadastro(new Date());
+            pessoaDAO.merge(pessoa);
+
             System.out.println("Registro editado - Depois:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getDataCadastro());
+            System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
         }
     }
 }

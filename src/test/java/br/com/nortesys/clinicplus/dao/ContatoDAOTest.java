@@ -32,7 +32,7 @@ public class ContatoDAOTest {
                 contato.setCelular1("(91)93963-6057");
                 contato.setDataCadastro(new Date());
                 contato.setFone("(91)3963-6057");
-                contato.setPessoa(pessoa);
+              //  contato.setPessoa(pessoa);
 
                 contatoDAO.merge(contato);
                 return;
@@ -42,7 +42,7 @@ public class ContatoDAOTest {
             contato.setCelular1("(91)93963-6057");
             contato.setDataCadastro(new Date());
             contato.setFone("(91)3963-6057");
-            contato.setPessoa(pessoa);
+           // contato.setPessoa(pessoa);
 
             contatoDAO.merge(contato);
 

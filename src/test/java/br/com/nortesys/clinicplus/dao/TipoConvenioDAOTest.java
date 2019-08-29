@@ -22,7 +22,7 @@ public class TipoConvenioDAOTest {
             TipoConvenio tipoConvenio = new TipoConvenio();
 
             ConvenioDAO convenioDAO = new ConvenioDAO();
-            Convenio convenio = convenioDAO.buscar(1L);
+            Convenio convenio = convenioDAO.buscar(5L);
 
             TipoConvenio resultado = (TipoConvenio) tipoConvenioDAO.listarSequencia();
 
@@ -39,7 +39,7 @@ public class TipoConvenioDAOTest {
                 return;
             }
             tipoConvenio.setSequencia(resultado.getSequencia() + 1);
-            tipoConvenio.setDescricao("UNIMED");
+            tipoConvenio.setDescricao("CAP SAUDE");
             tipoConvenio.setDataCadastro(new Date());
             tipoConvenio.setConvenio(convenio);
             tipoConvenio.setAtivo(true);
@@ -53,7 +53,7 @@ public class TipoConvenioDAOTest {
             System.out.println("Erro ao salvar Registro" + e);
         }
     }
-    
+
     @Test
     @Ignore
     public void listar() {

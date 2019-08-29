@@ -1,12 +1,16 @@
 package br.com.nortesys.clinicplus.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -36,11 +40,22 @@ public class Pessoa extends GenericDomain {
 
     @Column(length = 120)
     private String imagem;
+    
+     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+     private Contato contato;
 
     public String getNome() {
         return Nome;
     }
 
+    public Contato getContato() {
+        return contato;
+    }
+
+    public void setContato(Contato contato) {
+        this.contato = contato;
+    }
+    
     public void setNome(String Nome) {
         this.Nome = Nome;
     }

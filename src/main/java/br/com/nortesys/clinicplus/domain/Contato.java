@@ -1,6 +1,7 @@
 package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,9 +27,9 @@ public class Contato extends GenericDomain {
     @Column(unique = false, nullable = false)
     private Long Sequencia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Pessoa pessoa;
+   // @ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(nullable = false)
+    //private Pessoa pessoa;
 
     @Column(length = 14)
     private String Celular;
@@ -44,14 +46,10 @@ public class Contato extends GenericDomain {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
-
-    public Long getSequencia() {
-        return Sequencia;
-    }
-
-    public void setSequencia(Long Sequencia) {
-        this.Sequencia = Sequencia;
-    }
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Pessoa pessoa;
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -59,6 +57,14 @@ public class Contato extends GenericDomain {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+    
+    public Long getSequencia() {
+        return Sequencia;
+    }
+
+    public void setSequencia(Long Sequencia) {
+        this.Sequencia = Sequencia;
     }
 
     public String getCelular() {
@@ -99,6 +105,51 @@ public class Contato extends GenericDomain {
 
     public void setDataCadastro(Date DataCadastro) {
         this.DataCadastro = DataCadastro;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.Sequencia);
+        hash = 41 * hash + Objects.hashCode(this.Celular);
+        hash = 41 * hash + Objects.hashCode(this.Celular1);
+        hash = 41 * hash + Objects.hashCode(this.fone);
+        hash = 41 * hash + Objects.hashCode(this.fone2);
+        hash = 41 * hash + Objects.hashCode(this.DataCadastro);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Contato other = (Contato) obj;
+        if (!Objects.equals(this.Celular, other.Celular)) {
+            return false;
+        }
+        if (!Objects.equals(this.Celular1, other.Celular1)) {
+            return false;
+        }
+        if (!Objects.equals(this.fone, other.fone)) {
+            return false;
+        }
+        if (!Objects.equals(this.fone2, other.fone2)) {
+            return false;
+        }
+        if (!Objects.equals(this.Sequencia, other.Sequencia)) {
+            return false;
+        }
+        if (!Objects.equals(this.DataCadastro, other.DataCadastro)) {
+            return false;
+        }
+        return true;
     }
 
 }

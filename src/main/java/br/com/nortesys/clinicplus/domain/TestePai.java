@@ -19,7 +19,7 @@ public class TestePai extends GenericDomain{
     
     private String Nome;
     
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     private TesteFilho testeFilho;
     
     @Temporal(TemporalType.TIMESTAMP)

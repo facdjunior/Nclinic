@@ -28,14 +28,9 @@ public class GenericDomain implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return String.format("%s[codigo=%d]", getClass().getSimpleName(), getCodigo());
-    }
-
-    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.codigo);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.codigo);
         return hash;
     }
 
@@ -56,5 +51,7 @@ public class GenericDomain implements Serializable {
         }
         return true;
     }
+
+    
 
 }

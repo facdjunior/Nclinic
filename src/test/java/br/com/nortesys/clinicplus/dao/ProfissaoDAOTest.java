@@ -26,8 +26,8 @@ public class ProfissaoDAOTest {
             if (resultado == null) {
                 profissao.setSequencia(1);
                 profissao.setDataCadastro(new Date());
-                profissao.setDescricao("Governador");
-                profissao.setCBO("111900");
+                profissao.setDescricao("Oficial general do exército");
+                profissao.setCBO("10110");
                 profissaoDAO.merge(profissao);
 
                 System.out.println("Registro Salvo com Sucesso!");
@@ -36,8 +36,8 @@ public class ProfissaoDAOTest {
 
             profissao.setSequencia(resultado.getSequencia() + 1);
             profissao.setDataCadastro(new Date());
-            profissao.setDescricao("Sargento da policia militar");
-            profissao.setCBO("21110");
+            profissao.setDescricao("Juiz federal");
+            profissao.setCBO("111330");
             profissaoDAO.merge(profissao);
 
             System.out.println("Foi para sequencia");

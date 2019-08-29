@@ -31,7 +31,7 @@ public class ConvenioDAOTest {
                 return;
             }
             convenio.setSequencia(resultado.getSequencia() + 1);
-            convenio.setDescricao("UNIMED");
+            convenio.setDescricao("CAP SAUDE");
             convenio.setDataCadastro(new Date());
 
             convenioDAO.merge(convenio);

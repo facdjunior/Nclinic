@@ -30,7 +30,7 @@ public class DocumentoDAOTest {
                 documento.setSequencia(1);
                 documento.setDataCadastro(new Date());
                 documento.setDescricao("689.507.801-00");
-                documento.setPessoa(pessoa);
+//                documento.setPessoa(pessoa);
 
                 documentoDAO.merge(documento);
                 return;
@@ -39,7 +39,7 @@ public class DocumentoDAOTest {
             documento.setSequencia(resultado.getSequencia() + 1);
             documento.setDataCadastro(new Date());
             documento.setDescricao("689.507.801-00");
-            documento.setPessoa(pessoa);
+           // documento.setPessoa(pessoa);
 
             documentoDAO.merge(documento);
 

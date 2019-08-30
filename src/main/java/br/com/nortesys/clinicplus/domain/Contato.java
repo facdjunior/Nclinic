@@ -14,7 +14,9 @@ import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Cascade;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 
 /**
  *
@@ -26,10 +28,6 @@ public class Contato extends GenericDomain {
 
     @Column(unique = false, nullable = false)
     private Long Sequencia;
-
-   // @ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(nullable = false)
-    //private Pessoa pessoa;
 
     @Column(length = 14)
     private String Celular;
@@ -47,8 +45,7 @@ public class Contato extends GenericDomain {
     @Column(nullable = false)
     private Date DataCadastro;
     
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @OneToOne(mappedBy = "contato")
     private Pessoa pessoa;
 
     public Pessoa getPessoa() {

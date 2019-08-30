@@ -8,9 +8,13 @@ import javax.persistence.Entity;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 /**
  *
@@ -23,24 +27,15 @@ public class Documento extends GenericDomain {
     @Column(unique = true, nullable = false)
     private Integer Sequencia;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
-    private Pessoa pessoa;
-
     @Column(length = 120, nullable = false)
     private String descricao;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
-
-    public Integer getSequencia() {
-        return Sequencia;
-    }
-
-    public void setSequencia(Integer Sequencia) {
-        this.Sequencia = Sequencia;
-    }
+    
+    @ManyToOne
+    private Pessoa pessoa;
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -48,6 +43,13 @@ public class Documento extends GenericDomain {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+    public Integer getSequencia() {
+        return Sequencia;
+    }
+
+    public void setSequencia(Integer Sequencia) {
+        this.Sequencia = Sequencia;
     }
 
     public String getDescricao() {

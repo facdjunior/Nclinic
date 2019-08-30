@@ -20,7 +20,7 @@ import org.junit.Test;
 public class PessoaDAOTest {
 
     @Test
-    @Ignore
+  //  @Ignore
     public void salvar() throws ParseException {
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
@@ -42,9 +42,13 @@ public class PessoaDAOTest {
         DocumentoDAO documentoDAO = new DocumentoDAO();
         Documento resultadoDocumento = (Documento) documentoDAO.listarSequencia();
 
+        Contato contato = new Contato();
+        ContatoDAO contatoDAO = new ContatoDAO();
+        Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
+
         if (resultadoPessoa == null) {
 
-            pessoa.setNome("Isaac Nelson Ian Sales");
+            pessoa.setNome("Mariana Eliane Fogaça");
             pessoa.setDataCadastro(new Date());
             pessoa.setSequencia(1L);
             pessoa.setPessoaFisica(pessoaFisica);
@@ -54,14 +58,14 @@ public class PessoaDAOTest {
         } else {
 
             pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
-            pessoa.setNome("Isaac Nelson Ian Sales");
+            pessoa.setNome("Mariana Eliane Fogaça");
             pessoa.setDataCadastro(new Date());
             pessoa.setPessoaFisica(pessoaFisica);
 
         }
         if (resultadoPFisica == null) {
 
-            String data = "19/10/1973";
+            String data = "15/05/1959";
             pessoaFisica.setDataCadastro(new Date());
             pessoaFisica.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(data));
             pessoaFisica.setEstadoCivil(estadoCivil);
@@ -71,7 +75,7 @@ public class PessoaDAOTest {
             pessoaFisica.setSexo('F');
         } else {
 
-            String data = "19/10/1973";
+            String data = "15/05/1959";
             pessoaFisica.setDataCadastro(new Date());
             pessoaFisica.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(data));
             pessoaFisica.setEstadoCivil(estadoCivil);
@@ -81,68 +85,67 @@ public class PessoaDAOTest {
             pessoaFisica.setSexo('M');
         }
 
-        if (resultadoDocumento == null) {
-            documento.setDataCadastro(new Date());
-            documento.setDescricao("405.076.621-30");
-            documento.setPessoa(pessoa);
-            documento.setSequencia(1);
-        } else {
-            documento.setDataCadastro(new Date());
-            documento.setDescricao("405.076.621-30");
-            documento.setPessoa(pessoa);
-            documento.setSequencia(resultadoDocumento.getSequencia() + 1);
-        }
-
-        Contato contato = new Contato();
-        ContatoDAO contatoDAO = new ContatoDAO();
-        Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
-
         if (resultadoContato == null) {
 
-            contato.setCelular("(63)99767-4649");
+            contato.setCelular("(63)98683-5808");
             contato.setDataCadastro(new Date());
-            contato.setFone("(63)2615-6942");
+            contato.setFone("(63)3530-4539");
             contato.setPessoa(pessoa);
             contato.setSequencia(1L);
 
         } else {
-            contato.setCelular("(63)99767-4649");
+            contato.setCelular("(63)98683-5808");
             contato.setDataCadastro(new Date());
-            contato.setFone("(63)2615-6942");
+            contato.setFone("(63)3530-4539");
             contato.setPessoa(pessoa);
             contato.setSequencia(resultadoContato.getSequencia() + 1);
         }
 
-        pessoaDAO.salvar(pessoa);
-        contatoDAO.merge(contato);
-        documentoDAO.merge(documento);
+        if (resultadoDocumento == null) {
+
+            documento.setDataCadastro(new Date());
+            documento.setDescricao("589.206.601-07");
+            documento.setPessoa(pessoa);
+            documento.setSequencia(1);
+        } else {
+            documento.setDataCadastro(new Date());
+            documento.setDescricao("589.206.601-07");
+            documento.setPessoa(pessoa);
+            documento.setSequencia(resultadoDocumento.getSequencia() + 1);
+        }
+        //pessoaDAO.merge(pessoa);
+
         if (resultaEndereco == null) {
 
             endereco.setAtivo(true);
-            endereco.setBairro("Vila Norte");
-            endereco.setDescricao("Rua 12");
-            endereco.setCEP("77818-280");
+            endereco.setBairro("Parque Bom Viver");
+            endereco.setDescricao("Rua 25");
+            endereco.setCEP("77825-874");
             endereco.setSequencia(1L);
             endereco.setComplemento("Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("179");
-            endereco.setObservacao("Manaus");
+            endereco.setObservacao("Araguaína");
             endereco.setPessoa(pessoa);
 
         } else {
 
             endereco.setAtivo(true);
-            endereco.setBairro("Vila Norte");
-            endereco.setDescricao("Rua 12");
-            endereco.setCEP("77818-280");
-            endereco.setSequencia(1L);
+            endereco.setBairro("Parque Bom Viver");
+            endereco.setDescricao("Rua 25");
+            endereco.setCEP("77825-874");
+            endereco.setSequencia(resultaEndereco.getSequencia() + 1);
             endereco.setComplemento("Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("179");
-            endereco.setObservacao("Obs");
+            endereco.setObservacao("Araguaína");
             endereco.setPessoa(pessoa);
         }
+        pessoaDAO.salvar(pessoa);
+       // contatoDAO.merge(contato);
         enderecoDAO.merge(endereco);
+        documentoDAO.merge(documento);
+
     }
 
     @Test
@@ -157,7 +160,7 @@ public class PessoaDAOTest {
             System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
         }
     }
-    
+
     @Test
     @Ignore
     public void buscar() {
@@ -173,7 +176,7 @@ public class PessoaDAOTest {
             System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
         }
     }
-    
+
     @Test
     @Ignore
     public void excluir() {
@@ -189,7 +192,7 @@ public class PessoaDAOTest {
             System.out.println(pessoa.getCodigo() + " - " + pessoa.getNome());
         }
     }
-    
+
     @Test
     @Ignore
     public void editar() {

@@ -1,20 +1,20 @@
 package br.com.nortesys.clinicplus.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 /**
  *
@@ -40,12 +40,31 @@ public class Pessoa extends GenericDomain {
 
     @Column(length = 120)
     private String imagem;
-    
-     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-     private Contato contato;
 
-    public String getNome() {
-        return Nome;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Contato contato;
+
+    /*
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private Documento documento;
+
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private Endereco endereco;
+     */
+ /* public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
     }
 
     public Contato getContato() {
@@ -54,8 +73,19 @@ public class Pessoa extends GenericDomain {
 
     public void setContato(Contato contato) {
         this.contato = contato;
+    }*/
+    public Contato getContato() {
+        return contato;
     }
-    
+
+    public void setContato(Contato contato) {
+        this.contato = contato;
+    }
+
+    public String getNome() {
+        return Nome;
+    }
+
     public void setNome(String Nome) {
         this.Nome = Nome;
     }

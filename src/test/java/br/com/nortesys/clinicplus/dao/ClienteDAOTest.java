@@ -91,14 +91,14 @@ public class ClienteDAOTest {
             contato.setCelular("(92)98395-0668");
             contato.setDataCadastro(new Date());
             contato.setFone("(92)3906-2716");
-            contato.setPessoa(pessoa);
+         //   contato.setPessoa(pessoa);
             contato.setSequencia(1L);
 
         } else {
             contato.setCelular("(92)98395-0668");
             contato.setDataCadastro(new Date());
             contato.setFone("(92)3906-2716");
-            contato.setPessoa(pessoa);
+    //        contato.setPessoa(pessoa);
             contato.setSequencia(resultadoContato.getSequencia() + 1);
         }
 
@@ -136,12 +136,12 @@ public class ClienteDAOTest {
         if (resultadoDocumento == null) {
             documento.setDataCadastro(new Date());
             documento.setDescricao("405.076.621-30");
-            documento.setPessoa(pessoa);
+           // documento.setPessoa(pessoa);
             documento.setSequencia(1);
         } else {
             documento.setDataCadastro(new Date());
             documento.setDescricao("405.076.621-30");
-            documento.setPessoa(pessoa);
+           // documento.setPessoa(pessoa);
             documento.setSequencia(resultadoDocumento.getSequencia() + 1);
         }
         Cliente cliente = new Cliente();

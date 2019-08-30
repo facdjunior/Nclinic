@@ -68,6 +68,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>com.roscopeco.moxy</groupId>
+            <artifactId>moxy-annotations</artifactId>
+            <version>0.92.2</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>

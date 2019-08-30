@@ -1,5 +1,7 @@
 package br.com.nortesys.clinicplus.service;
 
+import br.com.nortesys.clinicplus.dao.DocumentoDAO;
+import br.com.nortesys.clinicplus.dao.EnderecoDAO;
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import com.google.gson.Gson;
@@ -23,6 +25,9 @@ public class PessoaService {
     public String listar() {
 
         PessoaDAO pessoaDAO = new PessoaDAO();
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        DocumentoDAO documentoDAO = new DocumentoDAO();
+        
         List<Pessoa> pessoas = pessoaDAO.listar("Nome");
 
         Gson gson = new Gson();

@@ -45,7 +45,8 @@ public class Contato extends GenericDomain {
     @Column(nullable = false)
     private Date DataCadastro;
     
-    @OneToOne(mappedBy = "contato")
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Pessoa pessoa;
 
     public Pessoa getPessoa() {

@@ -18,7 +18,7 @@ import javax.ws.rs.PathParam;
 @Path("estadoCivil")
 public class EstadoCivilService {
 
-    //http://localhost:8080/ClinicPlus/rest/estadoCivil 
+    //http://localhost:8080/ClinicPlus/clinic/estadoCivil 
     @GET
     public String listar() {
 

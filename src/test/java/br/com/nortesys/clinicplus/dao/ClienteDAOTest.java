@@ -29,10 +29,11 @@ public class ClienteDAOTest {
 
         PessoaFisica pessoaFisica = new PessoaFisica();
         PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+
         PessoaFisica resultadoPFisica = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
 
-        Pessoa pessoa = new Pessoa();
         PessoaDAO pessoaDAO = new PessoaDAO();
+        Pessoa pessoa = pessoaDAO.buscar(1L);
         Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
 
         Endereco endereco = new Endereco();
@@ -91,18 +92,18 @@ public class ClienteDAOTest {
             contato.setCelular("(92)98395-0668");
             contato.setDataCadastro(new Date());
             contato.setFone("(92)3906-2716");
-         //   contato.setPessoa(pessoa);
+            //   contato.setPessoa(pessoa);
             contato.setSequencia(1L);
 
         } else {
             contato.setCelular("(92)98395-0668");
             contato.setDataCadastro(new Date());
             contato.setFone("(92)3906-2716");
-    //        contato.setPessoa(pessoa);
+            //        contato.setPessoa(pessoa);
             contato.setSequencia(resultadoContato.getSequencia() + 1);
         }
 
-        pessoaDAO.salvar(pessoa);
+        pessoaDAO.merge(pessoa);
         contatoDAO.merge(contato);
 
         if (resultaEndereco == null) {
@@ -136,12 +137,12 @@ public class ClienteDAOTest {
         if (resultadoDocumento == null) {
             documento.setDataCadastro(new Date());
             documento.setDescricao("405.076.621-30");
-           // documento.setPessoa(pessoa);
+            // documento.setPessoa(pessoa);
             documento.setSequencia(1);
         } else {
             documento.setDataCadastro(new Date());
             documento.setDescricao("405.076.621-30");
-           // documento.setPessoa(pessoa);
+            // documento.setPessoa(pessoa);
             documento.setSequencia(resultadoDocumento.getSequencia() + 1);
         }
         Cliente cliente = new Cliente();
@@ -185,7 +186,7 @@ public class ClienteDAOTest {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro encontrados:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome()+ "Data Nascimento: "+cliente.getPessoa().getPessoaFisica().getDataNascimento());
+            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome() + "Data Nascimento: " + cliente.getPessoa().getPessoaFisica().getDataNascimento());
         }
     }
 
@@ -219,7 +220,7 @@ public class ClienteDAOTest {
             System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
 
             cliente.setDataCadastro(new Date());
-            
+
             System.out.println("Registro editado - Depois:");
             System.out.println(cliente.getCodigo() + " - " + cliente.getDataCadastro());
         }

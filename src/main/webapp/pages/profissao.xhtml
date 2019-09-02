@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/modelo.xhtml">
+
+    <ui:define name="conteudo">
+        <p:growl id="msg"/>
+
+        <h:form id="formLista">
+
+            <p:panel header="Lista de profissão">
+                <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
+                             paginator="true" value="#{profissaoBean.profissaos}" var="profissao" rows="10"
+                             paginatorPosition="bottom">
+                    <f:facet name="footer">
+
+                        <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
+                                         actionListener="#{profissaoBean.novo}"
+                                         update=":formCadastro:pnlCadastro">
+
+                        </p:commandButton>
+
+                    </f:facet>
+                    <p:column headerText="Descrição" filterBy="#{profissao.descricao}" sortBy="#{profissao.descricao}">
+                        <h:outputText value="#{profissao.descricao}" />
+                    </p:column>
+
+                    <p:column headerText="CBO" filterBy="#{profissao.CBO}">
+                        <h:outputText value="#{profissao.CBO}" />
+                    </p:column>
+
+                    <p:column headerText="Data Cadastro">
+                        <h:outputText value="#{profissao.dataCadastro}" >
+                            <f:convertDateTime locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Opções">
+                        <p:commandButton icon="ui-icon-trash"
+                                         actionListener="#{profissaoBean.excluir}"
+                                         update=":msg :formLista:TblLista">
+                            <p:confirm header="Confirmação" message="Deseja excluir registro?"
+                                       icon="ui-icon-alert" />
+                            <f:attribute name="profissaoSelecionado" value="#{profissao}" />
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-pencil"
+                                         actionListener="#{profissaoBean.editar}"
+                                         update=":formCadastro:pnlCadastro"
+                                         oncomplete="PF('dlgCadastro').show();">
+                            <f:attribute name="profissaoSelecionado" value="#{profissao}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+            </p:panel>
+        </h:form>
+        <p:dialog header="Cadastro de tipo funcionario" widgetVar="dlgCadastro" 
+                  draggable="false" resizable="false" modal="true" closable="false">
+            <h:form id="formCadastro">
+                <h:panelGrid id="pnlCadastro" columns="2">
+                    <p:outputLabel value="Descrição"/>
+                    <p:inputText maxlength="45" size="30" value="#{profissaoBean.profissao.descricao}"/>
+
+                    <p:outputLabel value="CBO"/>
+                    <p:inputText maxlength="45" size="30" value="#{profissaoBean.profissao.CBO}"/>
+
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Salvar" actionListener="#{profissaoBean.salvar}"
+                                     update=":msg :formCadastro:pnlCadastro :formLista:TblLista"/>
+                    <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+

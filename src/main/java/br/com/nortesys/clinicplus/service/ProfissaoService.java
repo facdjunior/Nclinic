@@ -4,6 +4,7 @@ import br.com.nortesys.clinicplus.dao.ProfissaoDAO;
 import br.com.nortesys.clinicplus.domain.Profissao;
 
 import com.google.gson.Gson;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,8 +19,8 @@ import javax.ws.rs.PathParam;
  */
 @Path("profissao")
 public class ProfissaoService {
-    
-       //http://localhost:8080/ClinicPlus/clinic/profissao 
+
+    //http://localhost:8080/ClinicPlus/clinic/profissao 
     @GET
     public String listar() {
 
@@ -45,6 +46,7 @@ public class ProfissaoService {
 
         return json;
     }
+
     //http://localhost:8080/ClinicPlus/clinic/profissao/
     @POST
     public String salvar(String json) {
@@ -53,37 +55,55 @@ public class ProfissaoService {
         Profissao profissao = gson.fromJson(json, Profissao.class);
 
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
+        Profissao resultado = (Profissao) profissaoDAO.listarSequencia();
+        
+        if (resultado == null) {
+            profissao.setSequencia(1);
+            profissao.setDataCadastro(new Date());
+
+            profissaoDAO.merge(profissao);
+
+            String jsonSaida = gson.toJson(profissao);
+            return jsonSaida;
+        }
+        profissao.setSequencia(resultado.getSequencia() + 1);
+        profissao.setDataCadastro(new Date());
+
         profissaoDAO.merge(profissao);
         
         String jsonSaida = gson.toJson(profissao);
         return jsonSaida;
     }
     //http://localhost:8080/ClinicPlus/clinc/profissao/
+
     @PUT
-    public String editar(String json) {
+    public String editar(String json
+    ) {
 
         Gson gson = new Gson();
         Profissao profissao = gson.fromJson(json, Profissao.class);
 
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaoDAO.merge(profissao);
-        
+
         String jsonSaida = gson.toJson(profissao);
         return jsonSaida;
     }
     //http://localhost:8080/ClinicPlus/clinic/profissao/{codigo}
+
     @DELETE
     @Path("{codigo}")
-    public String excluir(@PathParam("codigo")Long codigo){
-        
+    public String excluir(@PathParam("codigo") Long codigo
+    ) {
+
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
-        
+
         Profissao profissao = profissaoDAO.buscar(codigo);
         profissaoDAO.excluir(profissao);
-        
+
         Gson gson = new Gson();
         String saida = gson.toJson(profissao);
         return saida;
     }
-    
+
 }

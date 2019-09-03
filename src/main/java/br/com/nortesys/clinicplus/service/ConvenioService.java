@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.ConvenioDAO;
 import br.com.nortesys.clinicplus.domain.Convenio;
 import com.google.gson.Gson;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,13 +18,13 @@ import javax.ws.rs.PathParam;
  */
 @Path("convenio")
 public class ConvenioService {
-    
+
     //http://localhost:8080/ClinicPlus/clinic/convenio 
     @GET
     public String listar() {
 
-        ConvenioDAO profissaoDAO = new ConvenioDAO();
-        List<Convenio> convenios = profissaoDAO.listar("Descricao");
+        ConvenioDAO convenioDAO = new ConvenioDAO();
+        List<Convenio> convenios = convenioDAO.listar("Descricao");
 
         Gson gson = new Gson();
         String json = gson.toJson(convenios);
@@ -36,53 +37,69 @@ public class ConvenioService {
     @Path("{codigo}")
     public String buscar(@PathParam("codigo") Long codigo) {
 
-        ConvenioDAO profissaoDAO = new ConvenioDAO();
-        Convenio profissao = profissaoDAO.buscar(codigo);
+        ConvenioDAO convenioDAO = new ConvenioDAO();
+        Convenio convenio = convenioDAO.buscar(codigo);
 
         Gson gson = new Gson();
-        String json = gson.toJson(profissao);
+        String json = gson.toJson(convenio);
 
         return json;
     }
+
     //http://localhost:8080/ClinicPlus/clinic/convenio/
     @POST
     public String salvar(String json) {
 
         Gson gson = new Gson();
-        Convenio profissao = gson.fromJson(json, Convenio.class);
+        Convenio convenio = gson.fromJson(json, Convenio.class);
 
-        ConvenioDAO profissaoDAO = new ConvenioDAO();
-        profissaoDAO.merge(profissao);
-        
-        String jsonSaida = gson.toJson(profissao);
+        ConvenioDAO convenioDAO = new ConvenioDAO();
+        Convenio resultado = (Convenio) convenioDAO.listarSequencia();
+
+        if (resultado == null) {
+            convenio.setDataCadastro(new Date());
+            convenio.setSequencia(1);
+            convenioDAO.merge(convenio);
+
+            String jsonSaida = gson.toJson(convenio);
+            return jsonSaida;
+        }
+        convenio.setDataCadastro(new Date());
+        convenio.setSequencia(resultado.getSequencia() + 1);
+        convenioDAO.merge(convenio);
+
+        String jsonSaida = gson.toJson(convenio);
         return jsonSaida;
+
     }
+
     //http://localhost:8080/ClinicPlus/clinc/convenio/
     @PUT
     public String editar(String json) {
 
         Gson gson = new Gson();
-        Convenio profissao = gson.fromJson(json, Convenio.class);
+        Convenio convenio = gson.fromJson(json, Convenio.class);
 
-        ConvenioDAO profissaoDAO = new ConvenioDAO();
-        profissaoDAO.editar(profissao);
-        
-        String jsonSaida = gson.toJson(profissao);
+        ConvenioDAO convenioDAO = new ConvenioDAO();
+        convenioDAO.editar(convenio);
+
+        String jsonSaida = gson.toJson(convenio);
         return jsonSaida;
     }
+
     //http://localhost:8080/ClinicPlus/clinic/convenio/{codigo}
     @DELETE
     @Path("{codigo}")
-    public String excluir(@PathParam("codigo")Long codigo){
-        
-        ConvenioDAO profissaoDAO = new ConvenioDAO();
-        
-        Convenio profissao = profissaoDAO.buscar(codigo);
-        profissaoDAO.excluir(profissao);
-        
+    public String excluir(@PathParam("codigo") Long codigo) {
+
+        ConvenioDAO convenioDAO = new ConvenioDAO();
+
+        Convenio convenio = convenioDAO.buscar(codigo);
+        convenioDAO.excluir(convenio);
+
         Gson gson = new Gson();
-        String saida = gson.toJson(profissao);
+        String saida = gson.toJson(convenio);
         return saida;
     }
-    
+
 }

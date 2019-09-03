@@ -54,6 +54,12 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>	
     </servlet>	
     
+    <!-- Tema do PrimeFaces -->
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>redmond</param-value>
+    </context-param>
+    
     <!-- Configuração do JSF -->
   
     <servlet>

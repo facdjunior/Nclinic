@@ -24,13 +24,13 @@ public class EnderecoDAOTest {
 
         endereco.setAtivo(true);
         endereco.setBairro("Porto Novo");
-        endereco.setDescricao("Rua Mato Grosso I");
-        endereco.setCEP("29155-430");
+        endereco.setLogradouro("Rua Mato Grosso I");
+        endereco.setCep("29155-430");
         endereco.setSequencia(5L);
         endereco.setComplemento("João teste Complemento");
         endereco.setDataCadastro(new Date());
         endereco.setNumero("561");
-        endereco.setObservacao("Cariacica");
+        
 
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         enderecoDAO.merge(endereco);
@@ -46,7 +46,7 @@ public class EnderecoDAOTest {
         System.out.println("Total de Registros Encontrados: " + resultado.size());
 
         for (Endereco endereco : resultado) {
-            System.out.println(endereco.getCodigo() + " - " + endereco.getDescricao());
+            System.out.println(endereco.getCodigo() + " - " + endereco.getLogradouro());
         }
     }
 
@@ -62,7 +62,7 @@ public class EnderecoDAOTest {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro encontrado:");
-            System.out.println(endereco.getCodigo() + " - " + endereco.getDescricao());
+            System.out.println(endereco.getCodigo() + " - " + endereco.getLogadouro());
         }
     }
 
@@ -78,7 +78,7 @@ public class EnderecoDAOTest {
         } else {
             enderecoDAO.excluir(endereco);
             System.out.println("Registro removido:");
-            System.out.println(endereco.getCodigo() + " - " + endereco.getDescricao());
+            System.out.println(endereco.getCodigo() + " - " + endereco.getLogradouro());
         }
     }
     
@@ -93,14 +93,14 @@ public class EnderecoDAOTest {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro editado - Antes:");
-            System.out.println(endereco.getCodigo() + " - " + endereco.getDescricao());
+            System.out.println(endereco.getCodigo() + " - " + endereco.getLogradouro());
 
-            endereco.setDescricao("Rua João de Sousa Lima");
+            endereco.setLogradouro("Rua João de Sousa Lima");
             endereco.setDataCadastro(new Date());
             enderecoDAO.merge(endereco);
 
             System.out.println("Registro editado - Depois:");
-            System.out.println(endereco.getCodigo() + " - " + endereco.getDescricao());
+            System.out.println(endereco.getCodigo() + " - " + endereco.getLogradouro());
         }
     }
 }

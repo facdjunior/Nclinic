@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class TipoConvenio extends GenericDomain {
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Convenio convenio;
 
@@ -82,4 +82,6 @@ public class TipoConvenio extends GenericDomain {
     public void setELimitarAtendimentoPorDia(Boolean ELimitarAtendimentoPorDia) {
         this.ELimitarAtendimentoPorDia = ELimitarAtendimentoPorDia;
     }
+    
+    
 }

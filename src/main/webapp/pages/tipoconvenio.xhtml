@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/modelo.xhtml">
+   
+    <ui:define name="conteudo">
+        <p:growl id="msg"/>
+        
+        <h:form id="formLista">
+            
+            <p:panel id="pnlCadastro" header="Tipo de Convenio">
+                <p:dataTable id="TblCadastro" emptyMessage="Nenhum registro encontrado" 
+                             paginator="true" value="#{tipoConvenioBean.tipoConvenios}" var="tipoconvenio" rows="10"
+                             paginatorPosition="bottom" reflow="true">
+                    <f:facet name="footer">
+                        <p:commandButton value="Novo" actionListener="#{tipoConvenioBean.novo}"
+                                         oncomplete="PF('dlgCadastro').show();"
+                                         update=":msg :formCadastro:pnlCadastro">
+                            <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+
+                    </f:facet>
+                    <p:column headerText="Nome" filterBy="#{tipoconvenio.descricao}" 
+                              sortBy="#{tipoconvenio.descricao}">
+                        <h:outputText value="#{tipoconvenio.descricao}"/>
+                    </p:column>
+                    <p:column headerText="Estados">
+                        <h:outputText value="#{tipoconvenio.convenio.descricao}"/>
+                    </p:column>
+                    <p:column headerText="Opção">
+                        <p:commandButton icon="ui-icon-trash"
+                                         actionListener="#{tipoConvenioBean.excluir}"
+                                         update=":msg :formLista:TblCadastro">
+                            <p:confirm header="Confirmação" message="Deseja excluir Registro"
+                                       icon="ui-icon-alert" />
+                            <f:attribute name="Selecionado" value="#{tipoconvenio}" />
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-pencil"
+                                         actionListener="#{tipoConvenioBean.editar}"
+                                         update=":msg :formCadastro:pnlCadastro"
+                                         oncomplete="PF('dlgCadastro').show();">
+                            <f:attribute name="Selecionado" value="#{tipoconvenio}" />
+                            <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+            </p:panel>
+        </h:form>
+        <p:dialog header="Cadastro tipo de convenios" widgetVar="dlgCadastro" 
+                  draggable="false" resizable="false" modal="true" closable="false">
+            <h:form id="formCadastro">
+                <h:panelGrid id="pnlCadastro" columns="2">
+                    <p:outputLabel for="nome" value="Nome:"/>
+                    <p:inputText id="nome" maxlength="120" size="45"
+                                 value="#{tipoConvenioBean.tipoConvenio.descricao}" required="true" 
+                                 requiredMessage="Campo 'Nome' é obrigatório"/>
+
+                    <p:outputLabel for="convenio" value="Convenio"/>
+                    
+                    <p:selectOneMenu id="convenio" filter="true"
+                                     value="#{tipoConvenioBean.tipoConvenio.convenio}"
+                                     converter="omnifaces.SelectItemsConverter" required="true"
+                                     converterMessage="Favor informe Convenio!">
+                        <f:selectItem noSelectionOption="true" 
+                                      itemLabel="Selecione um Convênio"/>
+                        <f:selectItems value="#{tipoConvenioBean.convenios}" var="convenio"
+                                       itemValue="#{convenio}" itemLabel="#{convenio.descricao}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2"> 
+
+                    <p:commandButton value="Salvar" actionListener="#{tipoConvenioBean.salvar}"
+                                     update=":msg :formCadastro:pnlCadastro :formLista:TblCadastro"/>
+                    <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>
+

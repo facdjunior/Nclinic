@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.EstadoCivilDAO;
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
 import com.google.gson.Gson;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -44,6 +45,7 @@ public class EstadoCivilService {
 
         return json;
     }
+
     //http://localhost:8080/ClinicPlus/rest/estadoCivil/
     @POST
     public String salvar(String json) {
@@ -52,11 +54,25 @@ public class EstadoCivilService {
         EstadoCivil estadoCivil = gson.fromJson(json, EstadoCivil.class);
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
+        EstadoCivil resultado = (EstadoCivil) estadoCivilDAO.listarSequencia();
+
+        if (resultado == null) {
+
+            estadoCivil.setDataCadastro(new Date());
+            estadoCivil.setSequencia(1);
+            estadoCivilDAO.merge(estadoCivil);
+
+            String jsonSaida = gson.toJson(estadoCivil);
+            return jsonSaida;
+        }
+        estadoCivil.setDataCadastro(new Date());
+        estadoCivil.setSequencia(resultado.getSequencia() + 1);
         estadoCivilDAO.merge(estadoCivil);
-        
+
         String jsonSaida = gson.toJson(estadoCivil);
         return jsonSaida;
     }
+
     //http://localhost:8080/ClinicPlus/rest/estadoCivil/
     @PUT
     public String editar(String json) {
@@ -66,20 +82,21 @@ public class EstadoCivilService {
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         estadoCivilDAO.editar(estadoCivil);
-        
+
         String jsonSaida = gson.toJson(estadoCivil);
         return jsonSaida;
     }
+
     //http://localhost:8080/ClinicPlus/rest/estadoCivil/{codigo}
     @DELETE
     @Path("{codigo}")
-    public String excluir(@PathParam("codigo")Long codigo){
-        
+    public String excluir(@PathParam("codigo") Long codigo) {
+
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
-        
+
         EstadoCivil estadoCivil = estadoCivilDAO.buscar(codigo);
         estadoCivilDAO.excluir(estadoCivil);
-        
+
         Gson gson = new Gson();
         String saida = gson.toJson(estadoCivil);
         return saida;

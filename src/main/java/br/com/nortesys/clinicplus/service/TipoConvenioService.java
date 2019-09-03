@@ -1,8 +1,11 @@
 package br.com.nortesys.clinicplus.service;
 
+import br.com.nortesys.clinicplus.dao.ConvenioDAO;
 import br.com.nortesys.clinicplus.dao.TipoConvenioDAO;
+import br.com.nortesys.clinicplus.domain.Convenio;
 import br.com.nortesys.clinicplus.domain.TipoConvenio;
 import com.google.gson.Gson;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -53,10 +56,26 @@ public class TipoConvenioService {
         TipoConvenio tipoConvenio = gson.fromJson(json, TipoConvenio.class);
 
         TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
+        TipoConvenio resultado = tipoConvenioDAO.listarSequencia();
+
+        if (resultado == null) {
+
+            tipoConvenio.setSequencia(1);
+            tipoConvenio.setDataCadastro(new Date());
+            tipoConvenioDAO.merge(tipoConvenio);
+
+            String jsonSaida = gson.toJson(tipoConvenio);
+            return jsonSaida;
+
+        }
+        
+        tipoConvenio.setSequencia(resultado.getSequencia()+1);
+        tipoConvenio.setDataCadastro(new Date());
         tipoConvenioDAO.merge(tipoConvenio);
 
         String jsonSaida = gson.toJson(tipoConvenio);
         return jsonSaida;
+
     }
 
     //http://localhost:8080/ClinicPlus/clinc/tipoconvenio/

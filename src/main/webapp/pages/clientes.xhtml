@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/modelo.xhtml">
+
+    <ui:define name="conteudo">
+        <p:growl id="msg"/>
+
+        <h:form id="formLista">
+
+            <p:panel header="Clientes cadastrados">
+                <p:dataTable id="TblCadastro" emptyMessage="Nenhum registro encontrado" 
+                             paginator="true" value="#{clienteBean.pessoas}" var="pessoa" 
+                             rows="10" paginatorPosition="bottom" reflow="true">
+                    <f:facet name="footer">
+                        <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
+                                         actionListener="#{clienteBean.novo()}"
+                                         update=":formCadastro:pnlCadastro">
+                            <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+                    </f:facet>
+                    <p:column headerText="Nome" filterBy="#{pessoa.nome}" sortBy="#{pessoa.nome}">
+                        <h:outputText value="#{pessoa.nome}" />
+                    </p:column>
+
+                    <p:column headerText="RG.:">
+                        <h:outputText value="#{pessoa.rg}" />
+                    </p:column>
+
+                    <p:column headerText="Celular">
+                        <h:outputText value="#{pessoa.celular}" />
+                    </p:column>
+
+                    <p:column headerText="Opções">
+                        <p:commandButton icon="ui-icon-trash"
+                                         actionListener="#{clienteBean.excluir}"
+                                         update="msg :formLista:TblCadastro">
+                            <p:confirm header="Confirmação" message="Deseja excluir o resgistro selecionado?"
+                                       icon="ui-icon-alert" />
+                            <f:attribute name="pessoaSelecionada" value="#{pessoa}" />
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-pencil"
+                                         actionListener="#{clienteBean.editar}"
+                                         update="msg :formCadastro:pnlCadastro :formLista:TblCadastro"
+                                         oncomplete="PF('dlgCadastro').show();">
+                            <f:attribute name="pessoaSelecionada" value="#{pessoa}" />
+                            <f:actionListener
+                                type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </p:panel>
+        </h:form>
+
+        <p:dialog header="Cadastro de clientes" widgetVar="dlgCadastro" 
+                  draggable="false" resizable="false" modal="true" closable="false">
+            <h:form id="formCadastro">
+                <h:panelGrid id="pnlCadastros" columns="1">
+                    <p:panel header="Dados pessoais">
+                        <div>
+                            <p:outputLabel for="cpf" value=" CPF:" />
+                            <p:inputMask id="cpf" mask="999.999.999-99" size="13"
+                                         value="#{clienteBean.documento.descricao}" required="true"
+                                         requiredMessage="Campo CPF é obrigatório"/>  
+                        </div>
+
+                        <h:panelGrid id="pnlCadastro" columns="6" cellpadding="12" title="Dados Pessoais">
+
+                            <p:outputLabel for="nome" value="Nome:" />
+                            <p:inputText id="nome" maxlength="120" size="35"
+                                         value="#{clienteBean.pessoa.nome}" required="true"
+                                         requiredMessage="O campo 'Nome' é obrigatório" />
+
+                            <p:outputLabel  value="Data Nascimento" />
+                            <p:calendar value="#{clienteBean.pessoaFisica.dataNascimento}" 
+                                        required="true"
+                                        requiredMessage="Favor informa data" size="9"/>
+
+                            <p:outputLabel for="estadoCivil" value="Estado Civil:" />
+                            <p:selectOneMenu id="estadoCivil" filter="true" required="true"
+                                             requiredMessage="O campo 'Estado Civil' é obrigatório"
+                                             converter="omnifaces.SelectItemsConverter"
+                                             value="#{clienteBean.pessoaFisica.estadoCivil}">
+                                <f:selectItem noSelectionOption="true"
+                                              itemLabel="Selecione Estado Civil" />
+                                <f:selectItems value="#{clienteBean.estadoCivils}" var="civil"
+                                               itemValue="#{civil}" itemLabel="#{civil.descricao}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                            <p:outputLabel for="rg" value="RG:" />
+                            <p:inputText id="rg" maxlength="20" 
+                                         value="#{clienteBean.documento.descricao}"/>
+
+
+
+                            <p:outputLabel for="telefone" value="Telefone:" />
+                            <p:inputMask id="telefone" mask="(99)9999-9999" size="10"
+                                         value="#{pessoaBean.pessoa.telefone}"/>
+
+                            <p:outputLabel for="celular" value="Celular:" />
+                            <p:inputMask id="celular" mask="(99)99999-9999" size="10"
+                                         value="#{pessoaBean.pessoa.celular}"/>  
+
+                            <p:outputLabel for="escolaridade" value="Escolaridade" />
+                            <p:inputText id="escolaridade" maxlength="20" 
+                                         value="#{clienteBean.pessoaFisica.grauEscolaridade}"/>
+
+                            <p:outputLabel for="naturalidade" value="Escolaridade" />
+                            <p:inputText id="naturalidade" maxlength="20" 
+                                         value="#{clienteBean.pessoaFisica.naturalidade}"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel header="Endereço">
+                        <h:panelGrid id="pnlEndereco" columns="6">
+
+                            <p:outputLabel for="cep" value="CEP:" />
+                            <p:inputMask id="cep" mask="99.999-999" size="10"
+                                         value="#{clienteBean.endereco.cep}"/>
+
+                            <p:outputLabel for="rua" value="Rua:" />
+                            <p:inputText id="rua" maxlength="120" size="40"
+                                         value="#{clienteBean.endereco.logradouro}" required="true"
+                                         requiredMessage="O campo 'Rua' é obrigatório" />
+
+                            <p:outputLabel value="N.º" />
+                            <p:inputText maxlength="5" size="6"
+                                         value="#{clienteBean.endereco.numero}" required="true"
+                                         requiredMessage="O campo 'Número' é obrigatório"
+                                         converterMessage="Informe um valor válido para o campo 'Número'"
+                                         validatorMessage="Informe um valor entre 1 e 32767 para o campo 'Número'">
+                                <f:validateLongRange minimum="1" maximum="32767" />
+                            </p:inputText>
+                        </h:panelGrid>
+                        <h:panelGrid columns="4">
+                            <p:outputLabel for="bairro" value="Bairro:" />
+                            <p:inputText id="bairro" maxlength="120" size="30"
+                                         value="#{clienteBean.endereco.bairro}" required="true"
+                                         requiredMessage="O campo 'Bairro' é obrigatório" />
+
+                            <p:outputLabel for="complemento" value="Complemento:" />
+                            <p:inputText id="complemento" maxlength="10" size="10"
+                                         value="#{clienteBean.endereco.complemento}" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="4">
+
+                            <p:outputLabel for="cidade" value="Cidade:" />
+                            <p:inputText id="cidade" maxlength="10" size="18"
+                                         value="#{clienteBean.endereco.localidade}" />
+
+                            <p:outputLabel for="uf" value="UF" />
+                            <p:inputText id="uf" maxlength="10" size="10"
+                                         value="#{clienteBean.endereco.uf}" />
+                        </h:panelGrid>
+
+                    </p:panel>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Salvar" actionListener="#{clienteBean.salvar}"
+                                     update=":msg :formCadastro:pnlCadastro :formLista:TblCadastro">
+                        <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                    </p:commandButton>
+                    <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+
+
+

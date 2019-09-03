@@ -110,26 +110,25 @@ public class FuncionarioDAOTest {
 
             endereco.setAtivo(true);
             endereco.setBairro("Monte das Oliveiras");
-            endereco.setDescricao("Rua Muiratinga");
-            endereco.setCEP("69093-129");
+            endereco.setLogradouro("Rua Muiratinga");
+            endereco.setCep("69093-129");
             endereco.setSequencia(1L);
             endereco.setComplemento("João teste Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("310");
-            endereco.setObservacao("Manaus");
             endereco.setPessoa(pessoa);
 
         } else {
 
             endereco.setAtivo(true);
             endereco.setBairro("Monte das Oliveiras");
-            endereco.setDescricao("Rua Muiratinga");
-            endereco.setCEP("69093-129");
+            endereco.setLogradouro("Rua Muiratinga");
+            endereco.setCep("69093-129");
             endereco.setSequencia(resultaEndereco.getSequencia() + 1);
             endereco.setComplemento("João teste Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("310");
-            endereco.setObservacao("Manaus");
+            
             endereco.setPessoa(pessoa);
         }
         enderecoDAO.merge(endereco);

@@ -119,26 +119,26 @@ public class PessoaDAOTest {
 
             endereco.setAtivo(true);
             endereco.setBairro("Parque Bom Viver");
-            endereco.setDescricao("Rua 25");
-            endereco.setCEP("77825-874");
+            endereco.setLogradouro("Rua 25");
+            endereco.setCep("77825-874");
             endereco.setSequencia(1L);
             endereco.setComplemento("Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("179");
-            endereco.setObservacao("Araguaína");
+            
             endereco.setPessoa(pessoa);
 
         } else {
 
             endereco.setAtivo(true);
             endereco.setBairro("Parque Bom Viver");
-            endereco.setDescricao("Rua 25");
-            endereco.setCEP("77825-874");
+            endereco.setLogradouro("Rua 25");
+            endereco.setCep("77825-874");
             endereco.setSequencia(resultaEndereco.getSequencia() + 1);
             endereco.setComplemento("Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("179");
-            endereco.setObservacao("Araguaína");
+            
             endereco.setPessoa(pessoa);
         }
         pessoaDAO.salvar(pessoa);

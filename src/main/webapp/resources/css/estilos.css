@@ -27,3 +27,8 @@
     right: 1;
     margin:2px;
 }
+.ui-panelgrid {
+   border: none;  
+}
+
+.semBorda tr, .semBorda td {     border: none; }

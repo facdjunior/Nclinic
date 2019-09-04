@@ -41,6 +41,18 @@ public class PessoaFisica extends GenericDomain {
 
     @Column(length = 30)
     private String GrauEscolaridade;
+    
+    @Column(nullable = false, length = 120)
+    private String NomeMae;
+    
+    @Column(length = 120)
+    private String NomePai;
+    
+    @Column(length = 120)
+    private String Conjuge;
+    
+    @ManyToOne
+    private Profissao profissao;
 
     public Date getDataNascimento() {
         return DataNascimento;
@@ -97,5 +109,39 @@ public class PessoaFisica extends GenericDomain {
     public void setGrauEscolaridade(String GrauEscolaridade) {
         this.GrauEscolaridade = GrauEscolaridade;
     }
+
+    public String getNomeMae() {
+        return NomeMae;
+    }
+
+    public void setNomeMae(String NomeMae) {
+        this.NomeMae = NomeMae;
+    }
+
+    public String getNomePai() {
+        return NomePai;
+    }
+
+    public void setNomePai(String NomePai) {
+        this.NomePai = NomePai;
+    }
+
+    public String getConjuge() {
+        return Conjuge;
+    }
+
+    public void setConjuge(String Conjuge) {
+        this.Conjuge = Conjuge;
+    }
+
+    public Profissao getProfissao() {
+        return profissao;
+    }
+
+    public void setProfissao(Profissao profissao) {
+        this.profissao = profissao;
+    }
+    
+    
 
 }

@@ -57,7 +57,7 @@
     <!-- Tema do PrimeFaces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>redmond</param-value>
+        <param-value>south-street</param-value>
     </context-param>
     
     <!-- Configuração do JSF -->

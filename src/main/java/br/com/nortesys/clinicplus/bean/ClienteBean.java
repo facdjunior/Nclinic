@@ -1,5 +1,6 @@
 package br.com.nortesys.clinicplus.bean;
 
+import br.com.nortesys.clinicplus.dao.EstadoCivilDAO;
 import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Contato;
 
@@ -9,9 +10,13 @@ import br.com.nortesys.clinicplus.domain.EstadoCivil;
 
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
+import br.com.nortesys.clinicplus.domain.Profissao;
 import br.com.nortesys.clinicplus.domain.TipoDocumento;
+import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
 import com.google.gson.Gson;
+import com.sun.jersey.api.client.WebResource;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.util.List;
@@ -53,13 +58,15 @@ public class ClienteBean {
 
     private Contato contato;
     private List<Contato> contatos;
-    
+
     private TipoDocumento tipoDocumento;
     private List<TipoDocumento> tipoDocumentos;
-    
+
     private EstadoCivil estadoCivil;
     private List<EstadoCivil> estadoCivils;
-            
+
+    private Profissao profissao;
+    private List<Profissao> profissaos;
 
     public Cliente getCliente() {
         return cliente;
@@ -188,8 +195,23 @@ public class ClienteBean {
     public void setEstadoCivils(List<EstadoCivil> estadoCivils) {
         this.estadoCivils = estadoCivils;
     }
-    
-    
+
+    public Profissao getProfissao() {
+        return profissao;
+    }
+
+    public void setProfissao(Profissao profissao) {
+        this.profissao = profissao;
+    }
+
+    public List<Profissao> getProfissaos() {
+        return profissaos;
+    }
+
+    public void setProfissaos(List<Profissao> profissaos) {
+        this.profissaos = profissaos;
+    }
+
     @PostConstruct
     public void listar() {
         try {
@@ -210,27 +232,48 @@ public class ClienteBean {
 
     public void novo() {
 
-        pessoa = new Pessoa();
-        pessoaFisica = new PessoaFisica();
-        documento = new Documento();
-        contato = new Contato();
-        endereco = new Endereco();
-        cliente = new Cliente();
+        
+            pessoa = new Pessoa();
+            pessoaFisica = new PessoaFisica();
+           
+            documento = new Documento();
+            contato = new Contato();
+            endereco = new Endereco();
+            cliente = new Cliente();
+            profissao = new Profissao();
+            
+            estadoCivil();
 
-    }
+        }
+
+    
 
     public void salvar() {
 
-    
     }
 
     public void excluir(ActionEvent evento) {
-    
+
     }
 
     public void editar(ActionEvent evento) {
-    
 
+    }
+
+    public void estadoCivil() {
+        try {
+            Client cliente = ClientBuilder.newClient();
+            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/estadoCivil");
+            String json = caminho.request().get(String.class);
+
+            Gson gson = new Gson();
+            EstadoCivil[] vetor = gson.fromJson(json, EstadoCivil[].class);
+
+            estadoCivils = Arrays.asList(vetor);
+        } catch (RuntimeException erro) {
+            Messages.addGlobalError("Ocorreu um erro ao tentar listar registros");
+            erro.printStackTrace();
+        }
     }
 
 }

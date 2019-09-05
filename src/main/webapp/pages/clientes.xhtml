@@ -178,7 +178,10 @@
                             <div>
                                 <p:outputLabel for="cep" value="CEP:" />
                                 <p:inputMask id="cep" mask="99.999-999" size="10"
-                                             value="#{clienteBean.endereco.cep}"/>
+                                             value="#{clienteBean.endereco.cep}">
+                                
+                                    <p:ajax  event="onblur" listener="#{enderecoBean.carregarEndereco}" process="cep" update="@cep"/>
+                                </p:inputMask>
 
 
 

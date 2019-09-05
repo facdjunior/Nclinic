@@ -2,20 +2,15 @@ package br.com.nortesys.clinicplus.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import java.util.Date;
-import javax.persistence.CascadeType;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  *
@@ -29,17 +24,14 @@ public class Endereco extends GenericDomain {
     private Long Sequencia;
 
     private Boolean Ativo;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Pessoa pessoa;
-
-
-    @Column(length = 255, nullable = false)
-    private String logadouro;
 
     @SerializedName("cep")
     @Expose
@@ -101,14 +93,6 @@ public class Endereco extends GenericDomain {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
-    }
-
-    public String getLogadouro() {
-        return logadouro;
-    }
-
-    public void setLogadouro(String logadouro) {
-        this.logadouro = logadouro;
     }
 
     public String getCep() {

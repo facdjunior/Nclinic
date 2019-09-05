@@ -1,64 +1,64 @@
 package br.com.nortesys.clinicplus.bean;
 
-import br.com.nortesys.clinicplus.domain.Convenio;
-import br.com.nortesys.clinicplus.service.ConvenioService;
-import com.google.gson.Gson;
 
+import br.com.nortesys.clinicplus.domain.Pessoa;
+import br.com.nortesys.clinicplus.domain.PessoaFisica;
+import br.com.nortesys.clinicplus.service.PessoaFisicaService;
+import br.com.nortesys.clinicplus.service.PessoaService;
+import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-
 import javax.ws.rs.client.WebTarget;
-
 import org.omnifaces.util.Messages;
 
 /**
  *
- * @author Francisco Junior 2019-08-05
+ * @author Francisco Junior
  */
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class ConvenioBean {
+public class PessoaBean {
 
-    private Convenio convenio;
-    private List<Convenio> convenios;
+    private Pessoa pessoa;
+    private List<Pessoa> pessoas;
 
-    public Convenio getConvenio() {
-        return convenio;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setConvenio(Convenio convenio) {
-        this.convenio = convenio;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
-    public List<Convenio> getConvenios() {
-        return convenios;
+    public List<Pessoa> getPessoas() {
+        return pessoas;
     }
 
-    public void setConvenios(List<Convenio> convenios) {
-        this.convenios = convenios;
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
     }
+
+    
 
     @PostConstruct
     public void listar() {
         try {
 
             Client cliente = ClientBuilder.newClient();
-            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/convenio");
+            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/pessoa");
             String json = caminho.request().get(String.class);
 
             Gson gson = new Gson();
-            Convenio[] vetor = gson.fromJson(json, Convenio[].class);
+            Pessoa[] vetor = gson.fromJson(json, Pessoa[].class);
 
-            convenios = Arrays.asList(vetor);
+            pessoas = Arrays.asList(vetor);
         } catch (RuntimeException erro) {
             Messages.addGlobalError("Ocorreu um erro ao tentar listar registros");
             erro.printStackTrace();
@@ -66,40 +66,40 @@ public class ConvenioBean {
     }
 
     public void novo() {
-        convenio = new Convenio();
+        pessoa = new Pessoa();
     }
 
     public void salvar() {
-        
-         try {
-            
-            ConvenioService convenioService = new ConvenioService();
-                       
+
+        try {
+
+            PessoaService pessoaService = new PessoaService();
+
             novo();
             listar();
-            
+
             Messages.addGlobalInfo("Registro gravado com sucesso");
-            
+
         } catch (RuntimeException erro) {
-            
+
             Messages.addGlobalError("Erro ao tentar gravar Registro");
             erro.printStackTrace();
         }
-/*
+        /*
         try {
 
             Client cliente = ClientBuilder.newClient();
-            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/convenio");
+            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/pessoaFisica");
 
             Gson gson = new Gson();
-            String json = gson.toJson(convenio);
+            String json = gson.toJson(pessoaFisica);
             caminho.request().post(Entity.json(json));
 
             novo();
 
             json = caminho.request().get(String.class);
-            Convenio[] vetor = gson.fromJson(json, Convenio[].class);
-            convenios = Arrays.asList(vetor);
+            PessoaFisica[] vetor = gson.fromJson(json, PessoaFisica[].class);
+            pessoaFisicas = Arrays.asList(vetor);
 
             Messages.addGlobalInfo("Registro gravado com sucesso");
 
@@ -111,19 +111,19 @@ public class ConvenioBean {
 
     public void excluir(ActionEvent evento) {
         try {
-            convenio = (Convenio) evento.getComponent().getAttributes().get("convenioSelecionado");
+            pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
 
             Client cliente = ClientBuilder.newClient();
             WebTarget caminho
-                    = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/convenio/");
+                    = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/pessoa/");
 
-            caminho.path("{codigo}").resolveTemplate("codigo", convenio.getCodigo()).request().delete();
+            caminho.path("{codigo}").resolveTemplate("codigo", pessoa.getCodigo()).request().delete();
             String json = caminho.request().get(String.class);
 
             Gson gson = new Gson();
-            Convenio[] vetor = gson.fromJson(json, Convenio[].class);
+            Pessoa[] vetor = gson.fromJson(json, Pessoa[].class);
 
-            convenios = Arrays.asList(vetor);
+            pessoas = Arrays.asList(vetor);
 
             Messages.addGlobalInfo("Registro removido com sucesso");
         } catch (RuntimeException erro) {
@@ -133,7 +133,7 @@ public class ConvenioBean {
     }
 
     public void editar(ActionEvent evento) {
-        convenio = (Convenio) evento.getComponent().getAttributes().get("convenioSelecionado");
+        pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
     }
 
 }

@@ -1,34 +1,41 @@
 package br.com.nortesys.clinicplus.bean;
 
-import br.com.nortesys.clinicplus.dao.EstadoCivilDAO;
+import br.com.nortesys.clinicplus.dao.ClienteDAO;
+import br.com.nortesys.clinicplus.dao.ContatoDAO;
+import br.com.nortesys.clinicplus.dao.DocumentoDAO;
+import br.com.nortesys.clinicplus.dao.EnderecoDAO;
+import br.com.nortesys.clinicplus.dao.PessoaDAO;
+import br.com.nortesys.clinicplus.dao.PessoaFisicaDAO;
+import br.com.nortesys.clinicplus.dao.ProfissaoDAO;
 import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Contato;
-
 import br.com.nortesys.clinicplus.domain.Documento;
+
 import br.com.nortesys.clinicplus.domain.Endereco;
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
-
 import br.com.nortesys.clinicplus.domain.Pessoa;
+
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.domain.Profissao;
 import br.com.nortesys.clinicplus.domain.TipoDocumento;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
+
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.WebResource;
-import java.util.ArrayList;
+
 import java.util.Arrays;
-
+import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import javax.faces.event.ActionEvent;
 import javax.ws.rs.client.Client;
-
 import javax.ws.rs.client.ClientBuilder;
+
 import javax.ws.rs.client.WebTarget;
 import org.omnifaces.util.Messages;
 
@@ -67,7 +74,19 @@ public class ClienteBean {
 
     private Profissao profissao;
     private List<Profissao> profissaos;
+    
+    private String cep;
+    
+    private ServicoEndereco servico = new ServicoEndereco();
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+    
     public Cliente getCliente() {
         return cliente;
     }
@@ -232,23 +251,126 @@ public class ClienteBean {
 
     public void novo() {
 
-        
-            pessoa = new Pessoa();
-            pessoaFisica = new PessoaFisica();
-           
-            documento = new Documento();
-            contato = new Contato();
-            endereco = new Endereco();
-            cliente = new Cliente();
-            profissao = new Profissao();
-            
-            estadoCivil();
+        cliente = new Cliente();
+        pessoa = new Pessoa();
+        pessoaFisica = new PessoaFisica();
+        contato = new Contato();
+        documento = new Documento();
+        profissao = new Profissao();
+        ProfissaoDAO profissaoDAO = new ProfissaoDAO();
+        profissaoDAO.listar("Descricao");
 
-        }
+        estadoCivil();
 
-    
+    }
 
     public void salvar() {
+
+        try {
+
+            PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+            PessoaFisica resultadoPFisica = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
+
+            PessoaDAO pessoaDAO = new PessoaDAO();
+            Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
+
+            EnderecoDAO enderecoDAO = new EnderecoDAO();
+            Endereco resultaEndereco = (Endereco) enderecoDAO.listarSequencia();
+
+            DocumentoDAO documentoDAO = new DocumentoDAO();
+            Documento resultadoDocumento = (Documento) documentoDAO.listarSequencia();
+
+            if (resultadoPessoa == null) {
+
+                pessoa.setDataCadastro(new Date());
+                pessoa.setSequencia(1L);
+                pessoa.setPessoaFisica(pessoaFisica);
+
+                System.out.println("Registro Novo sem sequencia!" + pessoa.getNome());
+
+            } else {
+
+                pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
+                pessoa.setDataCadastro(new Date());
+                pessoa.setPessoaFisica(pessoaFisica);
+
+            }
+
+            if (resultadoPFisica == null) {
+
+                pessoaFisica.setDataCadastro(new Date());
+                pessoaFisica.setSequencia(1);
+
+            } else {
+
+                pessoaFisica.setDataCadastro(new Date());
+                pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
+
+            }
+            pessoaDAO.salvar(pessoa);
+            
+            ContatoDAO contatoDAO = new ContatoDAO();
+            Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
+
+            if (resultadoContato == null) {
+
+                contato.setDataCadastro(new Date());
+                contato.setSequencia(1L);
+                contato.setPessoa(pessoa);
+
+            } else {
+
+                contato.setDataCadastro(new Date());
+                contato.setSequencia(resultadoContato.getSequencia() + 1);
+                contato.setPessoa(pessoa);
+            }
+
+            contatoDAO.merge(contato);
+
+            if (resultaEndereco == null) {
+
+                endereco.setSequencia(1L);
+                endereco.setDataCadastro(new Date());
+                endereco.setPessoa(pessoa);
+
+            } else {
+
+                endereco.setSequencia(resultaEndereco.getSequencia() + 1);
+                endereco.setDataCadastro(new Date());
+                endereco.setPessoa(pessoa);
+            }
+            enderecoDAO.merge(endereco);
+
+            if (resultadoDocumento == null) {
+                documento.setDataCadastro(new Date());
+                documento.setSequencia(1);
+            } else {
+                documento.setDataCadastro(new Date());
+                documento.setSequencia(resultadoDocumento.getSequencia() + 1);
+            }
+
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
+
+            if (resultadoCliente == null) {
+                cliente.setDataCadastro(new Date());
+                cliente.setPessoa(pessoa);
+                cliente.setSequencia(1);
+            } else {
+                cliente.setDataCadastro(new Date());
+                cliente.setPessoa(pessoa);
+                cliente.setSequencia(resultadoCliente.getSequencia() + 1);
+            }
+            clienteDAO.merge(cliente);
+
+            novo();
+            listar();
+
+        } catch (RuntimeException erro) {
+
+            Messages.addGlobalError("Erro ao tentar gravar Registro");
+            erro.printStackTrace();
+        }
 
     }
 
@@ -274,6 +396,21 @@ public class ClienteBean {
             Messages.addGlobalError("Ocorreu um erro ao tentar listar registros");
             erro.printStackTrace();
         }
+    }
+    
+    public Endereco carregarEndereco() {
+        
+        endereco = new Endereco();
+        String resultado = this.getCep();
+        
+        com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
+        WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep()+ "/json/");
+        System.out.println("CHAMOU O URI....");
+        this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
+        String JSON = wr.get(String.class);
+        System.out.println(JSON);
+        return this.getEndereco();
+
     }
 
 }

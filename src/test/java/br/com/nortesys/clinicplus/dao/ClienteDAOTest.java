@@ -110,7 +110,7 @@ public class ClienteDAOTest {
 
             endereco.setAtivo(true);
             endereco.setBairro("Monte das Oliveiras");
-            endereco.setLogadouro("Rua Muiratinga");
+            endereco.setLogradouro("Rua Muiratinga");
             endereco.setCep("69093-129");
             endereco.setSequencia(1L);
             endereco.setComplemento("João teste Complemento");

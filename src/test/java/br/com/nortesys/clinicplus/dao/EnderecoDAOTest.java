@@ -62,7 +62,7 @@ public class EnderecoDAOTest {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro encontrado:");
-            System.out.println(endereco.getCodigo() + " - " + endereco.getLogadouro());
+            System.out.println(endereco.getCodigo() + " - " + endereco.getLogradouro());
         }
     }
 

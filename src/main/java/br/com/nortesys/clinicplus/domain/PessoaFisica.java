@@ -42,7 +42,7 @@ public class PessoaFisica extends GenericDomain {
     @Column(length = 30)
     private String GrauEscolaridade;
     
-    @Column(nullable = false, length = 120)
+    @Column(nullable = true, length = 120)
     private String NomeMae;
     
     @Column(length = 120)

@@ -125,7 +125,7 @@ public class PessoaDAOTest {
             endereco.setComplemento("Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("179");
-            
+
             endereco.setPessoa(pessoa);
 
         } else {
@@ -138,11 +138,11 @@ public class PessoaDAOTest {
             endereco.setComplemento("Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("179");
-            
+
             endereco.setPessoa(pessoa);
         }
         pessoaDAO.salvar(pessoa);
-       // contatoDAO.merge(contato);
+        contatoDAO.merge(contato);
         enderecoDAO.merge(endereco);
         documentoDAO.merge(documento);
 

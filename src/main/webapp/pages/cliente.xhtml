@@ -19,7 +19,7 @@
                     <f:facet name="footer">
                         <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
                                          actionListener="#{clienteBean.novo}"
-                                         update=":msg :formCadastro:pnlCadastros">
+                                         update=":msg :formCadastro:pnlCadastros :formCadastro:tabPrincipal">
                             <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                         </p:commandButton>
                     </f:facet>
@@ -72,7 +72,8 @@
 
 
                 <h:panelGrid id="pnlCadastros" columns="1">
-                    
+                    <p:tabView id="tabPrincipal">
+                        <p:tab id="principal" title="Principal">
                             <p:panel header="Dados pessoais" >
 
                                 <div class="row">
@@ -98,7 +99,7 @@
                                 <h:panelGrid id="pnlCadastro" columns="4" title="Dados Pessoais">
 
                                     <p:outputLabel  value="Data Nascimento" />
-                                    <p:calendar value="#{pessoaFisicaBeanpessoaFisica.dataNascimento}" 
+                                    <p:calendar value="#{clienteBean.pessoaFisica.dataNascimento}" 
                                                 required="true"
                                                 requiredMessage="Favor informa data" size="9" locale="pt_BR">
                                     </p:calendar>
@@ -131,52 +132,57 @@
                             </p:panel>
 
                             <p:panel id="pnEndereco" header="Endereço">
+                               
+                               
 
-                                <div class="row">
+                                <h:panelGrid id="pnlEndereco" columns="1">
+                                    
+                                     <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <p:outputLabel for="txtCep" value="CEP:" />
                                         <div class="col-xs-12 col-md-6">
-                                            <p:inputText id="txtCep" size="10" value="#{enderecoBean.cep}" >
-                                                <p:ajax event="blur" listener="#{enderecoBean.carregarEndereco()}"
+                                            <p:inputText id="txtCep" size="10" value="#{clienteBean.cep}" >
+                                                <p:ajax event="blur" listener="#{clienteBean.carregarEndereco()}"
                                                         process="txtCep" update="pnlEndereco"/>
                                             </p:inputText>
                                         </div>
                                     </div>
                                 </div>
-
-                                <h:panelGrid id="pnlEndereco" columns="1">
+                                    
                                     <h:panelGrid id="pnlEndereco2" columns="4">
 
                                         <p:outputLabel for="rua" value="Rua:" />
                                         <p:inputText id="rua" maxlength="120" size="50"
-                                                     value="#{enderecoBean.endereco.logradouro}" required="true"
+                                                     value="#{clienteBean.endereco.logradouro}" required="true"
                                                      requiredMessage="O campo 'Rua' é obrigatório" />
 
                                         <p:outputLabel value="N.º" />
                                         <p:inputText maxlength="5" size="6"
-                                                     value="#{enderecoBean.endereco.numero}" >
+                                                     value="#{clienteBean.endereco.numero}" >
                                             
                                         </p:inputText>
+                                        
+                                        <p:inputText value="#{clienteBean.endereco.ibge} "/>
 
                                     </h:panelGrid>
 
                                     <h:panelGrid id="pnlEndereco1" columns="4" columnClasses="grid" >
                                         <p:outputLabel for="bairro" value="Bairro:" />
                                         <p:inputText id="bairro" maxlength="120" size="35"
-                                                     value="#{enderecoBean.endereco.bairro}" required="true"
+                                                     value="#{clienteBean.endereco.bairro}" required="true"
                                                      requiredMessage="O campo 'Bairro' é obrigatório" />
 
                                         <p:outputLabel for="complemento" value="Complemento:" />
                                         <p:inputText id="complemento" maxlength="10" size="18"
-                                                     value="#{enderecoBean.endereco.complemento}" />
+                                                     value="#{clienteBean.endereco.complemento}" />
 
                                         <p:outputLabel for="cidade" value="Cidade:" />
                                         <p:inputText id="cidade" maxlength="10" size="18"
-                                                     value="#{enderecoBean.endereco.localidade}" />
+                                                     value="#{clienteBean.endereco.localidade}" />
 
                                         <p:outputLabel for="uf" value="UF" />
                                         <p:inputText id="uf" maxlength="10" size="10"
-                                                     value="#{enderecoBean.endereco.uf}" />
+                                                     value="#{clienteBean.endereco.uf}" />
                                     </h:panelGrid>
 
                                 </h:panelGrid>
@@ -199,7 +205,8 @@
 
                                 </p:panelGrid>
                             </p:panel>
-                        
+                        </p:tab>
+                        <p:tab id="detalhe" title="Detalhes">
                             <p:panel header="Filiação">
                                 <p:panelGrid id="pnlFiliacao" columns="2" layout="grid">
 
@@ -243,15 +250,15 @@
                                 <h:outputText id="obs" />
 
                             </p:panel>
-                    
+                        </p:tab>
 
-                    
+                    </p:tabView>
                 </h:panelGrid>
 
 
                 <h:panelGrid columns="2">
                     <p:commandButton value="Salvar" actionListener="#{clienteBean.salvar}"
-                                     update=":msg :formCadastro:pnlCadastros :formCadastro:tabPrincipal">
+                                     update=":msg :formCadastro:pnlCadastros :formCadastro:tabPrincipal:principal">
                         <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                     </p:commandButton>
                     <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>

@@ -20,8 +20,8 @@ import br.com.nortesys.clinicplus.domain.Profissao;
 import br.com.nortesys.clinicplus.domain.TipoDocumento;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
-
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.WebResource;
 
 import java.util.Arrays;
@@ -33,6 +33,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import javax.faces.event.ActionEvent;
+import javax.persistence.OneToOne;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
@@ -74,9 +75,9 @@ public class ClienteBean {
 
     private Profissao profissao;
     private List<Profissao> profissaos;
-    
+
     private String cep;
-    
+
     private ServicoEndereco servico = new ServicoEndereco();
 
     public String getCep() {
@@ -86,7 +87,7 @@ public class ClienteBean {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -234,15 +235,16 @@ public class ClienteBean {
     @PostConstruct
     public void listar() {
         try {
-
-            Client ccliente = ClientBuilder.newClient();
-            WebTarget caminho = ccliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/tipoconvenio");
+            ClienteDAO clienteDAO = new ClienteDAO();
+            clienteDAO.listar("codigo");
+            /*Client ccliente = ClientBuilder.newClient();
+            WebTarget caminho = ccliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/cliente");
             String json = caminho.request().get(String.class);
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             Cliente[] vetor = gson.fromJson(json, Cliente[].class);
 
-            clientes = Arrays.asList(vetor);
+            clientes = Arrays.asList(vetor);*/
         } catch (RuntimeException erro) {
             Messages.addGlobalError("Ocorreu um erro ao tentar listar registros");
             erro.printStackTrace();
@@ -261,6 +263,7 @@ public class ClienteBean {
         profissaoDAO.listar("Descricao");
 
         estadoCivil();
+        listar();
 
     }
 
@@ -308,7 +311,7 @@ public class ClienteBean {
 
             }
             pessoaDAO.salvar(pessoa);
-            
+
             ContatoDAO contatoDAO = new ContatoDAO();
             Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
 
@@ -380,6 +383,7 @@ public class ClienteBean {
 
     public void editar(ActionEvent evento) {
 
+        cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
     }
 
     public void estadoCivil() {
@@ -397,14 +401,14 @@ public class ClienteBean {
             erro.printStackTrace();
         }
     }
-    
+
     public Endereco carregarEndereco() {
-        
+
         endereco = new Endereco();
         String resultado = this.getCep();
-        
+
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
-        WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep()+ "/json/");
+        WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep() + "/json/");
         System.out.println("CHAMOU O URI....");
         this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
         String JSON = wr.get(String.class);

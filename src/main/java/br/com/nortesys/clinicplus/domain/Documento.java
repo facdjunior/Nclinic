@@ -2,10 +2,9 @@ package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
 import javax.persistence.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -13,8 +12,8 @@ import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
+
 
 /**
  *
@@ -36,6 +35,7 @@ public class Documento extends GenericDomain {
     
     @ManyToOne
     private Pessoa pessoa;
+    
 
     public Pessoa getPessoa() {
         return pessoa;

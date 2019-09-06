@@ -13,42 +13,50 @@
         <h:form id="formLista">
 
             <p:panel header="Clientes cadastrados">
-                <p:dataTable id="TblCadastro" emptyMessage="Nenhum registro encontrado" 
-                             paginator="true" value="#{clienteBean.pessoas}" var="pessoa" 
+                <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
+                             paginator="true" value="#{clienteBean.clientes}" var="cliente" 
                              rows="10" paginatorPosition="bottom" reflow="true">
                     <f:facet name="footer">
                         <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
                                          actionListener="#{clienteBean.novo}"
-                                         update=":msg :formCadastro:pnlCadastros :formCadastro:tabPrincipal">
+                                         update=":msg :formCadastro:pnlCad :formCadastro:tabPrincipal :formLista:TblLista">
                             <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                         </p:commandButton>
                     </f:facet>
-                    <p:column headerText="Nome" filterBy="#{pessoa.nome}" sortBy="#{pessoa.nome}">
-                        <h:outputText value="#{pessoa.nome}" />
+
+                    <p:column headerText="CPF" >
+                        <h:outputText value="#{cliente.pessoa.pessoaFisica.conjuge}" />
                     </p:column>
 
-                    <p:column headerText="RG.:">
-                        <h:outputText value="#{pessoa.pessoaFisica.dataNascimento}" />
+                    <p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}" sortBy="#{cliente.pessoa.nome}">
+                        <h:outputText value="#{cliente.pessoa.nome}" />
                     </p:column>
 
-                    <p:column headerText="Celular">
-                        <h:outputText value="#{pessoa.pessoaFisica.sexo}" />
+                    <p:column headerText="Estado Civil" >
+                        <h:outputText value="#{cliente.pessoa.pessoaFisica.estadoCivil.descricao}" />
                     </p:column>
+
+                    <p:column headerText="Data Nascimento" >
+                        <h:outputText value="#{cliente.pessoa.pessoaFisica.dataNascimento}">
+                            <f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
 
                     <p:column headerText="Opções">
                         <p:commandButton icon="ui-icon-trash"
                                          actionListener="#{clienteBean.excluir}"
-                                         update="msg :formLista:TblCadastro">
+                                         update=":msg :formLista:TblLista">
                             <p:confirm header="Confirmação" message="Deseja excluir o resgistro selecionado?"
                                        icon="ui-icon-alert" />
-                            <f:attribute name="pessoaSelecionada" value="#{pessoa}" />
+                            <f:attribute name="clienteSelecionado" value="#{pessoa}" />
                         </p:commandButton>
 
                         <p:commandButton icon="ui-icon-pencil"
                                          actionListener="#{clienteBean.editar}"
-                                         update="msg :formCadastro:pnlCadastro :formLista:TblCadastro"
+                                         update=":msg :formCadastro:pnlCad :formCadastro:tabPrincipal"
                                          oncomplete="PF('dlgCadastro').show();">
-                            <f:attribute name="pessoaSelecionada" value="#{pessoa}" />
+                            <f:attribute name="clienteSelecionado" value="#{cliente}" />
                             <f:actionListener
                                 type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                         </p:commandButton>
@@ -69,9 +77,7 @@
 
 
             <h:form id="formCadastro">
-
-
-                <h:panelGrid id="pnlCadastros" columns="1">
+                <h:panelGrid id="pnlCad" columns="1">
                     <p:tabView id="tabPrincipal">
                         <p:tab id="principal" title="Principal">
                             <p:panel header="Dados pessoais" >
@@ -124,31 +130,23 @@
                                         <f:selectItems value="#{estadoCivilBean.estadoCivils}" var="civil"
                                                        itemValue="#{civil}" itemLabel="#{civil.descricao}" />
                                     </p:selectOneMenu>
-
-
-
-                                   
                                 </h:panelGrid>
                             </p:panel>
 
                             <p:panel id="pnEndereco" header="Endereço">
-                               
-                               
-
                                 <h:panelGrid id="pnlEndereco" columns="1">
-                                    
-                                     <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <p:outputLabel for="txtCep" value="CEP:" />
-                                        <div class="col-xs-12 col-md-6">
-                                            <p:inputText id="txtCep" size="10" value="#{clienteBean.cep}" >
-                                                <p:ajax event="blur" listener="#{clienteBean.carregarEndereco()}"
-                                                        process="txtCep" update="pnlEndereco"/>
-                                            </p:inputText>
+
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <p:outputLabel for="txtCep" value="CEP:" />
+                                            <div class="col-xs-12 col-md-6">
+                                                <p:inputText id="txtCep" size="10" value="#{clienteBean.cep}" >
+                                                    <p:ajax event="blur" listener="#{clienteBean.carregarEndereco()}"
+                                                            process="txtCep" update="pnlEndereco"/>
+                                                </p:inputText>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                    
                                     <h:panelGrid id="pnlEndereco2" columns="4">
 
                                         <p:outputLabel for="rua" value="Rua:" />
@@ -159,9 +157,9 @@
                                         <p:outputLabel value="N.º" />
                                         <p:inputText maxlength="5" size="6"
                                                      value="#{clienteBean.endereco.numero}" >
-                                            
+
                                         </p:inputText>
-                                        
+
                                         <p:inputText value="#{clienteBean.endereco.ibge} "/>
 
                                     </h:panelGrid>
@@ -258,7 +256,8 @@
 
                 <h:panelGrid columns="2">
                     <p:commandButton value="Salvar" actionListener="#{clienteBean.salvar}"
-                                     update=":msg :formCadastro:pnlCadastros :formCadastro:tabPrincipal:principal">
+                                     update=":msg :formCadastro:pnlCad :formCadastro:tabPrincipal
+                                     :formLista:TblLista">
                         <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
                     </p:commandButton>
                     <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>

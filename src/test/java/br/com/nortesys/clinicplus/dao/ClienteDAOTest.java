@@ -165,12 +165,12 @@ public class ClienteDAOTest {
     @Ignore
     public void listar() {
         ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> resultado = clienteDAO.listar();
+        List<Cliente> resultado = clienteDAO.listar("codigo");
 
         System.out.println("Total de Registros Encontrados: " + resultado.size());
 
         for (Cliente cliente : resultado) {
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
+            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome()+ cliente.getPessoa().getDataCadastro());
         }
     }
 

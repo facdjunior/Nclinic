@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.ClienteDAO;
 import br.com.nortesys.clinicplus.domain.Cliente;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,20 +19,20 @@ import javax.ws.rs.PathParam;
 @Path("cliente")
 public class ClienteService {
     
-    //http://localhost:8080/ClinicPlus/clinic/convenio 
+    //http://localhost:8080/ClinicPlus/clinic/cliente 
     @GET
     public String listar() {
 
         ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> clientes = clienteDAO.listar("codigo");
+        List<Cliente> clientes = clienteDAO.listar("Sequencia");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(clientes);
 
         return json;
     }
 
-    //http://localhost:8080/ClinicPlus/clinic/convenio/codigo
+    //http://localhost:8080/ClinicPlus/clinic/cliente/codigo
     @GET
     @Path("{codigo}")
     public String buscar(@PathParam("codigo") Long codigo) {
@@ -44,7 +45,7 @@ public class ClienteService {
 
         return json;
     }
-    //http://localhost:8080/ClinicPlus/clinic/convenio/
+    //http://localhost:8080/ClinicPlus/clinic/cliente/
     @POST
     public String salvar(String json) {
 
@@ -57,7 +58,7 @@ public class ClienteService {
         String jsonSaida = gson.toJson(cliente);
         return jsonSaida;
     }
-    //http://localhost:8080/ClinicPlus/clinc/convenio/
+    //http://localhost:8080/ClinicPlus/clinc/cliente/
     @PUT
     public String editar(String json) {
 
@@ -70,7 +71,7 @@ public class ClienteService {
         String jsonSaida = gson.toJson(cliente);
         return jsonSaida;
     }
-    //http://localhost:8080/ClinicPlus/clinic/convenio/{codigo}
+    //http://localhost:8080/ClinicPlus/clinic/cliente/{codigo}
     @DELETE
     @Path("{codigo}")
     public String excluir(@PathParam("codigo")Long codigo){

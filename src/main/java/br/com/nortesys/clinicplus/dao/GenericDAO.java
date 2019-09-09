@@ -4,6 +4,7 @@ package br.com.nortesys.clinicplus.dao;
  *
  * @author Francisco Alves
  */
+import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -65,6 +66,7 @@ public class GenericDAO<Entidade> {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             Criteria consulta = sessao.createCriteria(classe);
+            
             consulta.addOrder(Order.asc(campoOrdenacao));
             List<Entidade> resultado = consulta.list();
             return resultado;
@@ -77,7 +79,7 @@ public class GenericDAO<Entidade> {
 
     @SuppressWarnings("unchecked")
     public Entidade buscar(Long codigo) {
-        
+
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             Criteria consulta = sessao.createCriteria(classe);

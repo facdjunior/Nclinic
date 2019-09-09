@@ -22,9 +22,9 @@ public class ClienteService {
     //http://localhost:8080/ClinicPlus/clinic/cliente 
     @GET
     public String listar() {
-
+        
         ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> clientes = clienteDAO.listar("Sequencia");
+        List<Cliente> clientes = clienteDAO.listar();
 
         Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(clientes);

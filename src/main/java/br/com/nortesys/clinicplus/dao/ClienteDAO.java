@@ -1,12 +1,13 @@
 package br.com.nortesys.clinicplus.dao;
 
 import br.com.nortesys.clinicplus.domain.Cliente;
+
 import br.com.nortesys.clinicplus.util.HibernateUtil;
-import java.util.List;
-import javax.persistence.Query;
 import org.hibernate.Criteria;
+
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+
 
 /**
  *
@@ -38,6 +39,5 @@ public class ClienteDAO extends GenericDAO<Cliente> {
             sessao.close();
         }
     }
-   
-    
+
 }

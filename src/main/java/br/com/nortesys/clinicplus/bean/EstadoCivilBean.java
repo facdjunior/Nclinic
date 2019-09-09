@@ -2,6 +2,7 @@ package br.com.nortesys.clinicplus.bean;
 
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 import java.util.Arrays;
@@ -55,7 +56,7 @@ public class EstadoCivilBean{
             WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/estadoCivil");
             String json = caminho.request().get(String.class);
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             EstadoCivil[] vetor = gson.fromJson(json, EstadoCivil[].class);
 
             estadoCivils = Arrays.asList(vetor);

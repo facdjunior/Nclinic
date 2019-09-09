@@ -4,6 +4,7 @@ import br.com.nortesys.clinicplus.dao.ClienteDAO;
 import br.com.nortesys.clinicplus.dao.ContatoDAO;
 import br.com.nortesys.clinicplus.dao.DocumentoDAO;
 import br.com.nortesys.clinicplus.dao.EnderecoDAO;
+import br.com.nortesys.clinicplus.dao.EstadoCivilDAO;
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import br.com.nortesys.clinicplus.dao.PessoaFisicaDAO;
 import br.com.nortesys.clinicplus.dao.ProfissaoDAO;
@@ -235,9 +236,11 @@ public class ClienteBean {
     @PostConstruct
     public void listar() {
         try {
+            
             ClienteDAO clienteDAO = new ClienteDAO();
-            clienteDAO.listar("codigo");
-            /*Client ccliente = ClientBuilder.newClient();
+            clientes = clienteDAO.listar();
+      /*     
+            Client ccliente = ClientBuilder.newClient();
             WebTarget caminho = ccliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/cliente");
             String json = caminho.request().get(String.class);
 
@@ -382,8 +385,20 @@ public class ClienteBean {
     }
 
     public void editar(ActionEvent evento) {
-
-        cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
+        try {
+            
+            cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
+            
+            EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
+            estadoCivils = estadoCivilDAO.listar();
+            
+        } catch (Exception erro) {
+            
+            Messages.addGlobalError("Ocorreu um erro ao gerar lista de estado civil");
+            erro.printStackTrace();
+        }
+        
+        
     }
 
     public void estadoCivil() {

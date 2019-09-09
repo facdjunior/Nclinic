@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 
 import javax.persistence.Temporal;
@@ -43,7 +44,7 @@ public class Contato extends GenericDomain {
     @Column(nullable = false)
     private Date DataCadastro;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(nullable = false)
     private Pessoa pessoa;
 

@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.DocumentoDAO;
 import br.com.nortesys.clinicplus.domain.Documento;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -26,7 +27,7 @@ public class DocumentoService {
         DocumentoDAO documentoDAO = new DocumentoDAO();
         List<Documento> documentos = documentoDAO.listar("codigo");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(documentos);
 
         return json;

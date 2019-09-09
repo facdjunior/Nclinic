@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,7 +31,7 @@ public class Endereco extends GenericDomain {
     @Column(nullable = false)
     private Date DataCadastro;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(nullable = false)
     private Pessoa pessoa;
 

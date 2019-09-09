@@ -105,12 +105,12 @@ public class PessoaDAOTest {
 
             documento.setDataCadastro(new Date());
             documento.setDescricao("589.206.601-07");
-            documento.setPessoa(pessoa);
+            //documento.setPessoas(pessoa);
             documento.setSequencia(1);
         } else {
             documento.setDataCadastro(new Date());
             documento.setDescricao("589.206.601-07");
-            documento.setPessoa(pessoa);
+          //  documento.setPessoa(pessoa);
             documento.setSequencia(resultadoDocumento.getSequencia() + 1);
         }
         //pessoaDAO.merge(pessoa);

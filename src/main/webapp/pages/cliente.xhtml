@@ -54,7 +54,7 @@
 
                         <p:commandButton icon="ui-icon-pencil"
                                          actionListener="#{clienteBean.editar}"
-                                         update=":msg :formCadastro:pnlCad :formCadastro:tabPrincipal"
+                                         update=":formCadastro:pnlCad"
                                          oncomplete="PF('dlgCadastro').show();">
                             <f:attribute name="clienteSelecionado" value="#{cliente}" />
                             <f:actionListener
@@ -119,7 +119,7 @@
                                         <f:selectItem itemLabel="Feminino" itemValue="F"/>
                                     </p:selectOneRadio>
 
-                                    <p:outputLabel for="estadoCivil" value="Estado Civil:" />
+                                    <p:outputLabel for="estadoCivil" value="Estado Civi:" />
                                     <p:selectOneMenu id="estadoCivil" filter="true" required="true"
                                                      requiredMessage="O campo 'Estado Civil' é obrigatório"
                                                      converter="omnifaces.SelectItemsConverter"
@@ -140,7 +140,7 @@
                                         <div class="col-xs-12 col-sm-6 col-md-6">
                                             <p:outputLabel for="txtCep" value="CEP:" />
                                             <div class="col-xs-12 col-md-6">
-                                                <p:inputText id="txtCep" size="10" value="#{clienteBean.pessoa.endereco.cep}" >
+                                                <p:inputText id="txtCep" size="10" value="#{clienteBean.cep}" >
                                                     <p:ajax event="blur" listener="#{clienteBean.carregarEndereco()}"
                                                             process="txtCep" update="pnlEndereco"/>
                                                 </p:inputText>
@@ -160,7 +160,8 @@
 
                                         </p:inputText>
 
-                                        <p:inputText value="#{clienteBean.cliente.pessoa.endereco.ibge} "/>
+                                        <p:inputText value="#{clienteBean.cliente.pessoa.endereco.ibge}" type="hidden"/>
+                                        <p:inputText value="#{clienteBean.cliente.pessoa.endereco.cep}" type="hidden"/>
 
                                     </h:panelGrid>
 

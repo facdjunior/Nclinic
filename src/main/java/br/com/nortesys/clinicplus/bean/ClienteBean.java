@@ -236,10 +236,10 @@ public class ClienteBean {
     @PostConstruct
     public void listar() {
         try {
-            
+
             ClienteDAO clienteDAO = new ClienteDAO();
             clientes = clienteDAO.listar();
-      /*     
+            /*     
             Client ccliente = ClientBuilder.newClient();
             WebTarget caminho = ccliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/cliente");
             String json = caminho.request().get(String.class);
@@ -271,7 +271,6 @@ public class ClienteBean {
     }
 
     public void salvar() {
-
         try {
 
             PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
@@ -292,8 +291,14 @@ public class ClienteBean {
                 pessoa.setSequencia(1L);
                 pessoa.setPessoaFisica(pessoaFisica);
 
-                System.out.println("Registro Novo sem sequencia!" + pessoa.getNome());
+                System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
 
+            } else if (resultadoPessoa.getCodigo() > 1) {
+                //   pessoa.setSequencia(resultadoPessoa.getSequencia());
+                // pessoa.setDataCadastro(new Date());
+                // pessoa.setPessoaFisica(pessoaFisica);
+                System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
+                pessoaDAO.merge(pessoa);
             } else {
 
                 pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
@@ -307,13 +312,41 @@ public class ClienteBean {
                 pessoaFisica.setDataCadastro(new Date());
                 pessoaFisica.setSequencia(1);
 
+            } else if (resultadoPFisica.getCodigo() > 1) {
+                pessoaFisicaDAO.merge(pessoaFisica);
             } else {
-
                 pessoaFisica.setDataCadastro(new Date());
                 pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
-
             }
-            pessoaDAO.salvar(pessoa);
+
+            if (resultaEndereco == null) {
+
+                endereco.setSequencia(1L);
+                endereco.setDataCadastro(new Date());
+                endereco.setPessoa(pessoa);
+
+            } else if (resultaEndereco.getCodigo() > 1) {
+
+            } else {
+
+                endereco.setSequencia(resultaEndereco.getSequencia() + 1);
+                endereco.setDataCadastro(new Date());
+                endereco.setPessoa(pessoa);
+            }
+
+            enderecoDAO.merge(endereco);
+
+            if (resultadoDocumento == null) {
+                documento.setDataCadastro(new Date());
+                documento.setSequencia(1);
+                documento.setPessoa(pessoa);
+            } else {
+                documento.setDataCadastro(new Date());
+                documento.setSequencia(resultadoDocumento.getSequencia() + 1);
+                documento.setPessoa(pessoa);
+            }
+
+            documentoDAO.merge(documento);
 
             ContatoDAO contatoDAO = new ContatoDAO();
             Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
@@ -333,28 +366,6 @@ public class ClienteBean {
 
             contatoDAO.merge(contato);
 
-            if (resultaEndereco == null) {
-
-                endereco.setSequencia(1L);
-                endereco.setDataCadastro(new Date());
-                endereco.setPessoa(pessoa);
-
-            } else {
-
-                endereco.setSequencia(resultaEndereco.getSequencia() + 1);
-                endereco.setDataCadastro(new Date());
-                endereco.setPessoa(pessoa);
-            }
-            enderecoDAO.merge(endereco);
-
-            if (resultadoDocumento == null) {
-                documento.setDataCadastro(new Date());
-                documento.setSequencia(1);
-            } else {
-                documento.setDataCadastro(new Date());
-                documento.setSequencia(resultadoDocumento.getSequencia() + 1);
-            }
-
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
 
@@ -367,6 +378,7 @@ public class ClienteBean {
                 cliente.setPessoa(pessoa);
                 cliente.setSequencia(resultadoCliente.getSequencia() + 1);
             }
+
             clienteDAO.merge(cliente);
 
             novo();
@@ -386,26 +398,26 @@ public class ClienteBean {
 
     public void editar(ActionEvent evento) {
         try {
-            
+
             cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
-            
+
             EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
             estadoCivils = estadoCivilDAO.listar();
-            
+
         } catch (Exception erro) {
-            
+
             Messages.addGlobalError("Ocorreu um erro ao gerar lista de estado civil");
             erro.printStackTrace();
         }
-        
-        
+
     }
 
     public void estadoCivil() {
         try {
-            Client cliente = ClientBuilder.newClient();
-            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/estadoCivil");
-            String json = caminho.request().get(String.class);
+            Client ccliente = ClientBuilder.newClient();
+            WebTarget caminho = ccliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/estadoCivil");
+            String json = caminho.request().get(String.class
+            );
 
             Gson gson = new Gson();
             EstadoCivil[] vetor = gson.fromJson(json, EstadoCivil[].class);
@@ -425,9 +437,13 @@ public class ClienteBean {
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
         WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep() + "/json/");
         System.out.println("CHAMOU O URI....");
-        this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
+
+        this.endereco = servico.buscarEnderecoPor(wr.get(String.class
+        ));
         String JSON = wr.get(String.class);
+
         System.out.println(JSON);
+
         return this.getEndereco();
 
     }

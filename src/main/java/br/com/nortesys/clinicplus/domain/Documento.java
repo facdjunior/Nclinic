@@ -1,7 +1,8 @@
 package br.com.nortesys.clinicplus.domain;
 
-
+import com.google.gson.annotations.Expose;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -9,8 +10,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-
 
 /**
  *
@@ -29,11 +28,11 @@ public class Documento extends GenericDomain {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
-    
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Pessoa pessoa;
-    
+
     public Pessoa getPessoa() {
         return pessoa;
     }

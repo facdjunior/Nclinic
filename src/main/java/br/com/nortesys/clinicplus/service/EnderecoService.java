@@ -4,6 +4,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.EnderecoDAO;
 import br.com.nortesys.clinicplus.domain.Endereco;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,7 +28,7 @@ public class EnderecoService {
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         List<Endereco> enderecos = enderecoDAO.listar("codigo");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(enderecos);
 
         return json;

@@ -1,9 +1,9 @@
 
 package br.com.nortesys.clinicplus.bean;
 
+
 import br.com.nortesys.clinicplus.domain.Documento;
 import br.com.nortesys.clinicplus.service.DocumentoService;
-import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -11,10 +11,6 @@ import com.google.gson.Gson;
 
 import java.util.Arrays;
 import java.util.List;
-
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import javax.ws.rs.client.Client;

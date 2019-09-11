@@ -1,6 +1,5 @@
 package br.com.nortesys.clinicplus.bean;
 
-
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.service.PessoaFisicaService;
@@ -44,8 +43,6 @@ public class PessoaBean {
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
     }
-
-    
 
     @PostConstruct
     public void listar() {

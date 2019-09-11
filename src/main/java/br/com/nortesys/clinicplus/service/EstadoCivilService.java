@@ -27,7 +27,7 @@ public class EstadoCivilService {
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         List<EstadoCivil> estadoCivils = estadoCivilDAO.listar("Descricao");
 
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        Gson gson = new Gson();
         String json = gson.toJson(estadoCivils);
 
         return json;

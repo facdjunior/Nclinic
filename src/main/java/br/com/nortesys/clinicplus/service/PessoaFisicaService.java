@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.PessoaFisicaDAO;
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,7 +26,7 @@ public class PessoaFisicaService {
         PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
         List<PessoaFisica> pessoaFisicas = pessoaFisicaDAO.listar("codigo");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(pessoaFisicas);
 
         return json;

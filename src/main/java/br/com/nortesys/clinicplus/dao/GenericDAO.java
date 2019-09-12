@@ -131,12 +131,14 @@ public class GenericDAO<Entidade> {
     }
 
     public Entidade merge(Entidade entidade) {
+        
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
 
         try {
             transacao = sessao.beginTransaction();
             Entidade retorno = (Entidade) sessao.merge(entidade);
+            
             transacao.commit();
             return retorno;
         } catch (RuntimeException erro) {

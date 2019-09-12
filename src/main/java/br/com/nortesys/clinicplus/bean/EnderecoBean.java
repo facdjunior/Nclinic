@@ -121,7 +121,7 @@ public class EnderecoBean {
     
     public Endereco carregarEndereco() {
         endereco = new Endereco();
-        String resultado = this.getCep();
+        
         
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
         WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep()+ "/json/");

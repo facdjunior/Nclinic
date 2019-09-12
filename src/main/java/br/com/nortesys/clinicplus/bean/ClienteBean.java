@@ -68,9 +68,6 @@ public class ClienteBean {
     private Contato contato;
     private List<Contato> contatos;
 
-    private TipoDocumento tipoDocumento;
-    private List<TipoDocumento> tipoDocumentos;
-
     private EstadoCivil estadoCivil;
     private List<EstadoCivil> estadoCivils;
 
@@ -185,22 +182,6 @@ public class ClienteBean {
         this.contatos = contatos;
     }
 
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
-
-    public List<TipoDocumento> getTipoDocumentos() {
-        return tipoDocumentos;
-    }
-
-    public void setTipoDocumentos(List<TipoDocumento> tipoDocumentos) {
-        this.tipoDocumentos = tipoDocumentos;
-    }
-
     public EstadoCivil getEstadoCivil() {
         return estadoCivil;
     }
@@ -257,13 +238,20 @@ public class ClienteBean {
     public void novo() {
 
         cliente = new Cliente();
-        pessoa = new Pessoa();
-        pessoaFisica = new PessoaFisica();
-        contato = new Contato();
-        documento = new Documento();
-        profissao = new Profissao();
+       // pessoa = new Pessoa();
+        //pessoaFisica = new PessoaFisica();
+        //contato = new Contato();
+        //documento = new Documento();
+        //profissao = new Profissao();
+        
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaoDAO.listar("Descricao");
+        
+        EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
+        estadoCivilDAO.listar("Descricao");
+        
+        DocumentoDAO documentoDAO = new DocumentoDAO();
+        documentoDAO.listar();
 
         estadoCivil();
         listar();
@@ -278,12 +266,15 @@ public class ClienteBean {
 
             PessoaDAO pessoaDAO = new PessoaDAO();
             Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
+            resultadoPessoa.getCodigo();
 
             EnderecoDAO enderecoDAO = new EnderecoDAO();
             Endereco resultaEndereco = (Endereco) enderecoDAO.listarSequencia();
 
             DocumentoDAO documentoDAO = new DocumentoDAO();
             Documento resultadoDocumento = (Documento) documentoDAO.listarSequencia();
+            
+            if(cliente.getCodigo()==null){
 
             if (resultadoPessoa == null) {
 
@@ -293,12 +284,6 @@ public class ClienteBean {
 
                 System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
 
-            } else if (resultadoPessoa.getCodigo() > 1) {
-                //   pessoa.setSequencia(resultadoPessoa.getSequencia());
-                // pessoa.setDataCadastro(new Date());
-                // pessoa.setPessoaFisica(pessoaFisica);
-                System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
-                pessoaDAO.merge(pessoa);
             } else {
 
                 pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
@@ -312,42 +297,41 @@ public class ClienteBean {
                 pessoaFisica.setDataCadastro(new Date());
                 pessoaFisica.setSequencia(1);
 
-            } else if (resultadoPFisica.getCodigo() > 1) {
-                pessoaFisicaDAO.merge(pessoaFisica);
             } else {
                 pessoaFisica.setDataCadastro(new Date());
                 pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
             }
-
+            pessoaDAO.merge(pessoa);
+            
             if (resultaEndereco == null) {
 
                 endereco.setSequencia(1L);
                 endereco.setDataCadastro(new Date());
                 endereco.setPessoa(pessoa);
 
-            } else if (resultaEndereco.getCodigo() > 1) {
-
             } else {
-
+                
                 endereco.setSequencia(resultaEndereco.getSequencia() + 1);
                 endereco.setDataCadastro(new Date());
                 endereco.setPessoa(pessoa);
             }
 
-            enderecoDAO.merge(endereco);
-
+            //  enderecoDAO.merge(endereco);
             if (resultadoDocumento == null) {
+
                 documento.setDataCadastro(new Date());
                 documento.setSequencia(1);
                 documento.setPessoa(pessoa);
+
             } else {
+
                 documento.setDataCadastro(new Date());
                 documento.setSequencia(resultadoDocumento.getSequencia() + 1);
                 documento.setPessoa(pessoa);
             }
 
             documentoDAO.merge(documento);
-
+            
             ContatoDAO contatoDAO = new ContatoDAO();
             Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
 
@@ -365,7 +349,7 @@ public class ClienteBean {
             }
 
             contatoDAO.merge(contato);
-
+            
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
 
@@ -378,9 +362,10 @@ public class ClienteBean {
                 cliente.setPessoa(pessoa);
                 cliente.setSequencia(resultadoCliente.getSequencia() + 1);
             }
-
+            }else{
+            ClienteDAO clienteDAO = new ClienteDAO();
             clienteDAO.merge(cliente);
-
+            }
             novo();
             listar();
 
@@ -403,6 +388,12 @@ public class ClienteBean {
 
             EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
             estadoCivils = estadoCivilDAO.listar();
+            
+            ClienteDAO clienteDAO = new ClienteDAO();
+            clientes = clienteDAO.listar();
+            
+            DocumentoDAO documentoDAO = new DocumentoDAO();
+            documentos = documentoDAO.listar();
 
         } catch (Exception erro) {
 
@@ -432,14 +423,14 @@ public class ClienteBean {
     public Endereco carregarEndereco() {
 
         endereco = new Endereco();
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
         String resultado = this.getCep();
 
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
         WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep() + "/json/");
         System.out.println("CHAMOU O URI....");
 
-        this.endereco = servico.buscarEnderecoPor(wr.get(String.class
-        ));
+        this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
         String JSON = wr.get(String.class);
 
         System.out.println(JSON);

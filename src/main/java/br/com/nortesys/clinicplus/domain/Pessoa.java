@@ -1,6 +1,5 @@
 package br.com.nortesys.clinicplus.domain;
 
-
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +10,6 @@ import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  *
@@ -39,13 +37,32 @@ public class Pessoa extends GenericDomain {
     private String imagem;
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private Documento documento;
-    
-    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private Endereco endereco;
-    
-    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "pessoa")
+    private Documento documento;
+
+    @OneToOne(mappedBy = "pessoa")
     private Contato contato;
+
+    @OneToOne(mappedBy = "pessoa")
+    private Cliente cliente;
+
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     public Contato getContato() {
         return contato;
@@ -54,23 +71,13 @@ public class Pessoa extends GenericDomain {
     public void setContato(Contato contato) {
         this.contato = contato;
     }
-    
+
     public Endereco getEndereco() {
         return endereco;
     }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
-    }
-    
-    
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
     }
 
     public String getNome() {

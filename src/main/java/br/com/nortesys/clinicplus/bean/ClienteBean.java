@@ -24,6 +24,7 @@ import br.com.nortesys.clinicplus.service.ServicoEndereco;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.WebResource;
+import java.util.ArrayList;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -238,18 +239,20 @@ public class ClienteBean {
     public void novo() {
 
         cliente = new Cliente();
-       // pessoa = new Pessoa();
-        //pessoaFisica = new PessoaFisica();
-        //contato = new Contato();
-        //documento = new Documento();
-        //profissao = new Profissao();
-        
+
+        pessoa = new Pessoa();
+        pessoaFisica = new PessoaFisica();
+        contato = new Contato();
+        documento = new Documento();
+
+        profissao = new Profissao();
+
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaoDAO.listar("Descricao");
-        
+
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         estadoCivilDAO.listar("Descricao");
-        
+
         DocumentoDAO documentoDAO = new DocumentoDAO();
         documentoDAO.listar();
 
@@ -266,106 +269,108 @@ public class ClienteBean {
 
             PessoaDAO pessoaDAO = new PessoaDAO();
             Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
-            resultadoPessoa.getCodigo();
+            //resultadoPessoa.getCodigo();
 
             EnderecoDAO enderecoDAO = new EnderecoDAO();
             Endereco resultaEndereco = (Endereco) enderecoDAO.listarSequencia();
 
             DocumentoDAO documentoDAO = new DocumentoDAO();
             Documento resultadoDocumento = (Documento) documentoDAO.listarSequencia();
-            
-            if(cliente.getCodigo()==null){
 
-            if (resultadoPessoa == null) {
-
-                pessoa.setDataCadastro(new Date());
-                pessoa.setSequencia(1L);
-                pessoa.setPessoaFisica(pessoaFisica);
-
-                System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
-
-            } else {
-
-                pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
-                pessoa.setDataCadastro(new Date());
-                pessoa.setPessoaFisica(pessoaFisica);
-
-            }
-
-            if (resultadoPFisica == null) {
-
-                pessoaFisica.setDataCadastro(new Date());
-                pessoaFisica.setSequencia(1);
-
-            } else {
-                pessoaFisica.setDataCadastro(new Date());
-                pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
-            }
-            pessoaDAO.merge(pessoa);
-            
-            if (resultaEndereco == null) {
-
-                endereco.setSequencia(1L);
-                endereco.setDataCadastro(new Date());
-                endereco.setPessoa(pessoa);
-
-            } else {
-                
-                endereco.setSequencia(resultaEndereco.getSequencia() + 1);
-                endereco.setDataCadastro(new Date());
-                endereco.setPessoa(pessoa);
-            }
-
-            //  enderecoDAO.merge(endereco);
-            if (resultadoDocumento == null) {
-
-                documento.setDataCadastro(new Date());
-                documento.setSequencia(1);
-                documento.setPessoa(pessoa);
-
-            } else {
-
-                documento.setDataCadastro(new Date());
-                documento.setSequencia(resultadoDocumento.getSequencia() + 1);
-                documento.setPessoa(pessoa);
-            }
-
-            documentoDAO.merge(documento);
-            
             ContatoDAO contatoDAO = new ContatoDAO();
             Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
 
-            if (resultadoContato == null) {
+            if (cliente.getCodigo() == null) {
 
-                contato.setDataCadastro(new Date());
-                contato.setSequencia(1L);
-                contato.setPessoa(pessoa);
+                if (resultadoPessoa == null) {
 
+                    pessoa.setDataCadastro(new Date());
+                    pessoa.setSequencia(1L);
+                    pessoa.setPessoaFisica(pessoaFisica);
+
+                    System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
+
+                } else {
+
+                    pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
+                    pessoa.setDataCadastro(new Date());
+                    pessoa.setPessoaFisica(pessoaFisica);
+
+                }
+
+                if (resultadoPFisica == null) {
+
+                    pessoaFisica.setDataCadastro(new Date());
+                    pessoaFisica.setSequencia(1);
+
+                } else {
+                    pessoaFisica.setDataCadastro(new Date());
+                    pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
+                }
+                // pessoaDAO.merge(pessoa);
+
+                if (resultaEndereco == null) {
+
+                    endereco.setSequencia(1L);
+                    endereco.setDataCadastro(new Date());
+                    endereco.setPessoa(pessoa);
+
+                } else {
+
+                    endereco.setSequencia(resultaEndereco.getSequencia() + 1);
+                    endereco.setDataCadastro(new Date());
+                    endereco.setPessoa(pessoa);
+                }
+
+                enderecoDAO.merge(endereco);
+                if (resultadoDocumento == null) {
+
+                    documento.setDataCadastro(new Date());
+                    documento.setSequencia(1);
+                    documento.setPessoa(pessoa);
+
+                } else {
+
+                    documento.setDataCadastro(new Date());
+                    documento.setSequencia(resultadoDocumento.getSequencia() + 1);
+                    documento.setPessoa(pessoa);
+                }
+
+                documentoDAO.merge(documento);
+
+                if (resultadoContato == null) {
+
+                    contato.setDataCadastro(new Date());
+                    contato.setSequencia(1L);
+                    contato.setPessoa(pessoa);
+
+                } else {
+
+                    contato.setDataCadastro(new Date());
+                    contato.setSequencia(resultadoContato.getSequencia() + 1);
+                    contato.setPessoa(pessoa);
+                }
+
+                contatoDAO.merge(contato);
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
+
+                if (resultadoCliente == null) {
+                    cliente.setDataCadastro(new Date());
+                    cliente.setPessoa(pessoa);
+                    cliente.setSequencia(1);
+                } else {
+                    cliente.setDataCadastro(new Date());
+                    cliente.setPessoa(pessoa);
+                    cliente.setSequencia(resultadoCliente.getSequencia() + 1);
+                }
             } else {
-
-                contato.setDataCadastro(new Date());
-                contato.setSequencia(resultadoContato.getSequencia() + 1);
-                contato.setPessoa(pessoa);
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.merge(cliente);
             }
 
-            contatoDAO.merge(contato);
-            
-            ClienteDAO clienteDAO = new ClienteDAO();
-            Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
-
-            if (resultadoCliente == null) {
-                cliente.setDataCadastro(new Date());
-                cliente.setPessoa(pessoa);
-                cliente.setSequencia(1);
-            } else {
-                cliente.setDataCadastro(new Date());
-                cliente.setPessoa(pessoa);
-                cliente.setSequencia(resultadoCliente.getSequencia() + 1);
-            }
-            }else{
             ClienteDAO clienteDAO = new ClienteDAO();
             clienteDAO.merge(cliente);
-            }
             novo();
             listar();
 
@@ -388,10 +393,10 @@ public class ClienteBean {
 
             EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
             estadoCivils = estadoCivilDAO.listar();
-            
+
             ClienteDAO clienteDAO = new ClienteDAO();
             clientes = clienteDAO.listar();
-            
+
             DocumentoDAO documentoDAO = new DocumentoDAO();
             documentos = documentoDAO.listar();
 

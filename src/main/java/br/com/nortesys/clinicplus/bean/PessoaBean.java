@@ -1,11 +1,13 @@
 package br.com.nortesys.clinicplus.bean;
 
+import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.service.PessoaFisicaService;
 import br.com.nortesys.clinicplus.service.PessoaService;
 import com.google.gson.Gson;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -69,9 +71,26 @@ public class PessoaBean {
     public void salvar() {
 
         try {
+            
+            PessoaDAO pessoaDAO = new PessoaDAO();
+            Pessoa resultado = (Pessoa) pessoaDAO.listarSequencia();
+              
+            if (resultado == null) {
 
+                    pessoa.setDataCadastro(new Date());
+                    pessoa.setSequencia(1L);
+                    
+
+                } else {
+
+                    pessoa.setDataCadastro(new Date());
+                    pessoa.setSequencia(resultado.getSequencia() + 1);
+                    
+                }
+            
+            
             PessoaService pessoaService = new PessoaService();
-
+            
             novo();
             listar();
 
@@ -132,5 +151,6 @@ public class PessoaBean {
     public void editar(ActionEvent evento) {
         pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
     }
-
+    
+    
 }

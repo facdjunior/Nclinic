@@ -2,6 +2,7 @@ package br.com.nortesys.clinicplus.dao;
 
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
+import java.util.Date;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -26,7 +27,12 @@ public class PessoaFisicaDAO extends GenericDAO<PessoaFisica> {
             PessoaFisica pessoaFisica = (PessoaFisica) consulta.uniqueResult();
 
             if (consulta == null) {
+                pessoaFisica.setDataCadastro(new Date());
                 pessoaFisica.setSequencia(1);
+            } else {
+                pessoaFisica.setDataCadastro(new Date());
+                pessoaFisica.setSequencia(pessoaFisica.getSequencia() + 1);
+                
             }
             return pessoaFisica;
 

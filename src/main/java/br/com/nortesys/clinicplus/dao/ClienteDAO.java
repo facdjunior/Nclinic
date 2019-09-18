@@ -1,12 +1,15 @@
 package br.com.nortesys.clinicplus.dao;
 
 import br.com.nortesys.clinicplus.domain.Cliente;
+import br.com.nortesys.clinicplus.domain.Pessoa;
 
 import br.com.nortesys.clinicplus.util.HibernateUtil;
+import java.util.Date;
 import org.hibernate.Criteria;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.omnifaces.util.Messages;
 
 
 /**
@@ -39,5 +42,37 @@ public class ClienteDAO extends GenericDAO<Cliente> {
             sessao.close();
         }
     }
+    
+    public void dependencia(){
+        
+        try {
+            
+            PessoaDAO pessoaDAO = new PessoaDAO();
+            Pessoa resultado = (Pessoa) pessoaDAO.listarSequencia();
+            Pessoa pessoa = new Pessoa();
+              
+            if (resultado == null) {
+
+                    pessoa.setDataCadastro(new Date());
+                    pessoa.setSequencia(1L);
+                    
+
+                } else {
+
+                    pessoa.setDataCadastro(new Date());
+                    pessoa.setSequencia(resultado.getSequencia() + 1);
+                    
+                }
+           
+            //Messages.addGlobalInfo("Registro gravado com sucesso");
+
+        } catch (RuntimeException erro) {
+
+            Messages.addGlobalError("Erro ao tentar gravar Registro");
+            erro.printStackTrace();
+        }
+        
+    }
+    
 
 }

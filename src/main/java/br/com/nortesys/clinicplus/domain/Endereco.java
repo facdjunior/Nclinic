@@ -30,7 +30,7 @@ public class Endereco extends GenericDomain {
     @Column(nullable = false)
     private Date DataCadastro;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(nullable = false)
     private Pessoa pessoa;
 

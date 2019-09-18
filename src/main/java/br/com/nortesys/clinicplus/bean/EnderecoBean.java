@@ -1,4 +1,3 @@
-
 package br.com.nortesys.clinicplus.bean;
 
 import br.com.nortesys.clinicplus.domain.Endereco;
@@ -7,10 +6,9 @@ import com.google.gson.Gson;
 import com.sun.jersey.api.client.WebResource;
 import java.util.ArrayList;
 
-
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -31,11 +29,11 @@ import org.omnifaces.util.Messages;
 @ManagedBean
 @ViewScoped
 public class EnderecoBean {
-    
+
     private List<Endereco> listagem = new ArrayList<Endereco>();
     private Endereco endereco;
     private String cep;
-    
+
     private ServicoEndereco servico = new ServicoEndereco();
 
     public List<Endereco> getListagem() {
@@ -61,8 +59,8 @@ public class EnderecoBean {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    
-     public void novo() {
+
+    public void novo() {
         endereco = new Endereco();
     }
 
@@ -96,12 +94,12 @@ public class EnderecoBean {
             endereco = (Endereco) evento.getComponent().getAttributes().get("enderecoSelecionado");
 
             Client cliente = ClientBuilder.newClient();
-            WebTarget caminho = 
-                    cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/endereco/");
-            
+            WebTarget caminho
+                    = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/endereco/");
+
             caminho.path("{codigo}").resolveTemplate("codigo", endereco.getCodigo()).request().delete();
             String json = caminho.request().get(String.class);
-            
+
             Gson gson = new Gson();
             Endereco[] vetor = gson.fromJson(json, Endereco[].class);
 
@@ -115,16 +113,15 @@ public class EnderecoBean {
     }
 
     public void editar(ActionEvent evento) {
-        
+
         endereco = (Endereco) evento.getComponent().getAttributes().get("enderecoSelecionado");
     }
-    
+
     public Endereco carregarEndereco() {
         endereco = new Endereco();
-        
-        
+
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
-        WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep()+ "/json/");
+        WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep() + "/json/");
         System.out.println("CHAMOU O URI....");
         this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
         String JSON = wr.get(String.class);

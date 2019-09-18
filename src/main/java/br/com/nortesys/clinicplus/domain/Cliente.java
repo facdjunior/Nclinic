@@ -30,9 +30,9 @@ public class Cliente extends GenericDomain {
     @Column(nullable = false)
     private Date DataCadastro;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-    private Pessoa pessoa;
+    private Pessoa pessoa = new Pessoa();
     
     public Integer getSequencia() {
         return Sequencia;

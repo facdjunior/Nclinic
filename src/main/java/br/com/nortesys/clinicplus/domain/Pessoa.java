@@ -1,15 +1,21 @@
 package br.com.nortesys.clinicplus.domain;
 
+import com.google.gson.annotations.Expose;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  *
@@ -31,38 +37,19 @@ public class Pessoa extends GenericDomain {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-    private PessoaFisica pessoaFisica;
+    private PessoaFisica pessoaFisica = new PessoaFisica();
 
     @Column(length = 120)
     private String imagem;
-
-    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private Endereco endereco;
-
-    @OneToOne(mappedBy = "pessoa")
-    private Documento documento;
-
-    @OneToOne(mappedBy = "pessoa")
-    private Contato contato;
-
-    @OneToOne(mappedBy = "pessoa")
-    private Cliente cliente;
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Contato contato = new Contato();
+    
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Endereco endereco = new Endereco();
+    
+    @OneToOne(mappedBy = "pessoa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Documento documento = new Documento();
 
     public Contato getContato() {
         return contato;
@@ -72,6 +59,7 @@ public class Pessoa extends GenericDomain {
         this.contato = contato;
     }
 
+    
     public Endereco getEndereco() {
         return endereco;
     }
@@ -80,6 +68,15 @@ public class Pessoa extends GenericDomain {
         this.endereco = endereco;
     }
 
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
+    
+    
     public String getNome() {
         return Nome;
     }
@@ -118,5 +115,8 @@ public class Pessoa extends GenericDomain {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public Pessoa() {
     }
 }

@@ -240,13 +240,6 @@ public class ClienteBean {
 
         cliente = new Cliente();
 
-        pessoa = new Pessoa();
-        pessoaFisica = new PessoaFisica();
-        contato = new Contato();
-        documento = new Documento();
-
-        profissao = new Profissao();
-
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaoDAO.listar("Descricao");
 
@@ -261,16 +254,37 @@ public class ClienteBean {
 
     }
 
+    public void dados() {
+        try {
+            PessoaDAO pessoaDAO = new PessoaDAO();
+            Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
+            pessoa = new Pessoa();
+            if (resultadoPessoa == null) {
+
+                pessoa.setDataCadastro(new Date());
+                pessoa.setSequencia(1L);
+                pessoa.setPessoaFisica(pessoaFisica);
+
+                System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
+
+            } else {
+
+                pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
+                pessoa.setDataCadastro(new Date());
+                pessoa.setPessoaFisica(pessoaFisica);
+
+            }
+
+        } catch (Exception e) {
+        }
+    }
+
     public void salvar() {
         try {
 
-            PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
-            PessoaFisica resultadoPFisica = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
+           
 
-            PessoaDAO pessoaDAO = new PessoaDAO();
-            Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
             //resultadoPessoa.getCodigo();
-
             EnderecoDAO enderecoDAO = new EnderecoDAO();
             Endereco resultaEndereco = (Endereco) enderecoDAO.listarSequencia();
 
@@ -279,35 +293,17 @@ public class ClienteBean {
 
             ContatoDAO contatoDAO = new ContatoDAO();
             Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
+            
+            PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+            PessoaFisica resultado = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
 
             if (cliente.getCodigo() == null) {
-
-                if (resultadoPessoa == null) {
-
-                    pessoa.setDataCadastro(new Date());
-                    pessoa.setSequencia(1L);
-                    pessoa.setPessoaFisica(pessoaFisica);
-
-                    System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
-
-                } else {
-
-                    pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
-                    pessoa.setDataCadastro(new Date());
-                    pessoa.setPessoaFisica(pessoaFisica);
-
-                }
-
-                if (resultadoPFisica == null) {
-
-                    pessoaFisica.setDataCadastro(new Date());
-                    pessoaFisica.setSequencia(1);
-
-                } else {
-                    pessoaFisica.setDataCadastro(new Date());
-                    pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
-                }
-                // pessoaDAO.merge(pessoa);
+                resultado.setDataCadastro(new Date());
+                resultado.getDataCadastro();
+                resultado.getSequencia();
+                /*
+                pessoaFisica.setDataCadastro(new Date());
+                pessoaFisica.setSequencia(1);
 
                 if (resultaEndereco == null) {
 
@@ -322,7 +318,7 @@ public class ClienteBean {
                     endereco.setPessoa(pessoa);
                 }
 
-                enderecoDAO.merge(endereco);
+                //enderecoDAO.salvar(endereco);
                 if (resultadoDocumento == null) {
 
                     documento.setDataCadastro(new Date());
@@ -336,8 +332,7 @@ public class ClienteBean {
                     documento.setPessoa(pessoa);
                 }
 
-                documentoDAO.merge(documento);
-
+                //documentoDAO.salvar(documento);
                 if (resultadoContato == null) {
 
                     contato.setDataCadastro(new Date());
@@ -351,7 +346,7 @@ public class ClienteBean {
                     contato.setPessoa(pessoa);
                 }
 
-                contatoDAO.merge(contato);
+                //contatoDAO.salvar(contato);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
 
@@ -363,14 +358,20 @@ public class ClienteBean {
                     cliente.setDataCadastro(new Date());
                     cliente.setPessoa(pessoa);
                     cliente.setSequencia(resultadoCliente.getSequencia() + 1);
-                }
+
+                }*/
+                
+                
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.dependencia();
+                
+                clienteDAO.merge(cliente);
             } else {
+
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.merge(cliente);
             }
 
-            ClienteDAO clienteDAO = new ClienteDAO();
-            clienteDAO.merge(cliente);
             novo();
             listar();
 
@@ -428,8 +429,6 @@ public class ClienteBean {
     public Endereco carregarEndereco() {
 
         endereco = new Endereco();
-        EnderecoDAO enderecoDAO = new EnderecoDAO();
-        String resultado = this.getCep();
 
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
         WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep() + "/json/");

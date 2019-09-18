@@ -5,6 +5,7 @@ import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.service.PessoaFisicaService;
 import com.google.gson.Gson;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -68,7 +69,8 @@ public class PessoaFisicaBean {
     public void salvar() {
 
         try {
-
+            
+            
             PessoaFisicaService pessoaFisicaService = new PessoaFisicaService();
 
             novo();
@@ -132,4 +134,5 @@ public class PessoaFisicaBean {
         pessoaFisica = (PessoaFisica) evento.getComponent().getAttributes().get("pessoaFisicaSelecionado");
     }
 
+    
 }

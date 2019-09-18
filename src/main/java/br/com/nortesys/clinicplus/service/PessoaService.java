@@ -27,7 +27,7 @@ public class PessoaService {
         PessoaDAO pessoaDAO = new PessoaDAO();
         List<Pessoa> pessoas = pessoaDAO.listar("Nome");
 
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        Gson gson = new Gson();
         String json = gson.toJson(pessoas);
 
         return json;

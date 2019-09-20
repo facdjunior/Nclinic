@@ -1,7 +1,7 @@
 package br.com.nortesys.clinicplus.domain;
 
+import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
@@ -60,16 +60,8 @@ public class Cliente extends GenericDomain {
     public Cliente() {
         this.pessoa = new Pessoa();
 
-        if (pessoa.getSequencia() == null) {
-            pessoa.setDataCadastro(new Date());
-            pessoa.setSequencia(1L);
-        }
-        pessoa.setDataCadastro(new Date());
-        pessoa.setSequencia(pessoa.getSequencia() + 1L);
-        
         this.setPessoa(pessoa);
-        
-        
+
     }
 
 }

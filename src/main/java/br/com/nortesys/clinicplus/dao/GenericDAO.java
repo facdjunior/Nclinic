@@ -4,18 +4,16 @@ package br.com.nortesys.clinicplus.dao;
  *
  * @author Francisco Alves
  */
-import br.com.nortesys.clinicplus.domain.Cliente;
+
 import br.com.nortesys.clinicplus.util.HibernateUtil;
-
 import java.lang.reflect.ParameterizedType;
-import java.util.List;
 
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Order;
 
 public class GenericDAO<Entidade> {
@@ -34,6 +32,7 @@ public class GenericDAO<Entidade> {
 
         try {
             transacao = sessao.beginTransaction();
+            
             sessao.save(entidade);
             transacao.commit();
         } catch (RuntimeException erro) {

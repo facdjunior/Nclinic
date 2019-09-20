@@ -1,21 +1,17 @@
 package br.com.nortesys.clinicplus.domain;
 
-import com.google.gson.annotations.Expose;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.codehaus.jackson.annotate.JsonProperty;
+import javax.persistence.Transient;
 
 /**
  *
@@ -28,7 +24,7 @@ public class Pessoa extends GenericDomain {
     @Column(length = 120, nullable = false)
     private String Nome;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = true, columnDefinition = "serial")
     private Long Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -96,7 +92,7 @@ public class Pessoa extends GenericDomain {
     }
 
     public void setDataCadastro(Date DataCadastro) {
-        this.DataCadastro = DataCadastro;
+        this.DataCadastro = new Date();
     }
 
     public PessoaFisica getPessoaFisica() {
@@ -121,42 +117,23 @@ public class Pessoa extends GenericDomain {
         this.contato = new Contato();
         this.endereco = new Endereco();
         this.pessoaFisica = new PessoaFisica();
-        
-     //   Pessoa pessoa = new Pessoa();
 
         if (pessoaFisica.getSequencia() == null) {
+            
             pessoaFisica.setDataCadastro(new Date());
             pessoaFisica.setSequencia(1);
-            
         }
-        pessoaFisica.setDataCadastro(new Date());
-        pessoaFisica.setSequencia(pessoaFisica.getSequencia() + 1);
-
-        
 
         if (documento.getSequencia() == null) {
 
             documento.setDataCadastro(new Date());
             documento.setSequencia(1);
-            
-
-        } else {
-
-            documento.setDataCadastro(new Date());
-            documento.setSequencia(documento.getSequencia() + 1);
-            //documento.setPessoa(pessoa);
         }
+
         if (endereco.getSequencia() == null) {
 
             endereco.setSequencia(1L);
             endereco.setDataCadastro(new Date());
-            //endereco.setPessoa(pessoa);
-
-        } else {
-
-            endereco.setSequencia(endereco.getSequencia() + 1);
-            endereco.setDataCadastro(new Date());
-           // endereco.setPessoa(pessoa);
         }
 
     }

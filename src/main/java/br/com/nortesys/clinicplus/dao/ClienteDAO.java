@@ -2,6 +2,7 @@ package br.com.nortesys.clinicplus.dao;
 
 import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Pessoa;
+import br.com.nortesys.clinicplus.domain.PessoaFisica;
 
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.omnifaces.util.Messages;
 
@@ -42,23 +44,24 @@ public class ClienteDAO extends GenericDAO<Cliente> {
             sessao.close();
         }
     }
-public List<Cliente> listaCliente(){
-    Session sessao = HibernateUtil.getSessionFactory().openSession();
-    
-    try {
-        Criteria consulta = sessao.createCriteria(Cliente.class);
-        consulta.createAlias("pessoa", "p");
-        consulta.createAlias("p.contato", "c");
-        consulta.createAlias("p.endereco", "e");
-        consulta.createAlias("p.documento", "d");
-        
-        List<Cliente> resultado = consulta.list();
-        return resultado;
-    } catch (RuntimeException erro) {
-        
-        throw erro;
-    }finally{
-        sessao.close();
+
+    public List<Cliente> listaCliente() {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            Criteria consulta = sessao.createCriteria(Cliente.class);
+            consulta.createAlias("pessoa", "p");
+            consulta.createAlias("p.contato", "c");
+            consulta.createAlias("p.endereco", "e");
+            consulta.createAlias("p.documento", "d");
+
+            List<Cliente> resultado = consulta.list();
+            return resultado;
+        } catch (RuntimeException erro) {
+
+            throw erro;
+        } finally {
+            sessao.close();
+        }
     }
-}
 }

@@ -70,6 +70,22 @@ public class PessoaFisicaBean {
 
         try {
             
+            PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+            PessoaFisica resultado = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
+              
+            if (resultado == null) {
+
+                    pessoaFisica.setDataCadastro(new Date());
+                    pessoaFisica.setSequencia(1);
+                    
+
+                } else {
+
+                    pessoaFisica.setDataCadastro(new Date());
+                    pessoaFisica.setSequencia(resultado.getSequencia() + 1);
+                    
+                }
+            
             
             PessoaFisicaService pessoaFisicaService = new PessoaFisicaService();
 

@@ -18,13 +18,11 @@ import br.com.nortesys.clinicplus.domain.Pessoa;
 
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.domain.Profissao;
-import br.com.nortesys.clinicplus.domain.TipoDocumento;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.WebResource;
-import java.util.ArrayList;
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -35,7 +33,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import javax.faces.event.ActionEvent;
-import javax.persistence.OneToOne;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
@@ -49,7 +46,7 @@ import org.omnifaces.util.Messages;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class ClienteBean {
+public class ClienteBean implements Serializable{
 
     private Cliente cliente;
     private List<Cliente> clientes;
@@ -221,6 +218,7 @@ public class ClienteBean {
 
             ClienteDAO clienteDAO = new ClienteDAO();
             clientes = clienteDAO.listar();
+
             /*     
             Client ccliente = ClientBuilder.newClient();
             WebTarget caminho = ccliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/cliente");
@@ -239,6 +237,9 @@ public class ClienteBean {
     public void novo() {
 
         cliente = new Cliente();
+        //   pessoa = new Pessoa();
+
+        //dadosCliente();
 
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaoDAO.listar("Descricao");
@@ -247,78 +248,51 @@ public class ClienteBean {
         estadoCivilDAO.listar("Descricao");
 
         DocumentoDAO documentoDAO = new DocumentoDAO();
-        documentoDAO.listar();
+        documentoDAO.listarSequencia();
 
         estadoCivil();
         listar();
 
     }
 
-    public void dados() {
+    public void dadosCliente() {
         try {
             PessoaDAO pessoaDAO = new PessoaDAO();
-            Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
-            pessoa = new Pessoa();
-            if (resultadoPessoa == null) {
+            Pessoa resultadoPesssoa = (Pessoa) pessoaDAO.listarSequencia();
 
-                pessoa.setDataCadastro(new Date());
+            if (resultadoPesssoa == null) {
                 pessoa.setSequencia(1L);
-                pessoa.setPessoaFisica(pessoaFisica);
-
-                System.out.println("Registro Novo sem sequencia!" + pessoa.getCodigo());
-
-            } else {
-
-                pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
                 pessoa.setDataCadastro(new Date());
-                pessoa.setPessoaFisica(pessoaFisica);
-
+            } else {
+                pessoa.setSequencia(resultadoPesssoa.getSequencia() + 1L);
+                pessoa.setDataCadastro(new Date());
             }
 
-        } catch (Exception e) {
+        } catch (RuntimeException erro) {
+
+            Messages.addGlobalError("Erro ao tentar gravar Registro");
+            erro.printStackTrace();
         }
     }
 
     public void salvar() {
         try {
 
-           
-
-            //resultadoPessoa.getCodigo();
-            EnderecoDAO enderecoDAO = new EnderecoDAO();
-            Endereco resultaEndereco = (Endereco) enderecoDAO.listarSequencia();
-
-            DocumentoDAO documentoDAO = new DocumentoDAO();
-            Documento resultadoDocumento = (Documento) documentoDAO.listarSequencia();
-
-            ContatoDAO contatoDAO = new ContatoDAO();
-            Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
-            
-            PessoaDAO pessoaDAO = new PessoaDAO();
-            Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
-            
-            PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
-            PessoaFisica resultado = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
-
+            // pessoa.setSequencia(10L);
             if (cliente.getCodigo() == null) {
-                
-                //contatoDAO.salvar(contato);
+
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
 
                 if (resultadoCliente == null) {
                     cliente.setDataCadastro(new Date());
-                    //cliente.setPessoa(pessoa);
                     cliente.setSequencia(1);
                 } else {
-                    cliente.setDataCadastro(new Date());
-                    //cliente.setPessoa(pessoa);
-                    cliente.setSequencia(resultadoCliente.getSequencia() + 1);
 
+                    cliente.setDataCadastro(new Date());
+                    cliente.setSequencia(resultadoCliente.getSequencia() + 1);
                 }
-               
-              //  clienteDAO.dependencia();
-                
+               // dadosCliente();
                 clienteDAO.merge(cliente);
             } else {
 

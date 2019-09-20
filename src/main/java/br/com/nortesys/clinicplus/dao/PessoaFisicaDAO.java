@@ -32,7 +32,7 @@ public class PessoaFisicaDAO extends GenericDAO<PessoaFisica> {
             } else {
                 pessoaFisica.setDataCadastro(new Date());
                 pessoaFisica.setSequencia(pessoaFisica.getSequencia() + 1);
-                
+
             }
             return pessoaFisica;
 
@@ -41,6 +41,5 @@ public class PessoaFisicaDAO extends GenericDAO<PessoaFisica> {
         } finally {
             sessao.close();
         }
-
     }
 }

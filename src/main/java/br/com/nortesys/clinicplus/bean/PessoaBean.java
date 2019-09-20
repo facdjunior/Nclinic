@@ -49,7 +49,8 @@ public class PessoaBean {
     @PostConstruct
     public void listar() {
         try {
-
+            
+            
             Client cliente = ClientBuilder.newClient();
             WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/pessoa");
             String json = caminho.request().get(String.class);
@@ -75,18 +76,7 @@ public class PessoaBean {
             PessoaDAO pessoaDAO = new PessoaDAO();
             Pessoa resultado = (Pessoa) pessoaDAO.listarSequencia();
               
-            if (resultado == null) {
-
-                    pessoa.setDataCadastro(new Date());
-                    pessoa.setSequencia(1L);
-                    
-
-                } else {
-
-                    pessoa.setDataCadastro(new Date());
-                    pessoa.setSequencia(resultado.getSequencia() + 1);
-                    
-                }
+            
             
             
             PessoaService pessoaService = new PessoaService();

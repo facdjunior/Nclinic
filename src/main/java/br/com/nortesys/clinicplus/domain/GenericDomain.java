@@ -1,11 +1,14 @@
 package br.com.nortesys.clinicplus.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -18,7 +21,8 @@ public class GenericDomain implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
-
+    
+    
     public Long getCodigo() {
         return codigo;
     }
@@ -26,6 +30,7 @@ public class GenericDomain implements Serializable {
     public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
+    
 
     @Override
     public int hashCode() {
@@ -51,7 +56,4 @@ public class GenericDomain implements Serializable {
         }
         return true;
     }
-
-    
-
 }

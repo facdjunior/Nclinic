@@ -37,19 +37,19 @@ public class Pessoa extends GenericDomain {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-    private PessoaFisica pessoaFisica = new PessoaFisica();
+    private PessoaFisica pessoaFisica;
 
     @Column(length = 120)
     private String imagem;
-    
+
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Contato contato = new Contato();
-    
+    private Contato contato;
+
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Endereco endereco = new Endereco();
-    
-    @OneToOne(mappedBy = "pessoa",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Documento documento = new Documento();
+    private Endereco endereco;
+
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Documento documento;
 
     public Contato getContato() {
         return contato;
@@ -59,7 +59,6 @@ public class Pessoa extends GenericDomain {
         this.contato = contato;
     }
 
-    
     public Endereco getEndereco() {
         return endereco;
     }
@@ -75,8 +74,7 @@ public class Pessoa extends GenericDomain {
     public void setDocumento(Documento documento) {
         this.documento = documento;
     }
-    
-    
+
     public String getNome() {
         return Nome;
     }
@@ -118,5 +116,48 @@ public class Pessoa extends GenericDomain {
     }
 
     public Pessoa() {
+
+        this.documento = new Documento();
+        this.contato = new Contato();
+        this.endereco = new Endereco();
+        this.pessoaFisica = new PessoaFisica();
+        
+     //   Pessoa pessoa = new Pessoa();
+
+        if (pessoaFisica.getSequencia() == null) {
+            pessoaFisica.setDataCadastro(new Date());
+            pessoaFisica.setSequencia(1);
+            
+        }
+        pessoaFisica.setDataCadastro(new Date());
+        pessoaFisica.setSequencia(pessoaFisica.getSequencia() + 1);
+
+        
+
+        if (documento.getSequencia() == null) {
+
+            documento.setDataCadastro(new Date());
+            documento.setSequencia(1);
+            
+
+        } else {
+
+            documento.setDataCadastro(new Date());
+            documento.setSequencia(documento.getSequencia() + 1);
+            //documento.setPessoa(pessoa);
+        }
+        if (endereco.getSequencia() == null) {
+
+            endereco.setSequencia(1L);
+            endereco.setDataCadastro(new Date());
+            //endereco.setPessoa(pessoa);
+
+        } else {
+
+            endereco.setSequencia(endereco.getSequencia() + 1);
+            endereco.setDataCadastro(new Date());
+           // endereco.setPessoa(pessoa);
+        }
+
     }
 }

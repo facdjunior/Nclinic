@@ -294,76 +294,30 @@ public class ClienteBean {
             ContatoDAO contatoDAO = new ContatoDAO();
             Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
             
+            PessoaDAO pessoaDAO = new PessoaDAO();
+            Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
+            
             PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
             PessoaFisica resultado = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
 
             if (cliente.getCodigo() == null) {
-                resultado.setDataCadastro(new Date());
-                resultado.getDataCadastro();
-                resultado.getSequencia();
-                /*
-                pessoaFisica.setDataCadastro(new Date());
-                pessoaFisica.setSequencia(1);
-
-                if (resultaEndereco == null) {
-
-                    endereco.setSequencia(1L);
-                    endereco.setDataCadastro(new Date());
-                    endereco.setPessoa(pessoa);
-
-                } else {
-
-                    endereco.setSequencia(resultaEndereco.getSequencia() + 1);
-                    endereco.setDataCadastro(new Date());
-                    endereco.setPessoa(pessoa);
-                }
-
-                //enderecoDAO.salvar(endereco);
-                if (resultadoDocumento == null) {
-
-                    documento.setDataCadastro(new Date());
-                    documento.setSequencia(1);
-                    documento.setPessoa(pessoa);
-
-                } else {
-
-                    documento.setDataCadastro(new Date());
-                    documento.setSequencia(resultadoDocumento.getSequencia() + 1);
-                    documento.setPessoa(pessoa);
-                }
-
-                //documentoDAO.salvar(documento);
-                if (resultadoContato == null) {
-
-                    contato.setDataCadastro(new Date());
-                    contato.setSequencia(1L);
-                    contato.setPessoa(pessoa);
-
-                } else {
-
-                    contato.setDataCadastro(new Date());
-                    contato.setSequencia(resultadoContato.getSequencia() + 1);
-                    contato.setPessoa(pessoa);
-                }
-
+                
                 //contatoDAO.salvar(contato);
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
 
                 if (resultadoCliente == null) {
                     cliente.setDataCadastro(new Date());
-                    cliente.setPessoa(pessoa);
+                    //cliente.setPessoa(pessoa);
                     cliente.setSequencia(1);
                 } else {
                     cliente.setDataCadastro(new Date());
-                    cliente.setPessoa(pessoa);
+                    //cliente.setPessoa(pessoa);
                     cliente.setSequencia(resultadoCliente.getSequencia() + 1);
 
-                }*/
-                
-                
-                ClienteDAO clienteDAO = new ClienteDAO();
-                clienteDAO.dependencia();
+                }
+               
+              //  clienteDAO.dependencia();
                 
                 clienteDAO.merge(cliente);
             } else {

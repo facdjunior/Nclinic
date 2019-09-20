@@ -5,12 +5,12 @@ import br.com.nortesys.clinicplus.domain.Pessoa;
 
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 import java.util.Date;
+import java.util.List;
 import org.hibernate.Criteria;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.omnifaces.util.Messages;
-
 
 /**
  *
@@ -42,37 +42,23 @@ public class ClienteDAO extends GenericDAO<Cliente> {
             sessao.close();
         }
     }
+public List<Cliente> listaCliente(){
+    Session sessao = HibernateUtil.getSessionFactory().openSession();
     
-    public void dependencia(){
+    try {
+        Criteria consulta = sessao.createCriteria(Cliente.class);
+        consulta.createAlias("pessoa", "p");
+        consulta.createAlias("p.contato", "c");
+        consulta.createAlias("p.endereco", "e");
+        consulta.createAlias("p.documento", "d");
         
-        try {
-            
-            PessoaDAO pessoaDAO = new PessoaDAO();
-            Pessoa resultado = (Pessoa) pessoaDAO.listarSequencia();
-            Pessoa pessoa = new Pessoa();
-              
-            if (resultado == null) {
-
-                    pessoa.setDataCadastro(new Date());
-                    pessoa.setSequencia(1L);
-                    
-
-                } else {
-
-                    pessoa.setDataCadastro(new Date());
-                    pessoa.setSequencia(resultado.getSequencia() + 1);
-                    
-                }
-           
-            //Messages.addGlobalInfo("Registro gravado com sucesso");
-
-        } catch (RuntimeException erro) {
-
-            Messages.addGlobalError("Erro ao tentar gravar Registro");
-            erro.printStackTrace();
-        }
+        List<Cliente> resultado = consulta.list();
+        return resultado;
+    } catch (RuntimeException erro) {
         
+        throw erro;
+    }finally{
+        sessao.close();
     }
-    
-
+}
 }

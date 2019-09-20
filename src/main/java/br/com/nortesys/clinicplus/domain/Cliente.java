@@ -7,7 +7,6 @@ import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import javax.persistence.SequenceGenerator;
@@ -33,7 +32,7 @@ public class Cliente extends GenericDomain {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Pessoa pessoa = new Pessoa();
-    
+
     public Integer getSequencia() {
         return Sequencia;
     }
@@ -56,6 +55,21 @@ public class Cliente extends GenericDomain {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public Cliente() {
+        this.pessoa = new Pessoa();
+
+        if (pessoa.getSequencia() == null) {
+            pessoa.setDataCadastro(new Date());
+            pessoa.setSequencia(1L);
+        }
+        pessoa.setDataCadastro(new Date());
+        pessoa.setSequencia(pessoa.getSequencia() + 1L);
+        
+        this.setPessoa(pessoa);
+        
+        
     }
 
 }

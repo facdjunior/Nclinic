@@ -1,21 +1,18 @@
 package br.com.nortesys.clinicplus.domain;
 
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-
 
 /**
  *
@@ -26,26 +23,33 @@ import javax.persistence.TemporalType;
 public class Contato extends GenericDomain {
 
     @Column(unique = false, nullable = false)
+    @Expose
     private Long Sequencia;
 
     @Column(length = 14)
+    @Expose
     private String Celular;
 
     @Column(length = 14)
+    @Expose
     private String Celular1;
 
     @Column(length = 13)
+    @Expose
     private String fone;
 
     @Column(length = 13)
+    @Expose
     private String fone2;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
+    @Expose
     private Date DataCadastro;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
+
     private Pessoa pessoa;
 
     public Pessoa getPessoa() {
@@ -55,7 +59,7 @@ public class Contato extends GenericDomain {
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
-    
+
     public Long getSequencia() {
         return Sequencia;
     }
@@ -104,49 +108,17 @@ public class Contato extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.Sequencia);
-        hash = 41 * hash + Objects.hashCode(this.Celular);
-        hash = 41 * hash + Objects.hashCode(this.Celular1);
-        hash = 41 * hash + Objects.hashCode(this.fone);
-        hash = 41 * hash + Objects.hashCode(this.fone2);
-        hash = 41 * hash + Objects.hashCode(this.DataCadastro);
-        return hash;
-    }
+    public Contato() {
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Contato other = (Contato) obj;
-        if (!Objects.equals(this.Celular, other.Celular)) {
-            return false;
-        }
-        if (!Objects.equals(this.Celular1, other.Celular1)) {
-            return false;
-        }
-        if (!Objects.equals(this.fone, other.fone)) {
-            return false;
-        }
-        if (!Objects.equals(this.fone2, other.fone2)) {
-            return false;
-        }
-        if (!Objects.equals(this.Sequencia, other.Sequencia)) {
-            return false;
-        }
-        if (!Objects.equals(this.DataCadastro, other.DataCadastro)) {
-            return false;
-        }
-        return true;
-    }
+        if (this.getSequencia() == null) {
+            this.setDataCadastro(new Date());
+            this.setPessoa(pessoa);
+            this.setSequencia(1L);
+        } else {
+            this.setDataCadastro(new Date());
+            this.setPessoa(pessoa);
+            this.setSequencia(this.getSequencia() + 1);
 
+        }
+    }
 }

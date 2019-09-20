@@ -22,16 +22,20 @@ import javax.persistence.TemporalType;
 public class Documento extends GenericDomain {
 
     @Column(unique = true, nullable = false)
+    @Expose
     private Integer Sequencia;
 
     @Column(length = 120, nullable = false)
+    @Expose
     private String descricao;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
+    @Expose
     private Date DataCadastro;
 
     @OneToOne
+    @JoinColumn(nullable = false)
     private Pessoa pessoa;
 
     public Pessoa getPessoa() {
@@ -65,4 +69,6 @@ public class Documento extends GenericDomain {
     public void setDataCadastro(Date DataCadastro) {
         this.DataCadastro = DataCadastro;
     }
+    
+
 }

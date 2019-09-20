@@ -22,12 +22,14 @@ import javax.persistence.TemporalType;
 public class Endereco extends GenericDomain {
 
     @Column(nullable = false)
+    @Expose
     private Long Sequencia;
-
+    @Expose
     private Boolean Ativo;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
+    @Expose
     private Date DataCadastro;
 
     @OneToOne
@@ -175,4 +177,6 @@ public class Endereco extends GenericDomain {
     public void setNumero(String numero) {
         this.numero = numero;
     }
+    
+
 }

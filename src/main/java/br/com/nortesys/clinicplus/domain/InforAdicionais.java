@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.domain;
 import com.google.gson.annotations.Expose;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -10,15 +11,17 @@ import javax.persistence.OneToOne;
  *
  * @author Francisco
  */
-public class InformacoesAdicionais extends GenericDomain {
+@SuppressWarnings("serial")
+@Entity
+public class InforAdicionais extends GenericDomain {
 
-    @Column(length = 2)
+    
     @Expose
     private Character Raça;
-    @Column(length = 2)
+    
     @Expose
     private Character TipoSanguineo;
-    @Column(length = 2)
+    
     @Expose
     private Character FatorRh;
 
@@ -31,8 +34,8 @@ public class InformacoesAdicionais extends GenericDomain {
     private String CodigoANS;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Expose
     @JoinColumn(nullable = false)
+    @Expose
     private Pessoa pessoa;
 
     public Pessoa getPessoa() {

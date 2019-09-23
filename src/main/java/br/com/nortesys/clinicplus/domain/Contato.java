@@ -107,8 +107,8 @@ public class Contato extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public Contato() {
+    /*public Contato() {
 
         this.setPessoa(pessoa);
-    }
+    }*/
 }

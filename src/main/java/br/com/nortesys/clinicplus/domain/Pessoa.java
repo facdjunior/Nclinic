@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -55,9 +56,6 @@ public class Pessoa extends GenericDomain {
     @Expose(serialize = true)
     private Documento documento;
     
-    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private InformacoesAdicionais informacoesAdicionais;
-
     public Contato getContato() {
         return contato;
     }
@@ -122,14 +120,8 @@ public class Pessoa extends GenericDomain {
         this.imagem = imagem;
     }
 
-    public InformacoesAdicionais getInformacoesAdicionais() {
-        return informacoesAdicionais;
-    }
-
-    public void setInformacoesAdicionais(InformacoesAdicionais informacoesAdicionais) {
-        this.informacoesAdicionais = informacoesAdicionais;
-    }
-    
+   
+    /*
     
 
     public Pessoa() {
@@ -138,7 +130,7 @@ public class Pessoa extends GenericDomain {
         this.contato = new Contato();
         this.endereco = new Endereco();
         this.pessoaFisica = new PessoaFisica();
-        this.informacoesAdicionais = new InformacoesAdicionais();
-
+   
+*/
     }
-}
+

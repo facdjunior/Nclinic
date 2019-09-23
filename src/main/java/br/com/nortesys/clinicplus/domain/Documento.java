@@ -122,8 +122,8 @@ public class Documento extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public Documento() {
+   /* public Documento() {
 
         this.setPessoa(pessoa);
-    }
+    }*/
 }

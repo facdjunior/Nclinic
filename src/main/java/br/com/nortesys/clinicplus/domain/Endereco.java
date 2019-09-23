@@ -34,6 +34,7 @@ public class Endereco extends GenericDomain {
 
     @OneToOne
     @JoinColumn(nullable = false)
+    @Expose(serialize = false)
     private Pessoa pessoa;
 
     @SerializedName("cep")
@@ -177,6 +178,5 @@ public class Endereco extends GenericDomain {
     public void setNumero(String numero) {
         this.numero = numero;
     }
-    
 
 }

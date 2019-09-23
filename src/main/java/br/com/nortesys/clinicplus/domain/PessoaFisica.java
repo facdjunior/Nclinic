@@ -1,11 +1,10 @@
 package br.com.nortesys.clinicplus.domain;
 
+import com.google.gson.annotations.Expose;
 import java.util.Date;
-
-import javax.persistence.Column;;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,6 +13,8 @@ import javax.persistence.TemporalType;
  *
  * @author Francisco Junior
  */
+
+
 @SuppressWarnings("Serial")
 @Entity
 public class PessoaFisica extends GenericDomain {
@@ -25,38 +26,49 @@ public class PessoaFisica extends GenericDomain {
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
+    @Expose(serialize = true)
     private Date DataNascimento;
 
     @Column(nullable = false)
+    @Expose(serialize = true)
     private Integer Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable =  false)
+    @Column(nullable = false)
+    @Expose(serialize = true)
     private Date DataCadastro;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @Expose(serialize = true)
     private EstadoCivil estadoCivil;
-    
+
     @Column(length = 1)
+    @Expose(serialize = true)
     private Character Sexo;
 
     @Column(length = 25)
+    @Expose(serialize = true)
     private String Naturalidade;
 
     @Column(length = 30)
+    @Expose(serialize = true)
     private String GrauEscolaridade;
-    
+
     @Column(nullable = true, length = 120)
+    @Expose(serialize = true)
     private String NomeMae;
-    
+
     @Column(length = 120)
+    @Expose(serialize = true)
     private String NomePai;
-    
+
     @Column(length = 120)
+    @Expose(serialize = true)
     private String Conjuge;
-    
+
     @ManyToOne
+    @Expose(serialize = true)
     private Profissao profissao;
 
     public Date getDataNascimento() {

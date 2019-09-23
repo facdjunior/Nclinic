@@ -1,5 +1,6 @@
 package br.com.nortesys.clinicplus.domain;
 
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
 
 /**
  *
@@ -22,30 +23,40 @@ import javax.persistence.Transient;
 public class Pessoa extends GenericDomain {
 
     @Column(length = 120, nullable = false)
+    @Expose
     private String Nome;
 
     @Column(unique = true, nullable = true, columnDefinition = "serial")
+    @Expose
     private Long Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JoinColumn(nullable = false)
+    @Expose
     private Date DataCadastro;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
+    @Expose(serialize = true)
     private PessoaFisica pessoaFisica;
 
     @Column(length = 120)
     private String imagem;
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Expose(serialize = true)
     private Contato contato;
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Expose(serialize = true)
     private Endereco endereco;
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Expose(serialize = true)
     private Documento documento;
+    
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private InformacoesAdicionais informacoesAdicionais;
 
     public Contato getContato() {
         return contato;
@@ -111,30 +122,23 @@ public class Pessoa extends GenericDomain {
         this.imagem = imagem;
     }
 
+    public InformacoesAdicionais getInformacoesAdicionais() {
+        return informacoesAdicionais;
+    }
+
+    public void setInformacoesAdicionais(InformacoesAdicionais informacoesAdicionais) {
+        this.informacoesAdicionais = informacoesAdicionais;
+    }
+    
+    
+
     public Pessoa() {
 
         this.documento = new Documento();
         this.contato = new Contato();
         this.endereco = new Endereco();
         this.pessoaFisica = new PessoaFisica();
-
-        if (pessoaFisica.getSequencia() == null) {
-            
-            pessoaFisica.setDataCadastro(new Date());
-            pessoaFisica.setSequencia(1);
-        }
-
-        if (documento.getSequencia() == null) {
-
-            documento.setDataCadastro(new Date());
-            documento.setSequencia(1);
-        }
-
-        if (endereco.getSequencia() == null) {
-
-            endereco.setSequencia(1L);
-            endereco.setDataCadastro(new Date());
-        }
+        this.informacoesAdicionais = new InformacoesAdicionais();
 
     }
 }

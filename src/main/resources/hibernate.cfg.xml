@@ -46,6 +46,7 @@
         <mapping class="br.com.nortesys.clinicplus.domain.Documento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Endereco"/>
         <mapping class="br.com.nortesys.clinicplus.domain.EstadoCivil"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.InformacoesAdicionais"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Pessoa"/>
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaFisica"/>
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaJuridica"/>

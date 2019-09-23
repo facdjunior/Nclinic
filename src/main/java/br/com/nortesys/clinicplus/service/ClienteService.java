@@ -18,15 +18,16 @@ import javax.ws.rs.PathParam;
  */
 @Path("cliente")
 public class ClienteService {
-    
+
     //http://localhost:8080/ClinicPlus/clinic/cliente 
     @GET
     public String listar() {
-        
+
         ClienteDAO clienteDAO = new ClienteDAO();
         List<Cliente> clientes = clienteDAO.listaCliente();
 
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+//Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(clientes);
 
         return json;
@@ -38,13 +39,14 @@ public class ClienteService {
     public String buscar(@PathParam("codigo") Long codigo) {
 
         ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.buscar(codigo);
+        Cliente cliente = clienteDAO.buscarCliente(codigo);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(cliente);
 
         return json;
     }
+
     //http://localhost:8080/ClinicPlus/clinic/cliente/
     @POST
     public String salvar(String json) {
@@ -54,10 +56,11 @@ public class ClienteService {
 
         ClienteDAO clienteDAO = new ClienteDAO();
         clienteDAO.merge(cliente);
-        
+
         String jsonSaida = gson.toJson(cliente);
         return jsonSaida;
     }
+
     //http://localhost:8080/ClinicPlus/clinc/cliente/
     @PUT
     public String editar(String json) {
@@ -67,24 +70,24 @@ public class ClienteService {
 
         ClienteDAO clienteDAO = new ClienteDAO();
         clienteDAO.editar(cliente);
-        
+
         String jsonSaida = gson.toJson(cliente);
         return jsonSaida;
     }
+
     //http://localhost:8080/ClinicPlus/clinic/cliente/{codigo}
     @DELETE
     @Path("{codigo}")
-    public String excluir(@PathParam("codigo")Long codigo){
-        
+    public String excluir(@PathParam("codigo") Long codigo) {
+
         ClienteDAO clienteDAO = new ClienteDAO();
-        
+
         Cliente cliente = clienteDAO.buscar(codigo);
         clienteDAO.excluir(cliente);
-        
+
         Gson gson = new Gson();
         String saida = gson.toJson(cliente);
         return saida;
     }
-    
-    
+
 }

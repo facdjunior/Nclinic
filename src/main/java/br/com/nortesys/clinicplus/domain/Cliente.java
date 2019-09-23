@@ -1,6 +1,7 @@
 package br.com.nortesys.clinicplus.domain;
 
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,14 +24,17 @@ public class Cliente extends GenericDomain {
 
     @Column(nullable = false)
     @SequenceGenerator(name = "Sequencia", initialValue = 1)
+    @Expose(serialize = true)
     private Integer Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
+    @Expose(serialize = true)
     private Date DataCadastro;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
+    @Expose(serialize = true)
     private Pessoa pessoa = new Pessoa();
 
     public Integer getSequencia() {
@@ -61,6 +65,9 @@ public class Cliente extends GenericDomain {
         this.pessoa = new Pessoa();
 
         this.setPessoa(pessoa);
+        this.pessoa.getContato().setPessoa(pessoa);
+        this.pessoa.getDocumento().setPessoa(pessoa);
+        this.pessoa.getEndereco().setPessoa(pessoa);
 
     }
 

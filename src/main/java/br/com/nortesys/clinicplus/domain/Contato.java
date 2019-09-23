@@ -2,13 +2,12 @@ package br.com.nortesys.clinicplus.domain;
 
 import com.google.gson.annotations.Expose;
 import java.util.Date;
-import java.util.Objects;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
@@ -47,9 +46,9 @@ public class Contato extends GenericDomain {
     @Expose
     private Date DataCadastro;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-
+    @Expose(serialize = false)
     private Pessoa pessoa;
 
     public Pessoa getPessoa() {
@@ -110,15 +109,6 @@ public class Contato extends GenericDomain {
 
     public Contato() {
 
-        if (this.getSequencia() == null) {
-            this.setDataCadastro(new Date());
-            this.setPessoa(pessoa);
-            this.setSequencia(1L);
-        } else {
-            this.setDataCadastro(new Date());
-            this.setPessoa(pessoa);
-            this.setSequencia(this.getSequencia() + 1);
-
-        }
+        this.setPessoa(pessoa);
     }
 }

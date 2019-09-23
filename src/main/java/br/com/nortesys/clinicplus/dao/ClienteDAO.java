@@ -12,6 +12,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.omnifaces.util.Messages;
 
 /**
@@ -56,6 +57,28 @@ public class ClienteDAO extends GenericDAO<Cliente> {
             consulta.createAlias("p.documento", "d");
 
             List<Cliente> resultado = consulta.list();
+            return resultado;
+        } catch (RuntimeException erro) {
+
+            throw erro;
+        } finally {
+            sessao.close();
+        }
+    }
+
+    public Cliente buscarCliente(Long codigo) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            Criteria consulta = sessao.createCriteria(Cliente.class);
+            consulta.createAlias("pessoa", "p");
+            consulta.createAlias("p.contato", "c");
+            consulta.createAlias("p.endereco", "e");
+            consulta.createAlias("p.documento", "d");
+            consulta.add(Restrictions.idEq(codigo));
+
+            Cliente resultado = (Cliente) consulta.uniqueResult();
+
             return resultado;
         } catch (RuntimeException erro) {
 

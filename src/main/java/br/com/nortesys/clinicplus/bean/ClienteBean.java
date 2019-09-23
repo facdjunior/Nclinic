@@ -46,7 +46,7 @@ import org.omnifaces.util.Messages;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class ClienteBean implements Serializable{
+public class ClienteBean implements Serializable {
 
     private Cliente cliente;
     private List<Cliente> clientes;
@@ -223,10 +223,8 @@ public class ClienteBean implements Serializable{
             Client ccliente = ClientBuilder.newClient();
             WebTarget caminho = ccliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/cliente");
             String json = caminho.request().get(String.class);
-
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             Cliente[] vetor = gson.fromJson(json, Cliente[].class);
-
             clientes = Arrays.asList(vetor);*/
         } catch (RuntimeException erro) {
             Messages.addGlobalError("Ocorreu um erro ao tentar listar registros");
@@ -240,7 +238,6 @@ public class ClienteBean implements Serializable{
         //   pessoa = new Pessoa();
 
         //dadosCliente();
-
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaoDAO.listar("Descricao");
 
@@ -256,22 +253,77 @@ public class ClienteBean implements Serializable{
     }
 
     public void dadosCliente() {
-        try {
-            PessoaDAO pessoaDAO = new PessoaDAO();
-            Pessoa resultadoPesssoa = (Pessoa) pessoaDAO.listarSequencia();
 
-            if (resultadoPesssoa == null) {
-                pessoa.setSequencia(1L);
-                pessoa.setDataCadastro(new Date());
-            } else {
-                pessoa.setSequencia(resultadoPesssoa.getSequencia() + 1L);
-                pessoa.setDataCadastro(new Date());
+        if (cliente.getCodigo() == null) {
+
+            try {
+                PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+                PessoaFisica resultadoPessoaFisica = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
+
+                if (resultadoPessoaFisica == null) {
+                    this.cliente.getPessoa().getPessoaFisica().setSequencia(1);
+                    this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
+                } else {
+                    this.cliente.getPessoa().getPessoaFisica().setSequencia(resultadoPessoaFisica.getSequencia() + 1);
+                    this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
+                }
+
+                PessoaDAO pessoaDAO = new PessoaDAO();
+                Pessoa resultadoPesssoa = (Pessoa) pessoaDAO.listarSequencia();
+
+                if (resultadoPesssoa == null) {
+                    this.cliente.getPessoa().setSequencia(1L);
+                    this.cliente.getPessoa().setDataCadastro(new Date());
+                } else {
+                    this.cliente.getPessoa().setSequencia(resultadoPesssoa.getSequencia() + 1L);
+                    this.cliente.getPessoa().setDataCadastro(new Date());
+                }
+
+                EnderecoDAO enderecoDAO = new EnderecoDAO();
+                Endereco resultadoEndereco = (Endereco) enderecoDAO.listarSequencia();
+
+                if (resultadoEndereco == null) {
+                    this.cliente.getPessoa().getEndereco().setSequencia(1L);
+                    this.cliente.getPessoa().getEndereco().setDataCadastro(new Date());
+
+                } else {
+                    this.cliente.getPessoa().getEndereco().setSequencia(resultadoEndereco.getSequencia() + 1L);
+                    this.cliente.getPessoa().getEndereco().setDataCadastro(new Date());
+
+                }
+
+                ContatoDAO contatoDAO = new ContatoDAO();
+                Contato resultadoContato = (Contato) contatoDAO.listarSequencia();
+
+                if (resultadoContato == null) {
+                    this.cliente.getPessoa().getContato().setSequencia(1L);
+                    this.cliente.getPessoa().getContato().setDataCadastro(new Date());
+
+                } else {
+                    this.cliente.getPessoa().getContato().setSequencia(resultadoContato.getSequencia() + 1);
+                    this.cliente.getPessoa().getContato().setDataCadastro(new Date());
+
+                }
+
+                DocumentoDAO documentoDAO = new DocumentoDAO();
+                Documento resultadoDocumento = (Documento) documentoDAO.listarSequencia();
+
+                if (resultadoDocumento == null) {
+
+                    this.cliente.getPessoa().getDocumento().setSequencia(1);
+                    this.cliente.getPessoa().getDocumento().setDataCadastro(new Date());
+
+                } else {
+                    this.cliente.getPessoa().getDocumento().setSequencia(resultadoDocumento.getSequencia() + 1);
+                    this.cliente.getPessoa().getDocumento().setDataCadastro(new Date());
+
+                }
+
+            } catch (RuntimeException erro) {
+
+                Messages.addGlobalError("Erro ao tentar gravar Registro");
+                erro.printStackTrace();
             }
-
-        } catch (RuntimeException erro) {
-
-            Messages.addGlobalError("Erro ao tentar gravar Registro");
-            erro.printStackTrace();
         }
     }
 
@@ -287,19 +339,21 @@ public class ClienteBean implements Serializable{
                 if (resultadoCliente == null) {
                     cliente.setDataCadastro(new Date());
                     cliente.setSequencia(1);
+
                 } else {
 
                     cliente.setDataCadastro(new Date());
                     cliente.setSequencia(resultadoCliente.getSequencia() + 1);
+
                 }
-               // dadosCliente();
+                // dadosCliente();
                 clienteDAO.merge(cliente);
             } else {
 
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.merge(cliente);
             }
-
+            Messages.addGlobalInfo("Registro gravado com Sucesso!");
             novo();
             listar();
 

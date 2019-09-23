@@ -2,12 +2,10 @@ package br.com.nortesys.clinicplus.bean;
 
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import br.com.nortesys.clinicplus.domain.Pessoa;
-import br.com.nortesys.clinicplus.domain.PessoaFisica;
-import br.com.nortesys.clinicplus.service.PessoaFisicaService;
 import br.com.nortesys.clinicplus.service.PessoaService;
 import com.google.gson.Gson;
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +23,7 @@ import org.omnifaces.util.Messages;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class PessoaBean {
+public class PessoaBean implements Serializable {
 
     private Pessoa pessoa;
     private List<Pessoa> pessoas;
@@ -48,6 +46,9 @@ public class PessoaBean {
 
     @PostConstruct
     public void listar() {
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        pessoas = pessoaDAO.listar();
+        /*
         try {
             
             
@@ -62,7 +63,7 @@ public class PessoaBean {
         } catch (RuntimeException erro) {
             Messages.addGlobalError("Ocorreu um erro ao tentar listar registros");
             erro.printStackTrace();
-        }
+        }*/
     }
 
     public void novo() {
@@ -72,15 +73,12 @@ public class PessoaBean {
     public void salvar() {
 
         try {
-            
+
             PessoaDAO pessoaDAO = new PessoaDAO();
             Pessoa resultado = (Pessoa) pessoaDAO.listarSequencia();
-              
-            
-            
-            
+
             PessoaService pessoaService = new PessoaService();
-            
+
             novo();
             listar();
 
@@ -141,6 +139,5 @@ public class PessoaBean {
     public void editar(ActionEvent evento) {
         pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
     }
-    
-    
+
 }

@@ -28,12 +28,8 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
             Pessoa pessoa = (Pessoa) consulta.uniqueResult();
 
             if (consulta == null) {
-                pessoa.setDataCadastro(new Date());
+                
                 pessoa.setSequencia(1L);
-            } else {
-                pessoa.setDataCadastro(new Date());
-                pessoa.setSequencia(pessoa.getSequencia() + 1L);
-
             }
             return pessoa;
 

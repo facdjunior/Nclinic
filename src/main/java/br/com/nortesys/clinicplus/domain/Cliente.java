@@ -61,14 +61,15 @@ public class Cliente extends GenericDomain {
         this.pessoa = pessoa;
     }
 
-   /* public Cliente() {
+    public Cliente() {
         this.pessoa = new Pessoa();
 
        // this.setPessoa(pessoa);
         this.pessoa.getContato().setPessoa(pessoa);
         this.pessoa.getDocumento().setPessoa(pessoa);
         this.pessoa.getEndereco().setPessoa(pessoa);
+        this.pessoa.getInforAdicionais().setPessoa(pessoa);
 
-    }*/
+    }
 
 }

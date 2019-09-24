@@ -1,5 +1,6 @@
 package br.com.nortesys.clinicplus.bean;
 
+import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Endereco;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 import com.google.gson.Gson;
@@ -34,6 +35,7 @@ public class EnderecoBean implements Serializable{
     private List<Endereco> listagem = new ArrayList<Endereco>();
     private Endereco endereco;
     private String cep;
+    private Cliente cliente;
 
     private ServicoEndereco servico = new ServicoEndereco();
 
@@ -120,9 +122,11 @@ public class EnderecoBean implements Serializable{
 
     public Endereco carregarEndereco() {
         endereco = new Endereco();
+        Cliente cliente = new Cliente();
+        
 
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
-       WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep() + "/json/");
+       WebResource wr = c.resource("http://viacep.com.br/ws/" + this.cliente.getPessoa().getEndereco()+ "/json/");
         System.out.println("CHAMOU O URI....");
         this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
         String JSON = wr.get(String.class);

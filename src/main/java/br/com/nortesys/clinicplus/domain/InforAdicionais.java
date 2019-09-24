@@ -15,13 +15,12 @@ import javax.persistence.OneToOne;
 @Entity
 public class InforAdicionais extends GenericDomain {
 
-    
     @Expose
     private Character Raça;
-    
+
     @Expose
     private Character TipoSanguineo;
-    
+
     @Expose
     private Character FatorRh;
 
@@ -32,6 +31,18 @@ public class InforAdicionais extends GenericDomain {
     @Column(length = 8)
     @Expose
     private String CodigoANS;
+
+    @Column(nullable = true, length = 120)
+    @Expose(serialize = true)
+    private String NomeMae;
+
+    @Column(length = 120)
+    @Expose(serialize = true)
+    private String NomePai;
+
+    @Column(length = 120)
+    @Expose(serialize = true)
+    private String Conjuge;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
@@ -85,4 +96,30 @@ public class InforAdicionais extends GenericDomain {
     public void setCodigoANS(String CodigoANS) {
         this.CodigoANS = CodigoANS;
     }
+
+    public String getNomeMae() {
+        return NomeMae;
+    }
+
+    public void setNomeMae(String NomeMae) {
+        this.NomeMae = NomeMae;
+    }
+
+    public String getNomePai() {
+        return NomePai;
+    }
+
+    public void setNomePai(String NomePai) {
+        this.NomePai = NomePai;
+    }
+
+    public String getConjuge() {
+        return Conjuge;
+    }
+
+    public void setConjuge(String Conjuge) {
+        this.Conjuge = Conjuge;
+    }
+    
+    
 }

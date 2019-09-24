@@ -3,17 +3,16 @@ package br.com.nortesys.clinicplus.domain;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,7 +26,7 @@ public class Pessoa extends GenericDomain {
     @Expose
     private String Nome;
 
-    @Column(unique = true, nullable = true, columnDefinition = "serial")
+    @Column(unique = true, nullable = true)
     @Expose
     private Long Sequencia;
 
@@ -56,6 +55,9 @@ public class Pessoa extends GenericDomain {
     @Expose(serialize = true)
     private Documento documento;
     
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private InforAdicionais inforAdicionais;
+
     public Contato getContato() {
         return contato;
     }
@@ -120,17 +122,21 @@ public class Pessoa extends GenericDomain {
         this.imagem = imagem;
     }
 
-   
-    /*
-    
+    public InforAdicionais getInforAdicionais() {
+        return inforAdicionais;
+    }
 
+    public void setInforAdicionais(InforAdicionais inforAdicionais) {
+        this.inforAdicionais = inforAdicionais;
+    }
+    
     public Pessoa() {
 
         this.documento = new Documento();
         this.contato = new Contato();
         this.endereco = new Endereco();
         this.pessoaFisica = new PessoaFisica();
-   
-*/
-    }
+        this.inforAdicionais = new InforAdicionais();
 
+    }
+}

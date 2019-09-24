@@ -19,9 +19,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class PessoaFisica extends GenericDomain {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     @Temporal(TemporalType.DATE)
@@ -54,18 +51,8 @@ public class PessoaFisica extends GenericDomain {
     @Column(length = 30)
     @Expose(serialize = true)
     private String GrauEscolaridade;
-
-    @Column(nullable = true, length = 120)
-    @Expose(serialize = true)
-    private String NomeMae;
-
-    @Column(length = 120)
-    @Expose(serialize = true)
-    private String NomePai;
-
-    @Column(length = 120)
-    @Expose(serialize = true)
-    private String Conjuge;
+    
+    private Character Tratamento;
 
     @ManyToOne
     @Expose(serialize = true)
@@ -127,35 +114,23 @@ public class PessoaFisica extends GenericDomain {
         this.GrauEscolaridade = GrauEscolaridade;
     }
 
-    public String getNomeMae() {
-        return NomeMae;
-    }
-
-    public void setNomeMae(String NomeMae) {
-        this.NomeMae = NomeMae;
-    }
-
-    public String getNomePai() {
-        return NomePai;
-    }
-
-    public void setNomePai(String NomePai) {
-        this.NomePai = NomePai;
-    }
-
-    public String getConjuge() {
-        return Conjuge;
-    }
-
-    public void setConjuge(String Conjuge) {
-        this.Conjuge = Conjuge;
-    }
-
     public Profissao getProfissao() {
         return profissao;
     }
 
     public void setProfissao(Profissao profissao) {
         this.profissao = profissao;
+    }
+
+    public Character getTratamento() {
+        return Tratamento;
+    }
+
+    public void setTratamento(Character Tratamento) {
+        this.Tratamento = Tratamento;
+    }
+    
+    public PessoaFisica(){
+        
     }
 }

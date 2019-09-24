@@ -1,6 +1,7 @@
 package br.com.nortesys.clinicplus.service;
 
 
+import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Endereco;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

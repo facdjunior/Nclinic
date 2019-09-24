@@ -27,12 +27,8 @@ public class PessoaFisicaDAO extends GenericDAO<PessoaFisica> {
             PessoaFisica pessoaFisica = (PessoaFisica) consulta.uniqueResult();
 
             if (consulta == null) {
-                pessoaFisica.setDataCadastro(new Date());
+               
                 pessoaFisica.setSequencia(1);
-            } else {
-                pessoaFisica.setDataCadastro(new Date());
-                pessoaFisica.setSequencia(pessoaFisica.getSequencia() + 1);
-
             }
             return pessoaFisica;
 

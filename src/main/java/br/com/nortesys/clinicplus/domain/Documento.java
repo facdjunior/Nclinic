@@ -2,21 +2,15 @@ package br.com.nortesys.clinicplus.domain;
 
 import com.google.gson.annotations.Expose;
 import java.util.Date;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 
-
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.WebTarget;
 
 /**
  *
@@ -45,6 +39,18 @@ public class Documento extends GenericDomain {
     @Temporal(TemporalType.DATE)
     @Expose
     private Date DataEmissaoRg;
+    
+    @Column(length = 50)
+    @Expose
+    private String CertNascimento;
+    
+    @Column(length = 50)
+    @Expose
+    private String NumeroMatricula;
+    
+    @Column(length = 50)
+    @Expose
+    private String InscEstadual;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -88,8 +94,6 @@ public class Documento extends GenericDomain {
         this.DataEmissaoRg = DataEmissaoRg;
     }
     
-    
-
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -121,9 +125,28 @@ public class Documento extends GenericDomain {
     public void setDataCadastro(Date DataCadastro) {
         this.DataCadastro = DataCadastro;
     }
+    
+    public String getCertNascimento() {
+        return CertNascimento;
+    }
 
-   /* public Documento() {
+    public void setCertNascimento(String CertNascimento) {
+        this.CertNascimento = CertNascimento;
+    }
 
-        this.setPessoa(pessoa);
-    }*/
+    public String getNumeroMatricula() {
+        return NumeroMatricula;
+    }
+
+    public void setNumeroMatricula(String NumeroMatricula) {
+        this.NumeroMatricula = NumeroMatricula;
+    }
+
+    public String getInscEstadual() {
+        return InscEstadual;
+    }
+
+    public void setInscEstadual(String InscEstadual) {
+        this.InscEstadual = InscEstadual;
+    }
 }

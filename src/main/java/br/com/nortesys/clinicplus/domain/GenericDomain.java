@@ -21,7 +21,7 @@ public class GenericDomain implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose(serialize = true)
+//    @Expose(serialize = true)
     private Long codigo;
     
     

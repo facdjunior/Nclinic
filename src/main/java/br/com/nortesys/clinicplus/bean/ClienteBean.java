@@ -18,6 +18,7 @@ import br.com.nortesys.clinicplus.domain.Pessoa;
 
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.domain.Profissao;
+import br.com.nortesys.clinicplus.service.ClienteService;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
 import com.google.gson.Gson;
@@ -75,6 +76,8 @@ public class ClienteBean implements Serializable {
     private String cep;
 
     private ServicoEndereco servico = new ServicoEndereco();
+    
+    private ClienteService clienteService = new ClienteService();
 
     public String getCep() {
         return cep;
@@ -235,7 +238,7 @@ public class ClienteBean implements Serializable {
     public void novo() {
 
         cliente = new Cliente();
-        //   pessoa = new Pessoa();
+        pessoa = new Pessoa();
 
         //dadosCliente();
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
@@ -408,20 +411,18 @@ public class ClienteBean implements Serializable {
         }
     }
 
-    public Endereco carregarEndereco() {
-
-        endereco = new Endereco();
+    public Cliente carregarEndereco() {
 
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
-        WebResource wr = c.resource("http://viacep.com.br/ws/" + this.getCep() + "/json/");
+        WebResource wr = c.resource("http://viacep.com.br/ws/" + this.cliente.getPessoa().getEndereco().getCep() + "/json/");
         System.out.println("CHAMOU O URI....");
 
-        this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
+        this.cliente = clienteService.buscarEnderecoPor(wr.get(String.class));
         String JSON = wr.get(String.class);
 
         System.out.println(JSON);
 
-        return this.getEndereco();
+        return this.cliente;
 
     }
 

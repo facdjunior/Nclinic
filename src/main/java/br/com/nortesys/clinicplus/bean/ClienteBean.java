@@ -266,6 +266,7 @@ public class ClienteBean implements Serializable {
                 if (resultadoPessoaFisica == null) {
                     this.cliente.getPessoa().getPessoaFisica().setSequencia(1);
                     this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
+                    this.cliente.getPessoa().getPessoaFisica().setIdade(pessoaFisicaDAO.idade());
                 } else {
                     this.cliente.getPessoa().getPessoaFisica().setSequencia(resultadoPessoaFisica.getSequencia() + 1);
                     this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
@@ -434,6 +435,14 @@ public class ClienteBean implements Serializable {
 
         return this.endereco;
 
+    }
+    
+    public String IdadeCalcular(){
+        
+        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
+        pessoaFisicaDAO.idade();
+        
+        return IdadeCalcular();
     }
 
 }

@@ -81,42 +81,40 @@
                                         </div>
                                     </div>
                                     <div></div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <p:outputLabel for="nome" value="Nome:" />
-                                        <div class="col-xs-12 col-md-6">
-                                            <p:inputText id="nome" maxlength="120" size="55"
-                                                         value="#{clienteBean.cliente.pessoa.nome}" required="true"
-                                                         requiredMessage="O campo 'Nome' é obrigatório" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <br></br>
-                                <h:panelGrid id="pnlCadastro" columns="4" title="Dados Pessoais">
 
+                                </div>
+                                <h:panelGrid id="pnlNome" columns="3">
+
+                                    <p:outputLabel for="nome" value="Nome:" />
                                     <p:outputLabel  value="Data Nascimento" />
+                                    <p:outputLabel value="Idade"/>
+
+
+                                    <p:inputText id="nome" maxlength="120" size="65"
+                                                 value="#{clienteBean.cliente.pessoa.nome}" required="true"
+                                                 requiredMessage="O campo 'Nome' é obrigatório" />
                                     <p:calendar value="#{clienteBean.cliente.pessoa.pessoaFisica.dataNascimento}" 
                                                 required="true"
-                                                requiredMessage="Favor informa data" size="9" locale="pt_BR">
+                                                requiredMessage="Favor informa data" size="10" locale="pt_BR">
                                     </p:calendar>
+                                    <p:inputText size="8" value="#{clienteBean.cliente.pessoa.pessoaFisica.idade}"/>
+
+                                </h:panelGrid>
+
+                                <h:panelGrid id="pnlCadastro" columns="3" title="Dados Pessoais">
+
 
                                     <p:outputLabel value="Naturalidade"/>
+                                    <p:outputLabel value="Sexo"/>
+                                    <p:outputLabel for="estadoCivil" value="Estado Civil:" />
+
                                     <p:inputText value="#{clienteBean.cliente.pessoa.pessoaFisica.naturalidade}"/>
 
-                                    <p:outputLabel value="RG:"/>
-                                    <p:inputText value="#{clienteBean.cliente.pessoa.documento.rg}"/>
-                                    <p:outputLabel value="Orgão Emissor"/>
-                                    <p:inputText value="#{clienteBean.cliente.pessoa.documento.orgaoEmissor}"/>
-                                    
-                                    <p:outputLabel value="Expedição RG"/>
-                                    <p:inputText value="#{clienteBean.cliente.pessoa.documento.dataEmissaoRg}"/>
-
-                                    <p:outputLabel value="Sexo"/>
                                     <p:selectOneRadio id="sexo" value="#{clienteBean.cliente.pessoa.pessoaFisica.sexo}">
                                         <f:selectItem itemLabel="Masculino" itemValue="M"/>
                                         <f:selectItem itemLabel="Feminino" itemValue="F"/>
                                     </p:selectOneRadio>
 
-                                    <p:outputLabel for="estadoCivil" value="Estado Civil:" />
                                     <p:selectOneMenu id="estadoCivil" filter="true" required="true"
                                                      requiredMessage="O campo 'Estado Civil' é obrigatório"
                                                      converter="omnifaces.SelectItemsConverter"
@@ -127,6 +125,18 @@
                                         <f:selectItems value="#{clienteBean.estadoCivils}" var="civil"
                                                        itemValue="#{civil}" itemLabel="#{civil.descricao}" />
                                     </p:selectOneMenu>
+
+                                    <p:outputLabel value="RG:"/>
+                                    <p:outputLabel value="Orgão Emissor"/>
+                                    <p:outputLabel value="Expedição RG"/>
+
+                                    <p:inputText value="#{clienteBean.cliente.pessoa.documento.rg}"/>
+                                    <p:inputText value="#{clienteBean.cliente.pessoa.documento.orgaoEmissor}"/>
+                                    <p:calendar value="#{clienteBean.cliente.pessoa.documento.dataEmissaoRg}"
+                                                requiredMessage="Favor informa data" size="12" locale="pt_BR">
+                                    
+                                    </p:calendar>
+
                                 </h:panelGrid>
                             </p:panel>
 
@@ -144,45 +154,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h:panelGrid id="pnlEndereco2" columns="4">
+                                    <h:panelGrid id="pnlEndereco2" columns="3">
 
                                         <p:outputLabel for="logradouro" value="Rua:" />
-                                        <p:inputText id="logradouro" maxlength="120" size="50"
+                                        <p:outputLabel value="N.º" />
+                                        <p:outputLabel for="complemento" value="Complemento:" />
+
+                                        <p:inputText id="logradouro" maxlength="120" size="48"
                                                      value="#{clienteBean.cliente.pessoa.endereco.logradouro}" required="true"
                                                      requiredMessage="O campo 'Rua' é obrigatório"/>
-
-                                        <p:outputLabel value="N.º" />
-                                        <p:inputText maxlength="5" size="6"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.numero}" 
-                                                    >
-
-                                        </p:inputText>
-
-                                        <p:inputText id="ibge" value="#{clienteBean.cliente.pessoa.endereco.ibge}"
-                                                     placeholder="#{clienteBean.endereco.ibge}" type="hidden"/>
-                                        <p:inputText value="#{clienteBean.cliente.pessoa.endereco.cep}" type="hidden"
-                                                    />
+                                        <p:inputText maxlength="5" size="6" value="#{clienteBean.cliente.pessoa.endereco.numero}"/>
+                                        <p:inputText id="complemento" maxlength="11" size="30" value="#{clienteBean.cliente.pessoa.endereco.complemento}"/>
 
                                     </h:panelGrid>
 
                                     <h:panelGrid id="pnlEndereco1" columns="4" columnClasses="grid" >
                                         <p:outputLabel for="bairro" value="Bairro:" />
-                                        <p:inputText id="bairro" maxlength="120" size="35"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.bairro}" 
-                                                    required="true"
-                                                     requiredMessage="O campo 'Bairro' é obrigatório" />
-
-                                        <p:outputLabel for="complemento" value="Complemento:" />
-                                        <p:inputText id="complemento" maxlength="10" size="18"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.complemento}"/>
-
+                                        <p:outputLabel for="bairro" value="IBGE:" />
                                         <p:outputLabel for="localidade" value="Cidade:" />
-                                        <p:inputText id="localidade" maxlength="10" size="18"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.localidade}"/>
-
                                         <p:outputLabel for="uf" value="UF" />
-                                        <p:inputText id="uf" maxlength="10" size="10"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.uf}"/>
+
+                                        <p:inputText id="bairro" maxlength="120" size="37" value="#{clienteBean.cliente.pessoa.endereco.bairro}" 
+                                                     required="true" requiredMessage="O campo 'Bairro' é obrigatório" />
+                                        <p:inputText id="ibge" size="6" value="#{clienteBean.cliente.pessoa.endereco.ibge}"/>
+                                        <p:inputText id="localidade" maxlength="120" size="35" value="#{clienteBean.cliente.pessoa.endereco.localidade}"/>
+                                        <p:inputText id="uf" maxlength="2" size="1" value="#{clienteBean.cliente.pessoa.endereco.uf}"/>
+
                                     </h:panelGrid>
 
                                 </h:panelGrid>
@@ -214,13 +211,13 @@
 
                                     <p:outputLabel for="pai" value="Pai"/>
 
-                                    <p:inputText id="mae" value="#{clienteBean.cliente.pessoa.inforAdicionais.nomeMae}" size="45"/>
+                                    <p:inputText id="mae" value="#{clienteBean.cliente.pessoa.inforAdicionais.nomeMae}" size="35"/>
 
-                                    <p:inputText id="pai" value="#{clienteBean.cliente.pessoa.inforAdicionais.nomePai}" size="45"/>
+                                    <p:inputText id="pai" value="#{clienteBean.cliente.pessoa.inforAdicionais.nomePai}" size="35"/>
 
                                     <p:outputLabel for="conjuge" value="Cônjuge"/>
                                     <br></br>
-                                    <p:inputText id="conjuge" value="#{clienteBean.cliente.pessoa.inforAdicionais.conjuge}" size="45"/>
+                                    <p:inputText id="conjuge" value="#{clienteBean.cliente.pessoa.inforAdicionais.conjuge}" size="35"/>
 
                                 </p:panelGrid>
                             </p:panel>
@@ -245,9 +242,10 @@
                             </p:panel>
 
                             <p:panel header="Observação">
-                                <p:inputTextarea rows="5" cols="100" counter="obs" maxlength="190" counterTemplate="{0} Caracteres restantes." autoResize="false" />
+                                <p:inputTextarea rows="5" cols="90" counter="obs" maxlength="190" counterTemplate="{0} Caracteres restantes." autoResize="false"
+                                                 value="#{clienteBean.cliente.observacao}"/>
                                 <br />
-                                <h:outputText id="obs" />
+                                <h:outputText id="obs"  />
 
                             </p:panel>
                         </p:tab>

@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -34,6 +35,9 @@ public class PessoaFisica extends GenericDomain {
     @Column(nullable = false)
     @Expose(serialize = true)
     private Date DataCadastro;
+    
+    @Transient
+    private String idade;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -58,6 +62,14 @@ public class PessoaFisica extends GenericDomain {
     @Expose(serialize = true)
     private Profissao profissao;
 
+    public String getIdade() {
+        return idade;
+    }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
+    }
+    
     public Date getDataNascimento() {
         return DataNascimento;
     }

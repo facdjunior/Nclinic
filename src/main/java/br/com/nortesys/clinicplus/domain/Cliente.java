@@ -36,7 +36,19 @@ public class Cliente extends GenericDomain {
     @JoinColumn(nullable = false)
     @Expose(serialize = true)
     private Pessoa pessoa;
+    
+    @Column(length = 200)
+    @Expose(serialize = true)
+    private String Observacao;
 
+    public String getObservacao() {
+        return Observacao;
+    }
+
+    public void setObservacao(String Observacao) {
+        this.Observacao = Observacao;
+    }
+    
     public Integer getSequencia() {
         return Sequencia;
     }

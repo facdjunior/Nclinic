@@ -11,7 +11,7 @@ import org.junit.Test;
 public class HibernateUtilTest {
 
     @Test
-  //  @Ignore
+    @Ignore
     public void conectar() {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         sessao.close();

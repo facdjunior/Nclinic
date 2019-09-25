@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.domain;
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
@@ -40,7 +41,7 @@ public class Cliente extends GenericDomain {
     @Column(length = 200)
     @Expose(serialize = true)
     private String Observacao;
-
+    
     public String getObservacao() {
         return Observacao;
     }

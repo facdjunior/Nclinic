@@ -24,7 +24,7 @@ public class ConvenioService {
     public String listar() {
 
         ConvenioDAO convenioDAO = new ConvenioDAO();
-        List<Convenio> convenios = convenioDAO.listar("Descricao");
+        List<Convenio> convenios = convenioDAO.listar();
 
         Gson gson = new Gson();
         String json = gson.toJson(convenios);

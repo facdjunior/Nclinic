@@ -39,7 +39,7 @@
         <property name="hibernate.dbcp.minIdle">5</property>
         
        
-
+        <mapping class="br.com.nortesys.clinicplus.domain.CartaoConvenio"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Cliente"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Contato"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Convenio"/>
@@ -51,6 +51,7 @@
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaFisica"/>
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaJuridica"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Profissao"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.TipoConvenio"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoDocumento"/>
         
 

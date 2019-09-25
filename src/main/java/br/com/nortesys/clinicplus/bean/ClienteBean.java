@@ -2,14 +2,18 @@ package br.com.nortesys.clinicplus.bean;
 
 import br.com.nortesys.clinicplus.dao.ClienteDAO;
 import br.com.nortesys.clinicplus.dao.ContatoDAO;
+import br.com.nortesys.clinicplus.dao.ConvenioDAO;
 import br.com.nortesys.clinicplus.dao.DocumentoDAO;
 import br.com.nortesys.clinicplus.dao.EnderecoDAO;
 import br.com.nortesys.clinicplus.dao.EstadoCivilDAO;
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import br.com.nortesys.clinicplus.dao.PessoaFisicaDAO;
 import br.com.nortesys.clinicplus.dao.ProfissaoDAO;
+import br.com.nortesys.clinicplus.dao.TipoConvenioDAO;
+import br.com.nortesys.clinicplus.domain.CartaoConvenio;
 import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Contato;
+import br.com.nortesys.clinicplus.domain.Convenio;
 import br.com.nortesys.clinicplus.domain.Documento;
 
 import br.com.nortesys.clinicplus.domain.Endereco;
@@ -18,6 +22,7 @@ import br.com.nortesys.clinicplus.domain.Pessoa;
 
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.domain.Profissao;
+import br.com.nortesys.clinicplus.domain.TipoConvenio;
 import br.com.nortesys.clinicplus.service.ClienteService;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
@@ -73,11 +78,74 @@ public class ClienteBean implements Serializable {
     private Profissao profissao;
     private List<Profissao> profissaos;
 
+    private CartaoConvenio cartaoConvenio;
+    private List<CartaoConvenio> cartaoConvenios;
+
     private String cep;
 
     private ServicoEndereco servico = new ServicoEndereco();
 
-    private ClienteService clienteService = new ClienteService();
+    private Convenio convenio;
+    private List<Convenio> convenios;
+
+    private TipoConvenio tipoConvenio;
+    private List<TipoConvenio> tipoConvenios;
+
+    public Convenio getConvenio() {
+        return convenio;
+    }
+
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
+    }
+
+    public List<Convenio> getConvenios() {
+        return convenios;
+    }
+
+    public void setConvenios(List<Convenio> convenios) {
+        this.convenios = convenios;
+    }
+
+    public TipoConvenio getTipoConvenio() {
+        return tipoConvenio;
+    }
+
+    public void setTipoConvenio(TipoConvenio tipoConvenio) {
+        this.tipoConvenio = tipoConvenio;
+    }
+
+    public List<TipoConvenio> getTipoConvenios() {
+        return tipoConvenios;
+    }
+
+    public void setTipoConvenios(List<TipoConvenio> tipoConvenios) {
+        this.tipoConvenios = tipoConvenios;
+    }
+
+    public CartaoConvenio getCartaoConvenio() {
+        return cartaoConvenio;
+    }
+
+    public void setCartaoConvenio(CartaoConvenio cartaoConvenio) {
+        this.cartaoConvenio = cartaoConvenio;
+    }
+
+    public List<CartaoConvenio> getCartaoConvenios() {
+        return cartaoConvenios;
+    }
+
+    public void setCartaoConvenios(List<CartaoConvenio> cartaoConvenios) {
+        this.cartaoConvenios = cartaoConvenios;
+    }
+
+    public ServicoEndereco getServico() {
+        return servico;
+    }
+
+    public void setServico(ServicoEndereco servico) {
+        this.servico = servico;
+    }
 
     public String getCep() {
         return cep;
@@ -239,18 +307,24 @@ public class ClienteBean implements Serializable {
 
         cliente = new Cliente();
         pessoa = new Pessoa();
+        profissao = new Profissao();
+        convenio = new Convenio();
+        estadoCivil = new EstadoCivil();
+        tipoConvenio = new TipoConvenio();
 
-        //dadosCliente();
+        
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
-        profissaoDAO.listar("Descricao");
+        profissaos = profissaoDAO.listar("Descricao");
+
+        ConvenioDAO convenioDAO = new ConvenioDAO();
+        convenios = convenioDAO.listar("Descricao");
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
-        estadoCivilDAO.listar("Descricao");
+        estadoCivils = estadoCivilDAO.listar("Descricao");
+        
+        TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
+        tipoConvenios = tipoConvenioDAO.listar("Descricao");
 
-        DocumentoDAO documentoDAO = new DocumentoDAO();
-        documentoDAO.listarSequencia();
-
-        estadoCivil();
         listar();
 
     }
@@ -383,10 +457,13 @@ public class ClienteBean implements Serializable {
 
             ClienteDAO clienteDAO = new ClienteDAO();
             clientes = clienteDAO.listar();
-
-            DocumentoDAO documentoDAO = new DocumentoDAO();
-            documentos = documentoDAO.listar();
-
+            
+            ConvenioDAO convenioDAO = new ConvenioDAO();
+            convenios = convenioDAO.listar("Descricao");
+            
+            TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
+            tipoConvenios = tipoConvenioDAO.listar("Descricao");
+            
         } catch (Exception erro) {
 
             Messages.addGlobalError("Ocorreu um erro ao gerar lista de estado civil");
@@ -414,7 +491,7 @@ public class ClienteBean implements Serializable {
 
     public Endereco carregarEndereco() {
         endereco = new Endereco();
-        
+
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
         WebResource wr = c.resource("http://viacep.com.br/ws/" + this.cliente.getPessoa().getEndereco().getCep() + "/json/");
         System.out.println("CHAMOU O URI....");
@@ -436,12 +513,12 @@ public class ClienteBean implements Serializable {
         return this.endereco;
 
     }
-    
-    public String IdadeCalcular(){
-        
+
+    public String IdadeCalcular() {
+
         PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
         pessoaFisicaDAO.idade();
-        
+
         return IdadeCalcular();
     }
 

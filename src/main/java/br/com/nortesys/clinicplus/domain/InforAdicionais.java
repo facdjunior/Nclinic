@@ -48,7 +48,33 @@ public class InforAdicionais extends GenericDomain {
     @JoinColumn(nullable = false)
     @Expose
     private Pessoa pessoa;
+    
+    @Column(length = 190)
+    @Expose
+    private String LocalTrabalho;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Convenio convenio;
 
+    public Convenio getConvenio() {
+        return convenio;
+    }
+
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
+    }
+    
+    
+
+    public String getLocalTrabalho() {
+        return LocalTrabalho;
+    }
+
+    public void setLocalTrabalho(String LocalTrabalho) {
+        this.LocalTrabalho = LocalTrabalho;
+    }
+    
     public Pessoa getPessoa() {
         return pessoa;
     }

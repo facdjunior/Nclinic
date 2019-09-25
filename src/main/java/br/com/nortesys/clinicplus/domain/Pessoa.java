@@ -57,7 +57,18 @@ public class Pessoa extends GenericDomain {
     
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private InforAdicionais inforAdicionais;
+    
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private CartaoConvenio cartaoConvenio;
 
+    public CartaoConvenio getCartaoConvenio() {
+        return cartaoConvenio;
+    }
+
+    public void setCartaoConvenio(CartaoConvenio cartaoConvenio) {
+        this.cartaoConvenio = cartaoConvenio;
+    }
+    
     public Contato getContato() {
         return contato;
     }

@@ -60,7 +60,7 @@
             </p:panel>
         </h:form>
 
-        <p:dialog header="Cadastro de clientes" widgetVar="dlgCadastro" 
+        <p:dialog header="Cadastro de clientes" widgetVar="dlgCadastro"  responsive="true"
                   draggable="false" resizable="false" modal="true" closable="false">
 
 
@@ -134,7 +134,7 @@
                                     <p:inputText value="#{clienteBean.cliente.pessoa.documento.orgaoEmissor}"/>
                                     <p:calendar value="#{clienteBean.cliente.pessoa.documento.dataEmissaoRg}"
                                                 requiredMessage="Favor informa data" size="12" locale="pt_BR">
-                                    
+
                                     </p:calendar>
 
                                 </h:panelGrid>
@@ -204,8 +204,39 @@
                             </p:panel>
                         </p:tab>
                         <p:tab id="detalhe" title="Detalhes">
+                            <p:panel header="Dados cadastrais">
+                                <h:panelGrid id="pnlDadosCadastrais" columns="2" >
+
+                                    <p:outputLabel for="tipoSanquineo" value="Tipo Sanguíneo"/>
+                                    <p:outputLabel for="etnia" value="Etnia"/>
+
+                                    <p:selectOneMenu id="tipoSanquineo" value="#{clienteBean.cliente.pessoa.inforAdicionais.tipoSanguineo}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione fator Sanguíneo" />
+                                        <f:selectItem itemValue="O-" itemLabel="O-" />
+                                        <f:selectItem itemValue="O+" itemLabel="O+" />
+                                        <f:selectItem itemValue="A-" itemLabel="A-" />
+                                        <f:selectItem itemValue="A+" itemLabel="A+" />
+                                        <f:selectItem itemValue="B-" itemLabel="B-" />
+                                        <f:selectItem itemValue="AB-" itemLabel="AB-" />
+                                        <f:selectItem itemValue="AB+" itemLabel="AB+" />
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu id="etnia" value="#{clienteBean.cliente.pessoa.inforAdicionais.raça}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Etnia" />
+                                        <f:selectItem itemValue="Branca" itemLabel="Branca" />
+                                        <f:selectItem itemValue="Parda" itemLabel="Parda" />
+                                        <f:selectItem itemValue="Negra" itemLabel="Negra" />
+                                        <f:selectItem itemValue="Indígena" itemLabel="Indígena" />
+                                        <f:selectItem itemValue="Oriental" itemLabel="Oriental" />
+                                        <f:selectItem itemValue="Asiática" itemLabel="Asiática" />
+                                    </p:selectOneMenu>
+
+
+                                </h:panelGrid>
+                            </p:panel>
+
                             <p:panel header="Filiação">
-                                <p:panelGrid id="pnlFiliacao" columns="2" layout="grid">
+                                <h:panelGrid id="pnlFiliacao" columns="2" >
 
                                     <p:outputLabel for="mae" value="Mãe"/>
 
@@ -219,30 +250,85 @@
                                     <br></br>
                                     <p:inputText id="conjuge" value="#{clienteBean.cliente.pessoa.inforAdicionais.conjuge}" size="35"/>
 
-                                </p:panelGrid>
+                                </h:panelGrid>
                             </p:panel>
 
                             <p:panel header="Dados Trabalho e Educação">
-                                <p:panelGrid columns="2" layout="grid" styleClass="semBorda" class="semBorda">
+                                <h:panelGrid columns="3" styleClass="semBorda" class="semBorda">
+
                                     <p:outputLabel for="escolaridade" value="Escolaridade"/>
                                     <p:outputLabel for="profissao" value="Profissão"/>
+                                    <p:outputLabel for="localTrabalho" value="Empresa trabalho"/>
 
-                                    <p:inputText id="escolaridade" value="#{clienteBean.cliente.pessoa.pessoaFisica.grauEscolaridade}" size="35"/>
+
+                                    <p:selectOneMenu id="escolaridade" value="#{clienteBean.cliente.pessoa.pessoaFisica.grauEscolaridade}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Informe escolaridade" />
+                                        <f:selectItem itemValue="Analfabeto" itemLabel="Analfabeto" />
+                                        <f:selectItem itemValue="Pré-escola" itemLabel="Pré-escola" />
+                                        <f:selectItem itemValue="Ensino Fundamental incompleto" itemLabel="Ensino fundamental incompleto" />
+                                        <f:selectItem itemValue="Ensino Fundamental completo" itemLabel="Ensino fundamental completo" />
+                                        <f:selectItem itemValue="Ensino Médio incompleto" itemLabel="Ensino médio incompleto" />
+                                        <f:selectItem itemValue="Ensino Médio completo" itemLabel="Ensino médio completo" />
+                                        <f:selectItem itemValue="Ensino Superior incompleto" itemLabel="Ensino Superior incompleto" />
+                                        <f:selectItem itemValue="Ensino Superior completo" itemLabel="Ensino Superior completo" />
+                                        <f:selectItem itemValue="Pós-graduado" itemLabel="Pós-graduado" />
+                                        <f:selectItem itemValue="Mestrado" itemLabel="Mestrado" />
+                                        <f:selectItem itemValue="Doutorado" itemLabel="Doutorado" />
+                                        <f:selectItem itemValue="Pós-Doutorado" itemLabel="Pós-Doutorado" />
+                                    </p:selectOneMenu>
 
                                     <p:selectOneMenu id="profissao" filter="true" 
                                                      value="#{clienteBean.cliente.pessoa.pessoaFisica.profissao}">
-                                        <f:selectItem noSelectionOption="true"
-                                                      itemLabel="Selecione Profissão" />
+                                        <f:selectItem noSelectionOption="true" 
+                                                      itemLabel="Selecione uma profissão" />
                                         <f:selectItems value="#{clienteBean.profissaos}" var="profissao"
                                                        itemValue="#{profissao}" itemLabel="#{profissao.descricao}" />
                                     </p:selectOneMenu>
 
-                                </p:panelGrid>
+                                    <p:inputText id="localTrabalho" value="#{clienteBean.cliente.pessoa.inforAdicionais.localTrabalho}" size="25"/>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel header="Convenio">
+                                <h:panelGrid id="pnlConvenio" columns="2">
+
+                                    <p:outputLabel for="convenios" value="Convênio:"/>
+                                    <p:outputLabel for="tipoConvenio" value="Tipo Convênio"/>
+
+
+                                    <p:selectOneMenu id="convenios" filter="true" converter="omnifaces.SelectItemsConverter"
+                                                     value="#{clienteBean.cliente.pessoa.cartaoConvenio.convenio}"
+                                                     >
+                                        <f:selectItem noSelectionOption="true"
+                                                      itemLabel="Selecione Convenio" />
+                                        <f:selectItems value="#{clienteBean.convenios}" var="convenios"
+                                                       itemValue="#{convenios}" itemLabel="#{convenios.descricao}" />
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu id="tipoConvenio" filter="true" converter="omnifaces.SelectItemsConverter"
+                                                     value="#{clienteBean.cliente.pessoa.cartaoConvenio.tipoConvenio}">
+                                        <f:selectItem noSelectionOption="true"
+                                                      itemLabel="Selecione Tipo convenio" />
+                                        <f:selectItems value="#{clienteBean.convenios}" var="tipoconvenio"
+                                                       itemValue="#{tipoconvenio}" itemLabel="#{tipoconvenio.descricao}" />
+                                    </p:selectOneMenu>
+
+
+
+                                    <p:outputLabel for="numerocartao" value="N.º Cartão:"/>
+                                    <p:outputLabel for="validade" value="Validade:"/>
+
+                                    <p:inputText id="numerocartao" value="#{clienteBean.cliente.pessoa.cartaoConvenio.numeroCartaoConvenio}" size="20"/>
+
+
+                                    <p:calendar id="validade" value="#{clienteBean.cliente.pessoa.cartaoConvenio.dataValidade}" size="12" locale="pt_BR"/>
+
+                                </h:panelGrid>
 
                             </p:panel>
 
                             <p:panel header="Observação">
-                                <p:inputTextarea rows="5" cols="90" counter="obs" maxlength="190" counterTemplate="{0} Caracteres restantes." autoResize="false"
+                                <p:inputTextarea rows="5" cols="94" counter="obs" maxlength="190" counterTemplate="{0} Caracteres restantes." autoResize="false"
                                                  value="#{clienteBean.cliente.observacao}"/>
                                 <br />
                                 <h:outputText id="obs"  />

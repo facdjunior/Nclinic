@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.ws.rs.client.Entity;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -73,21 +74,6 @@ public class ConvenioBean {
         
          try {
             
-            ConvenioService convenioService = new ConvenioService();
-                       
-            novo();
-            listar();
-            
-            Messages.addGlobalInfo("Registro gravado com sucesso");
-            
-        } catch (RuntimeException erro) {
-            
-            Messages.addGlobalError("Erro ao tentar gravar Registro");
-            erro.printStackTrace();
-        }
-/*
-        try {
-
             Client cliente = ClientBuilder.newClient();
             WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/convenio");
 
@@ -106,7 +92,7 @@ public class ConvenioBean {
         } catch (RuntimeException erro) {
             Messages.addGlobalError("Ocorreu um erro ao tentar salvar registro");
             erro.printStackTrace();
-        }*/
+        }
     }
 
     public void excluir(ActionEvent evento) {

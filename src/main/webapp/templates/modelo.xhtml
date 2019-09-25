@@ -15,14 +15,16 @@
     </h:head>
     <h:body>
 
-        <div id="geral">
+        
+            <div id="geral">
             <div id="topo" class="divTop">
-                
+
             </div>
 
             <div id="cabecalho" class="divCabecalho">
                 <h:form>
-                    <p:menubar>
+
+                    <p:menubar >
                         <p:submenu label="Cadastros" rendered="#{autenticacaoBean.temPermissoes(['A','G'])}">
                             <p:menuitem value="Estado"  url="estados.xhtml"/>
                             <p:menuitem value="Cidade" url="cidades.xhtml"/>
@@ -41,12 +43,14 @@
                         <p:submenu label="Ajuda">
                         </p:submenu>
                     </p:menubar>
-                </h:form>
-            </div>
-            <div id="conteudo" >
-                <ui:insert name="conteudo"/>
-            </div>
 
+                </h:form>
+
+                <div id="conteudo">
+                    <ui:insert name="conteudo"/>
+                </div>
+
+            </div>
         </div>
 
 

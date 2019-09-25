@@ -11,61 +11,62 @@
         <p:growl id="msg"/>
 
         <h:form id="formLista">
+            
 
-            <p:panel header="Clientes cadastrados">
-                <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
-                             paginator="true" value="#{clienteBean.clientes}" var="cliente" 
-                             rows="10" paginatorPosition="bottom" reflow="true">
-                    <f:facet name="footer">
-                        <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
-                                         actionListener="#{clienteBean.novo}" 
-                                         update=":msg :formCadastro:tabPrincipal">
-                            <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                        </p:commandButton>
-                    </f:facet>
+                <p:panel header="Clientes cadastrados">
+                    <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
+                                 paginator="true" value="#{clienteBean.clientes}" var="cliente" 
+                                 rows="10" paginatorPosition="bottom" reflow="true">
+                        <f:facet name="footer">
+                            <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
+                                             actionListener="#{clienteBean.novo}" 
+                                             update=":msg :formCadastro:tabPrincipal">
+                                <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                            </p:commandButton>
+                        </f:facet>
 
 
 
-                    <p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}" sortBy="#{cliente.pessoa.nome}">
-                        <h:outputText value="#{cliente.pessoa.nome}" />
-                    </p:column>
+                        <p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}" sortBy="#{cliente.pessoa.nome}">
+                            <h:outputText value="#{cliente.pessoa.nome}" />
+                        </p:column>
 
-                    <p:column headerText="Opções">
-                        <p:commandButton icon="ui-icon-trash"
-                                         actionListener="#{clienteBean.excluir}"
-                                         update=":msg :formLista:TblLista">
-                            <p:confirm header="Confirmação" message="Deseja excluir o resgistro selecionado?"
-                                       icon="ui-icon-alert" />
-                            <f:attribute name="clienteSelecionado" value="#{cliente}" />
-                        </p:commandButton>
+                        <p:column headerText="Opções">
+                            <p:commandButton icon="ui-icon-trash"
+                                             actionListener="#{clienteBean.excluir}"
+                                             update=":msg :formLista:TblLista">
+                                <p:confirm header="Confirmação" message="Deseja excluir o resgistro selecionado?"
+                                           icon="ui-icon-alert" />
+                                <f:attribute name="clienteSelecionado" value="#{cliente}" />
+                            </p:commandButton>
 
-                        <p:commandButton icon="ui-icon-pencil"
-                                         actionListener="#{clienteBean.editar}"
-                                         update=":formCadastro:pnlCad :formCadastro:tabPrincipal"
-                                         oncomplete="PF('dlgCadastro').show();">
-                            <f:attribute name="clienteSelecionado" value="#{cliente}" />
+                            <p:commandButton icon="ui-icon-pencil"
+                                             actionListener="#{clienteBean.editar}"
+                                             update=":formCadastro:pnlCad :formCadastro:tabPrincipal"
+                                             oncomplete="PF('dlgCadastro').show();">
+                                <f:attribute name="clienteSelecionado" value="#{cliente}" />
 
-                            <f:actionListener
-                                type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
+                                <f:actionListener
+                                    type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
 
-                <p:confirmDialog global="true">
-                    <p:commandButton value="Sim" type="button"
-                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                    <p:commandButton value="Não" type="button"
-                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                </p:confirmDialog>
-            </p:panel>
+                    <p:confirmDialog global="true">
+                        <p:commandButton value="Sim" type="button"
+                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button"
+                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </p:panel>
         </h:form>
 
         <p:dialog header="Cadastro de clientes" widgetVar="dlgCadastro"  responsive="true"
-                  draggable="false" resizable="false" modal="true" closable="false">
+                  draggable="false" resizable="false" modal="true">
 
 
             <h:form id="formCadastro">
-                <h:panelGrid id="pnlCad" columns="1">
+                <h:panelGrid id="pnlCad" columns="1" >
                     <p:tabView id="tabPrincipal">
                         <p:tab id="principal" title="Principal">
                             <p:panel header="Dados pessoais" >
@@ -348,7 +349,7 @@
                     <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>
                 </h:panelGrid>
 
-
+                
             </h:form>
 
         </p:dialog>

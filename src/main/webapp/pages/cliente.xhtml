@@ -77,8 +77,6 @@
                                             <p:inputMask id="cpf" mask="999.999.999-99" size="13"
                                                          value="#{clienteBean.cliente.pessoa.documento.cpf}" required="true" 
                                                          requiredMessage="Campo CPF é obrigatório" >  
-                                                <p:ajax event="blur" listener="#{clienteBean.dadosCliente()}"
-                                                        process="cpf" update=":formCadastro:tabPrincipal"/>
                                             </p:inputMask>
                                         </div>
                                     </div>
@@ -141,7 +139,7 @@
                                             <div class="col-xs-12 col-md-6">
                                                 <p:inputText id="txtCep" size="10" value="#{clienteBean.cliente.pessoa.endereco.cep}">
                                                     <p:ajax event="blur" listener="#{clienteBean.carregarEndereco()}"
-                                                            process="txtCep" update="pnlEndereco2"/>
+                                                            process="txtCep" update="pnlEndereco"/>
                                                 </p:inputText>
                                             </div>
                                         </div>
@@ -156,14 +154,14 @@
                                         <p:outputLabel value="N.º" />
                                         <p:inputText maxlength="5" size="6"
                                                      value="#{clienteBean.cliente.pessoa.endereco.numero}" 
-                                                     placeholder="#{clienteBean.endereco.numero}">
+                                                    >
 
                                         </p:inputText>
 
                                         <p:inputText id="ibge" value="#{clienteBean.cliente.pessoa.endereco.ibge}"
                                                      placeholder="#{clienteBean.endereco.ibge}" type="hidden"/>
                                         <p:inputText value="#{clienteBean.cliente.pessoa.endereco.cep}" type="hidden"
-                                                     placeholder="#{clienteBean.endereco.cep}"/>
+                                                    />
 
                                     </h:panelGrid>
 
@@ -171,23 +169,20 @@
                                         <p:outputLabel for="bairro" value="Bairro:" />
                                         <p:inputText id="bairro" maxlength="120" size="35"
                                                      value="#{clienteBean.cliente.pessoa.endereco.bairro}" 
-                                                     placeholder="#{clienteBean.endereco.bairro}" required="true"
+                                                    required="true"
                                                      requiredMessage="O campo 'Bairro' é obrigatório" />
 
                                         <p:outputLabel for="complemento" value="Complemento:" />
                                         <p:inputText id="complemento" maxlength="10" size="18"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.complemento}"
-                                                     placeholder="#{clienteBean.endereco.complemento}"/>
+                                                     value="#{clienteBean.cliente.pessoa.endereco.complemento}"/>
 
                                         <p:outputLabel for="localidade" value="Cidade:" />
                                         <p:inputText id="localidade" maxlength="10" size="18"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.localidade}"
-                                                     placeholder="#{clienteBean.endereco.localidade}"/>
+                                                     value="#{clienteBean.cliente.pessoa.endereco.localidade}"/>
 
                                         <p:outputLabel for="uf" value="UF" />
                                         <p:inputText id="uf" maxlength="10" size="10"
-                                                     value="#{clienteBean.cliente.pessoa.endereco.uf}" 
-                                                     placeholder="#{clienteBean.endereco.uf}"/>
+                                                     value="#{clienteBean.cliente.pessoa.endereco.uf}"/>
                                     </h:panelGrid>
 
                                 </h:panelGrid>

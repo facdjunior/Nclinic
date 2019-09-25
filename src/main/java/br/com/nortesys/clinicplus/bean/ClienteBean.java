@@ -76,7 +76,7 @@ public class ClienteBean implements Serializable {
     private String cep;
 
     private ServicoEndereco servico = new ServicoEndereco();
-    
+
     private ClienteService clienteService = new ClienteService();
 
     public String getCep() {
@@ -332,7 +332,7 @@ public class ClienteBean implements Serializable {
 
     public void salvar() {
         try {
-
+            dadosCliente();
             // pessoa.setSequencia(10L);
             if (cliente.getCodigo() == null) {
 
@@ -411,18 +411,28 @@ public class ClienteBean implements Serializable {
         }
     }
 
-    public Cliente carregarEndereco() {
-
+    public Endereco carregarEndereco() {
+        endereco = new Endereco();
+        
         com.sun.jersey.api.client.Client c = com.sun.jersey.api.client.Client.create();
         WebResource wr = c.resource("http://viacep.com.br/ws/" + this.cliente.getPessoa().getEndereco().getCep() + "/json/");
         System.out.println("CHAMOU O URI....");
 
-        this.cliente = clienteService.buscarEnderecoPor(wr.get(String.class));
+        this.endereco = servico.buscarEnderecoPor(wr.get(String.class));
         String JSON = wr.get(String.class);
 
         System.out.println(JSON);
+        this.cliente.getPessoa().getEndereco().setCep(endereco.getCep());
+        this.cliente.getPessoa().getEndereco().setComplemento(endereco.getComplemento());
+        this.cliente.getPessoa().getEndereco().setGia(endereco.getGia());
+        this.cliente.getPessoa().getEndereco().setIbge(endereco.getIbge());
+        this.cliente.getPessoa().getEndereco().setLocalidade(endereco.getLocalidade());
+        this.cliente.getPessoa().getEndereco().setLogradouro(endereco.getLogradouro());
+        this.cliente.getPessoa().getEndereco().setNumero(endereco.getNumero());
+        this.cliente.getPessoa().getEndereco().setUf(endereco.getUf());
+        this.cliente.getPessoa().getEndereco().setUnidade(endereco.getUnidade());
 
-        return this.cliente;
+        return this.endereco;
 
     }
 

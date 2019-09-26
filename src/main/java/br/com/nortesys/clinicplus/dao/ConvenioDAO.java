@@ -25,9 +25,6 @@ public class ConvenioDAO extends GenericDAO<Convenio>{
 
             Convenio convenio = (Convenio) consulta.uniqueResult();
 
-            if (consulta == null) {
-                convenio.setSequencia(1);
-            }
             return convenio;
 
         } catch (RuntimeException erro) {

@@ -38,7 +38,7 @@ public class Pessoa extends GenericDomain {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     @Expose(serialize = true)
-    private PessoaFisica pessoaFisica;
+    private PessoaFisica pessoaFisica = new PessoaFisica();
 
     @Column(length = 120)
     private String imagem;
@@ -56,9 +56,11 @@ public class Pessoa extends GenericDomain {
     private Documento documento;
     
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Expose(serialize = true)
     private InforAdicionais inforAdicionais;
     
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Expose(serialize = true)
     private CartaoConvenio cartaoConvenio;
 
     public CartaoConvenio getCartaoConvenio() {
@@ -148,6 +150,9 @@ public class Pessoa extends GenericDomain {
         this.endereco = new Endereco();
         this.pessoaFisica = new PessoaFisica();
         this.inforAdicionais = new InforAdicionais();
+        this.cartaoConvenio = new CartaoConvenio();
+        
+        
 
     }
 }

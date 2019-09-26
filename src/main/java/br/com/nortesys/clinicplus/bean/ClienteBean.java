@@ -1,5 +1,6 @@
 package br.com.nortesys.clinicplus.bean;
 
+import br.com.nortesys.clinicplus.dao.CartaoConvenioDAO;
 import br.com.nortesys.clinicplus.dao.ClienteDAO;
 import br.com.nortesys.clinicplus.dao.ContatoDAO;
 import br.com.nortesys.clinicplus.dao.ConvenioDAO;
@@ -78,7 +79,7 @@ public class ClienteBean implements Serializable {
     private Profissao profissao;
     private List<Profissao> profissaos;
 
-    private CartaoConvenio cartaoConvenio;
+    private CartaoConvenio cartaoConvenio = new CartaoConvenio();
     private List<CartaoConvenio> cartaoConvenios;
 
     private String cep;
@@ -310,9 +311,8 @@ public class ClienteBean implements Serializable {
         profissao = new Profissao();
         convenio = new Convenio();
         estadoCivil = new EstadoCivil();
-        tipoConvenio = new TipoConvenio();
+        pessoaFisica = new PessoaFisica();
 
-        
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaos = profissaoDAO.listar("Descricao");
 
@@ -321,7 +321,7 @@ public class ClienteBean implements Serializable {
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         estadoCivils = estadoCivilDAO.listar("Descricao");
-        
+
         TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
         tipoConvenios = tipoConvenioDAO.listar("Descricao");
 
@@ -340,7 +340,7 @@ public class ClienteBean implements Serializable {
                 if (resultadoPessoaFisica == null) {
                     this.cliente.getPessoa().getPessoaFisica().setSequencia(1);
                     this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
-                    this.cliente.getPessoa().getPessoaFisica().setIdade(pessoaFisicaDAO.idade());
+
                 } else {
                     this.cliente.getPessoa().getPessoaFisica().setSequencia(resultadoPessoaFisica.getSequencia() + 1);
                     this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
@@ -395,6 +395,19 @@ public class ClienteBean implements Serializable {
                     this.cliente.getPessoa().getDocumento().setSequencia(resultadoDocumento.getSequencia() + 1);
                     this.cliente.getPessoa().getDocumento().setDataCadastro(new Date());
 
+                }
+
+                CartaoConvenioDAO cartaoConvenioDAO = new CartaoConvenioDAO();
+                CartaoConvenio resultadoCartao = (CartaoConvenio) cartaoConvenioDAO.listarSequencia();
+
+                if (resultadoCartao == null) {
+                    this.cliente.getPessoa().getCartaoConvenio().setSequencia(1L);
+                    this.cliente.getPessoa().getCartaoConvenio().setDataCadastro(new Date());
+                    this.cliente.getPessoa().getCartaoConvenio().setPessoa(pessoa);
+                } else {
+                    this.cliente.getPessoa().getCartaoConvenio().setDataCadastro(new Date());
+                    this.cliente.getPessoa().getCartaoConvenio().setSequencia(resultadoCartao.getSequencia() + 1L);
+                    this.cliente.getPessoa().getCartaoConvenio().setPessoa(pessoa);
                 }
 
             } catch (RuntimeException erro) {
@@ -457,13 +470,13 @@ public class ClienteBean implements Serializable {
 
             ClienteDAO clienteDAO = new ClienteDAO();
             clientes = clienteDAO.listar();
-            
+
             ConvenioDAO convenioDAO = new ConvenioDAO();
             convenios = convenioDAO.listar("Descricao");
-            
+
             TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
             tipoConvenios = tipoConvenioDAO.listar("Descricao");
-            
+
         } catch (Exception erro) {
 
             Messages.addGlobalError("Ocorreu um erro ao gerar lista de estado civil");
@@ -506,20 +519,13 @@ public class ClienteBean implements Serializable {
         this.cliente.getPessoa().getEndereco().setIbge(endereco.getIbge());
         this.cliente.getPessoa().getEndereco().setLocalidade(endereco.getLocalidade());
         this.cliente.getPessoa().getEndereco().setLogradouro(endereco.getLogradouro());
+        this.cliente.getPessoa().getEndereco().setBairro(endereco.getBairro());
         this.cliente.getPessoa().getEndereco().setNumero(endereco.getNumero());
         this.cliente.getPessoa().getEndereco().setUf(endereco.getUf());
         this.cliente.getPessoa().getEndereco().setUnidade(endereco.getUnidade());
 
         return this.endereco;
 
-    }
-
-    public String IdadeCalcular() {
-
-        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
-        pessoaFisicaDAO.idade();
-
-        return IdadeCalcular();
     }
 
 }

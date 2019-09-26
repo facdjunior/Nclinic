@@ -25,9 +25,6 @@ public class ContatoDAO extends GenericDAO<Contato> {
 
             Contato contato = (Contato) consulta.uniqueResult();
 
-            if (consulta == null) {
-                contato.setSequencia(1L);
-            }
             return contato;
 
         } catch (RuntimeException erro) {

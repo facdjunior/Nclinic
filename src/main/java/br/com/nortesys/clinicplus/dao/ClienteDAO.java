@@ -1,19 +1,15 @@
 package br.com.nortesys.clinicplus.dao;
 
 import br.com.nortesys.clinicplus.domain.Cliente;
-import br.com.nortesys.clinicplus.domain.Pessoa;
-import br.com.nortesys.clinicplus.domain.PessoaFisica;
 
 import br.com.nortesys.clinicplus.util.HibernateUtil;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.omnifaces.util.Messages;
+
 
 /**
  *

@@ -25,9 +25,7 @@ public class EnderecoDAO extends GenericDAO<Endereco> {
 
             Endereco endereco = (Endereco) consulta.uniqueResult();
 
-            if (consulta == null) {
-                endereco.setSequencia(1L);
-            }
+           
             return endereco;
 
         } catch (RuntimeException erro) {

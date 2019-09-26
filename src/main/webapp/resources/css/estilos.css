@@ -22,7 +22,7 @@
 }
 
 .buttonbar{
-    position: absolute;
+    position: fixed;
     bottom: 1;
     right: 1;
     margin:2px;
@@ -30,5 +30,12 @@
 .ui-panelgrid {
    border: none;  
 }
+.buttom
+{
+    float: left;
+    padding: 10px;
+    font-family: Cambria;
+    text-align: left;
+ }
 
 .semBorda tr, .semBorda td {     border: none; }

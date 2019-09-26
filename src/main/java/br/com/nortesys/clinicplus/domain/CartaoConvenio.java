@@ -1,14 +1,13 @@
 package br.com.nortesys.clinicplus.domain;
 
-
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +18,7 @@ import javax.persistence.TemporalType;
  */
 @SuppressWarnings("serial")
 @Entity
-public class CartaoConvenio extends GenericDomain{
+public class CartaoConvenio extends GenericDomain {
     
     @Column(nullable = false)
     @Expose
@@ -29,7 +28,7 @@ public class CartaoConvenio extends GenericDomain{
     @Expose
     private String TipoPlano;
 
-    @Column(length=90)
+    @Column(length = 90)
     @Expose
     private String Acomodacao;
 
@@ -51,14 +50,16 @@ public class CartaoConvenio extends GenericDomain{
 
     @OneToOne(cascade = CascadeType.ALL)
     @Expose
+    @JoinColumn(nullable = false)
     private Pessoa pessoa;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     @Expose
     private Convenio convenio;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     @Expose
+    @JoinColumn(nullable = false)
     private TipoConvenio tipoConvenio;
 
     public Convenio getConvenio() {
@@ -76,7 +77,7 @@ public class CartaoConvenio extends GenericDomain{
     public void setTipoConvenio(TipoConvenio tipoConvenio) {
         this.tipoConvenio = tipoConvenio;
     }
-    
+
     public Long getSequencia() {
         return Sequencia;
     }
@@ -140,5 +141,8 @@ public class CartaoConvenio extends GenericDomain{
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
-    
- }
+
+    public CartaoConvenio() {
+        convenio = new Convenio();
+    }
+}

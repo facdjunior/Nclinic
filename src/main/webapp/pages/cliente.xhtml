@@ -11,54 +11,59 @@
         <p:growl id="msg"/>
 
         <h:form id="formLista">
-            
-
-                <p:panel header="Clientes cadastrados">
-                    <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
-                                 paginator="true" value="#{clienteBean.clientes}" var="cliente" 
-                                 rows="10" paginatorPosition="bottom" reflow="true">
-                        <f:facet name="footer">
-                            <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
-                                             actionListener="#{clienteBean.novo}" 
-                                             update=":msg :formCadastro:tabPrincipal">
-                                <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                            </p:commandButton>
-                        </f:facet>
 
 
+            <p:panel header="Clientes cadastrados">
+                <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
+                             paginator="true" value="#{clienteBean.clientes}" var="cliente" 
+                             rows="10" paginatorPosition="bottom" reflow="true">
+                    <f:facet name="footer">
+                        <div align="left">
+                            
+                        
+                        <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
+                                         actionListener="#{clienteBean.novo}" 
+                                         update=":msg :formCadastro:tabPrincipal">
+                            <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+                            
+                            </div>
+                    </f:facet>
 
-                        <p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}" sortBy="#{cliente.pessoa.nome}">
-                            <h:outputText value="#{cliente.pessoa.nome}" />
-                        </p:column>
 
-                        <p:column headerText="Opções">
-                            <p:commandButton icon="ui-icon-trash"
-                                             actionListener="#{clienteBean.excluir}"
-                                             update=":msg :formLista:TblLista">
-                                <p:confirm header="Confirmação" message="Deseja excluir o resgistro selecionado?"
-                                           icon="ui-icon-alert" />
-                                <f:attribute name="clienteSelecionado" value="#{cliente}" />
-                            </p:commandButton>
 
-                            <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{clienteBean.editar}"
-                                             update=":formCadastro:pnlCad :formCadastro:tabPrincipal"
-                                             oncomplete="PF('dlgCadastro').show();">
-                                <f:attribute name="clienteSelecionado" value="#{cliente}" />
+                    <p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}" sortBy="#{cliente.pessoa.nome}">
+                        <h:outputText value="#{cliente.pessoa.nome}" />
+                    </p:column>
 
-                                <f:actionListener
-                                    type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
+                    <p:column headerText="Opções">
+                        <p:commandButton icon="ui-icon-trash"
+                                         actionListener="#{clienteBean.excluir}"
+                                         update=":msg :formLista:TblLista">
+                            <p:confirm header="Confirmação" message="Deseja excluir o resgistro selecionado?"
+                                       icon="ui-icon-alert" />
+                            <f:attribute name="clienteSelecionado" value="#{cliente}" />
+                        </p:commandButton>
 
-                    <p:confirmDialog global="true">
-                        <p:commandButton value="Sim" type="button"
-                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                        <p:commandButton value="Não" type="button"
-                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                    </p:confirmDialog>
-                </p:panel>
+                        <p:commandButton icon="ui-icon-pencil"
+                                         actionListener="#{clienteBean.editar}"
+                                         update=":formCadastro:pnlCad :formCadastro:tabPrincipal"
+                                         oncomplete="PF('dlgCadastro').show();">
+                            <f:attribute name="clienteSelecionado" value="#{cliente}" />
+
+                            <f:actionListener
+                                type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </p:panel>
         </h:form>
 
         <p:dialog header="Cadastro de clientes" widgetVar="dlgCadastro"  responsive="true"
@@ -102,12 +107,13 @@
 
                                 </h:panelGrid>
 
-                                <h:panelGrid id="pnlCadastro" columns="3" title="Dados Pessoais">
+                                <h:panelGrid id="pnlCadastro" columns="4" title="Dados Pessoais">
 
 
                                     <p:outputLabel value="Naturalidade"/>
                                     <p:outputLabel value="Sexo"/>
                                     <p:outputLabel for="estadoCivil" value="Estado Civil:" />
+                                    <p:outputLabel for="etnia" value="Etnia"/>
 
                                     <p:inputText value="#{clienteBean.cliente.pessoa.pessoaFisica.naturalidade}"/>
 
@@ -116,20 +122,38 @@
                                         <f:selectItem itemLabel="Feminino" itemValue="F"/>
                                     </p:selectOneRadio>
 
-                                    <p:selectOneMenu id="estadoCivil" filter="true" required="true"
-                                                     requiredMessage="O campo 'Estado Civil' é obrigatório"
+                                    <p:selectOneMenu id="estadoCivil" filter="true" required="true" requiredMessage="O campo 'Estado Civil' é obrigatório"
                                                      converter="omnifaces.SelectItemsConverter"
-                                                     value="#{clienteBean.cliente.pessoa.pessoaFisica.estadoCivil}"
-                                                     >
-                                        <f:selectItem noSelectionOption="true"
-                                                      itemLabel="Selecione Estado Civil" />
-                                        <f:selectItems value="#{clienteBean.estadoCivils}" var="civil"
-                                                       itemValue="#{civil}" itemLabel="#{civil.descricao}" />
+                                                     value="#{clienteBean.cliente.pessoa.pessoaFisica.estadoCivil}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione Estado Civil" />
+                                        <f:selectItems value="#{clienteBean.estadoCivils}" var="civil" itemValue="#{civil}" itemLabel="#{civil.descricao}" />
                                     </p:selectOneMenu>
 
+                                    <p:selectOneMenu id="etnia" value="#{clienteBean.cliente.pessoa.inforAdicionais.raça}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione Raça" />
+                                        <f:selectItem itemValue="Branca" itemLabel="Branca" />
+                                        <f:selectItem itemValue="Parda" itemLabel="Parda" />
+                                        <f:selectItem itemValue="Negra" itemLabel="Negra" />
+                                        <f:selectItem itemValue="Indígena" itemLabel="Indígena" />
+                                        <f:selectItem itemValue="Oriental" itemLabel="Oriental" />
+                                        <f:selectItem itemValue="Asiática" itemLabel="Asiática" />
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel for="tipoSanquineo" value="Tipo Sanguíneo"/>
                                     <p:outputLabel value="RG:"/>
                                     <p:outputLabel value="Orgão Emissor"/>
                                     <p:outputLabel value="Expedição RG"/>
+
+                                    <p:selectOneMenu id="tipoSanquineo" value="#{clienteBean.cliente.pessoa.inforAdicionais.tipoSanguineo}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Tipo Sanguíneo" />
+                                        <f:selectItem itemValue="O-" itemLabel="O-" />
+                                        <f:selectItem itemValue="O+" itemLabel="O+" />
+                                        <f:selectItem itemValue="A-" itemLabel="A-" />
+                                        <f:selectItem itemValue="A+" itemLabel="A+" />
+                                        <f:selectItem itemValue="B-" itemLabel="B-" />
+                                        <f:selectItem itemValue="AB-" itemLabel="AB-" />
+                                        <f:selectItem itemValue="AB+" itemLabel="AB+" />
+                                    </p:selectOneMenu>
 
                                     <p:inputText value="#{clienteBean.cliente.pessoa.documento.rg}"/>
                                     <p:inputText value="#{clienteBean.cliente.pessoa.documento.orgaoEmissor}"/>
@@ -205,36 +229,6 @@
                             </p:panel>
                         </p:tab>
                         <p:tab id="detalhe" title="Detalhes">
-                            <p:panel header="Dados cadastrais">
-                                <h:panelGrid id="pnlDadosCadastrais" columns="2" >
-
-                                    <p:outputLabel for="tipoSanquineo" value="Tipo Sanguíneo"/>
-                                    <p:outputLabel for="etnia" value="Etnia"/>
-
-                                    <p:selectOneMenu id="tipoSanquineo" value="#{clienteBean.cliente.pessoa.inforAdicionais.tipoSanguineo}">
-                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione fator Sanguíneo" />
-                                        <f:selectItem itemValue="O-" itemLabel="O-" />
-                                        <f:selectItem itemValue="O+" itemLabel="O+" />
-                                        <f:selectItem itemValue="A-" itemLabel="A-" />
-                                        <f:selectItem itemValue="A+" itemLabel="A+" />
-                                        <f:selectItem itemValue="B-" itemLabel="B-" />
-                                        <f:selectItem itemValue="AB-" itemLabel="AB-" />
-                                        <f:selectItem itemValue="AB+" itemLabel="AB+" />
-                                    </p:selectOneMenu>
-
-                                    <p:selectOneMenu id="etnia" value="#{clienteBean.cliente.pessoa.inforAdicionais.raça}">
-                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione uma Etnia" />
-                                        <f:selectItem itemValue="Branca" itemLabel="Branca" />
-                                        <f:selectItem itemValue="Parda" itemLabel="Parda" />
-                                        <f:selectItem itemValue="Negra" itemLabel="Negra" />
-                                        <f:selectItem itemValue="Indígena" itemLabel="Indígena" />
-                                        <f:selectItem itemValue="Oriental" itemLabel="Oriental" />
-                                        <f:selectItem itemValue="Asiática" itemLabel="Asiática" />
-                                    </p:selectOneMenu>
-
-
-                                </h:panelGrid>
-                            </p:panel>
 
                             <p:panel header="Filiação">
                                 <h:panelGrid id="pnlFiliacao" columns="2" >
@@ -278,13 +272,14 @@
                                         <f:selectItem itemValue="Pós-Doutorado" itemLabel="Pós-Doutorado" />
                                     </p:selectOneMenu>
 
-                                    <p:selectOneMenu id="profissao" filter="true" 
+                                    <p:selectOneMenu id="profissao" filter="true" converter="omnifaces.SelectItemsConverter"
                                                      value="#{clienteBean.cliente.pessoa.pessoaFisica.profissao}">
-                                        <f:selectItem noSelectionOption="true" 
-                                                      itemLabel="Selecione uma profissão" />
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione uma profissão" />
                                         <f:selectItems value="#{clienteBean.profissaos}" var="profissao"
                                                        itemValue="#{profissao}" itemLabel="#{profissao.descricao}" />
                                     </p:selectOneMenu>
+                                    
+                                    
 
                                     <p:inputText id="localTrabalho" value="#{clienteBean.cliente.pessoa.inforAdicionais.localTrabalho}" size="25"/>
                                 </h:panelGrid>
@@ -298,43 +293,40 @@
 
 
                                     <p:selectOneMenu id="convenios" filter="true" converter="omnifaces.SelectItemsConverter"
-                                                     value="#{clienteBean.cliente.pessoa.cartaoConvenio.convenio}"
-                                                     >
-                                        <f:selectItem noSelectionOption="true"
-                                                      itemLabel="Selecione Convenio" />
-                                        <f:selectItems value="#{clienteBean.convenios}" var="convenios"
-                                                       itemValue="#{convenios}" itemLabel="#{convenios.descricao}" />
+                                                     value="#{clienteBean.cliente.pessoa.cartaoConvenio.convenio}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione Convenio" />
+                                        <f:selectItems value="#{clienteBean.convenios}" var="convenios" itemValue="#{convenios}" itemLabel="#{convenios.descricao}" />
                                     </p:selectOneMenu>
-
+                                    
                                     <p:selectOneMenu id="tipoConvenio" filter="true" converter="omnifaces.SelectItemsConverter"
                                                      value="#{clienteBean.cliente.pessoa.cartaoConvenio.tipoConvenio}">
                                         <f:selectItem noSelectionOption="true"
                                                       itemLabel="Selecione Tipo convenio" />
-                                        <f:selectItems value="#{clienteBean.convenios}" var="tipoconvenio"
+                                        <f:selectItems value="#{clienteBean.tipoConvenios}" var="tipoconvenio"
                                                        itemValue="#{tipoconvenio}" itemLabel="#{tipoconvenio.descricao}" />
                                     </p:selectOneMenu>
-
-
 
                                     <p:outputLabel for="numerocartao" value="N.º Cartão:"/>
                                     <p:outputLabel for="validade" value="Validade:"/>
 
                                     <p:inputText id="numerocartao" value="#{clienteBean.cliente.pessoa.cartaoConvenio.numeroCartaoConvenio}" size="20"/>
-
-
                                     <p:calendar id="validade" value="#{clienteBean.cliente.pessoa.cartaoConvenio.dataValidade}" size="12" locale="pt_BR"/>
 
                                 </h:panelGrid>
 
                             </p:panel>
 
+                        </p:tab>
+                        <p:tab id="detalhes" title="Observação">
+
                             <p:panel header="Observação">
                                 <p:inputTextarea rows="5" cols="94" counter="obs" maxlength="190" counterTemplate="{0} Caracteres restantes." autoResize="false"
                                                  value="#{clienteBean.cliente.observacao}"/>
-                                <br />
+                                <br/>
                                 <h:outputText id="obs"  />
 
                             </p:panel>
+
                         </p:tab>
 
                     </p:tabView>
@@ -349,7 +341,7 @@
                     <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>
                 </h:panelGrid>
 
-                
+
             </h:form>
 
         </p:dialog>

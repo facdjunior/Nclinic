@@ -22,7 +22,7 @@ public class Convenio extends GenericDomain {
 
     @Column(length = 90, nullable = false)
     private String Descricao;
-    
+
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date DataCadastro;
@@ -50,7 +50,9 @@ public class Convenio extends GenericDomain {
     public void setDataCadastro(Date DataCadastro) {
         this.DataCadastro = DataCadastro;
     }
-    
-    
+
+    public Convenio() {
+
+    }
 
 }

@@ -14,8 +14,6 @@ import javax.persistence.Transient;
  *
  * @author Francisco Junior
  */
-
-
 @SuppressWarnings("Serial")
 @Entity
 public class PessoaFisica extends GenericDomain {
@@ -32,10 +30,10 @@ public class PessoaFisica extends GenericDomain {
     private Integer Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Expose(serialize = true)
     private Date DataCadastro;
-    
+
     @Transient
     private String idade;
 
@@ -55,7 +53,7 @@ public class PessoaFisica extends GenericDomain {
     @Column(length = 30)
     @Expose(serialize = true)
     private String GrauEscolaridade;
-    
+
     private Character Tratamento;
 
     @ManyToOne
@@ -69,7 +67,7 @@ public class PessoaFisica extends GenericDomain {
     public void setIdade(String idade) {
         this.idade = idade;
     }
-    
+
     public Date getDataNascimento() {
         return DataNascimento;
     }
@@ -140,9 +138,5 @@ public class PessoaFisica extends GenericDomain {
 
     public void setTratamento(Character Tratamento) {
         this.Tratamento = Tratamento;
-    }
-    
-    public PessoaFisica(){
-        
     }
 }

@@ -146,6 +146,4 @@ public class InforAdicionais extends GenericDomain {
     public void setConjuge(String Conjuge) {
         this.Conjuge = Conjuge;
     }
-    
-    
 }

@@ -25,9 +25,6 @@ public class DocumentoDAO extends GenericDAO<Documento>{
 
             Documento documento = (Documento) consulta.uniqueResult();
 
-            if (consulta == null) {
-                documento.setSequencia(1);
-            }
             return documento;
 
         } catch (RuntimeException erro) {

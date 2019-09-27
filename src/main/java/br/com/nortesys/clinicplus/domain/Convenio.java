@@ -1,5 +1,6 @@
 package br.com.nortesys.clinicplus.domain;
 
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,13 +19,16 @@ import javax.persistence.TemporalType;
 public class Convenio extends GenericDomain {
 
     @Column(unique = true, nullable = false)
+    @Expose
     private Integer Sequencia;
 
     @Column(length = 90, nullable = false)
+    @Expose
     private String Descricao;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @Expose
     private Date DataCadastro;
 
     public Integer getSequencia() {

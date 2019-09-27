@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/modelo.xhtml">
+
+    <ui:define name="conteudo">
+        <p:growl id="msg"/>
+
+        <h:form id="formLista">
+
+
+            <p:panel header="Funcionarios cadastrados">
+                <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
+                             paginator="true" value="#{funcionarioBean.funcionarios}" var="funcionario" 
+                             rows="10" paginatorPosition="bottom" reflow="true">
+                    <f:facet name="footer">
+                        <div align="left">
+
+
+                            <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
+                                             actionListener="#{funcionarioBean.novo}" 
+                                             update=":msg :formCadastro:tabPrincipal">
+                                <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                            </p:commandButton>
+
+                        </div>
+                    </f:facet>
+
+
+
+                    <p:column headerText="Nome" filterBy="#{funcionario.pessoa.nome}" sortBy="#{funcionario.pessoa.nome}">
+                        <h:outputText value="#{funcionario.pessoa.nome}" />
+                    </p:column>
+
+                    <p:column headerText="Cargo" filterBy="#{funcionario.pessoa.pessoaFisica.profissao.descricao}">
+                        <h:outputText value="#{funcionario.pessoa.pessoaFisica.profissao.descricao}" />
+                    </p:column>
+
+                    <p:column headerText="Opções">
+                        <p:commandButton icon="ui-icon-trash"
+                                         actionListener="#{funcionarioBean.excluir}"
+                                         update=":msg :formLista:TblLista">
+                            <p:confirm header="Confirmação" message="Deseja excluir o resgistro selecionado?"
+                                       icon="ui-icon-alert" />
+                            <f:attribute name="funcionarioSelecionado" value="#{funcionario}" />
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-pencil"
+                                         actionListener="#{funcionarioBean.editar}"
+                                         update=":formCadastro:pnlCad :formCadastro:tabPrincipal"
+                                         oncomplete="PF('dlgCadastro').show();">
+                            <f:attribute name="funcionarioSelecionado" value="#{funcionario}" />
+
+                            <f:actionListener
+                                type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Sim" type="button"
+                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button"
+                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </p:panel>
+        </h:form>
+
+        <p:dialog header="Cadastro de funcionarios" widgetVar="dlgCadastro"  responsive="true"
+                  draggable="false" resizable="false" modal="true">
+
+
+            <h:form id="formCadastro">
+                <h:panelGrid id="pnlCad" columns="1" >
+                    <p:tabView id="tabPrincipal">
+                        <p:tab id="principal" title="Principal">
+                            <p:panel header="Dados pessoais" >
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <p:outputLabel for="cpf" value=" CPF:" />
+                                        <div class="col-xs-12 col-md-6">
+                                            <p:inputMask id="cpf" mask="999.999.999-99" size="13"
+                                                         value="#{funcionarioBean.funcionario.pessoa.documento.cpf}" required="true" 
+                                                         requiredMessage="Campo CPF é obrigatório" >  
+                                            </p:inputMask>
+                                        </div>
+                                    </div>
+                                    <div></div>
+
+                                </div>
+                                <h:panelGrid id="pnlNome" columns="3">
+
+                                    <p:outputLabel for="tratamento" value="Tratamento" />
+                                    <p:outputLabel for="nome" value="Nome:" />
+                                    <p:outputLabel  value="Data Nascimento" />
+
+
+                                    <p:selectOneMenu id="tratamento" value="#{funcionarioBean.funcionario.pessoa.pessoaFisica.tratamento}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Tratamento" />
+                                        <f:selectItem itemValue="1" itemLabel="Sr" />
+                                        <f:selectItem itemValue="2" itemLabel="Srª" />
+                                        <f:selectItem itemValue="3" itemLabel="Srta" />
+                                        <f:selectItem itemValue="4" itemLabel="Dr" />
+                                        <f:selectItem itemValue="5" itemLabel="Dra" />
+                                    </p:selectOneMenu>
+
+                                    <p:inputText id="nome" maxlength="120" size="65"
+                                                 value="#{funcionarioBean.funcionario.pessoa.nome}" required="true"
+                                                 requiredMessage="O campo 'Nome' é obrigatório" />
+                                    <p:calendar value="#{funcionarioBean.funcionario.pessoa.pessoaFisica.dataNascimento}" 
+                                                required="true"
+                                                requiredMessage="Favor informa data" size="12" locale="pt_BR">
+                                    </p:calendar>
+                                </h:panelGrid>
+
+                                <h:panelGrid id="pnlCadastro" columns="4" title="Dados Pessoais">
+
+
+                                    <p:outputLabel value="Sexo"/>
+                                    <p:outputLabel for="estadoCivil" value="Estado Civil:" />
+                                    <p:outputLabel for="tipoFuncionario" value="Tipo Funcionario" />
+                                    <p:outputLabel for="tipoSanquineo" value="Tipo Sanguíneo"/>
+
+                                    <p:selectOneRadio id="sexo" value="#{funcionarioBean.funcionario.pessoa.pessoaFisica.sexo}">
+                                        <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                                        <f:selectItem itemLabel="Feminino" itemValue="F"/>
+                                    </p:selectOneRadio>
+
+                                    <p:selectOneMenu id="estadoCivil" filter="true" required="true" requiredMessage="O campo 'Estado Civil' é obrigatório"
+                                                     converter="omnifaces.SelectItemsConverter"
+                                                     value="#{funcionarioBean.funcionario.pessoa.pessoaFisica.estadoCivil}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione Estado Civil" />
+                                        <f:selectItems value="#{funcionarioBean.estadoCivils}" var="civil" itemValue="#{civil}" itemLabel="#{civil.descricao}" />
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu id="tipoFuncionario" filter="true" required="true" requiredMessage="O campo 'Tipo funcionário' é obrigatório"
+                                                     converter="omnifaces.SelectItemsConverter"
+                                                     value="#{funcionarioBean.funcionario.tipoFuncionario}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Tipo funcionário" />
+                                        <f:selectItems value="#{funcionarioBean.tipoFuncionarios}" var="civil" itemValue="#{tipo}" itemLabel="#{tipo.descricao}" />
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu id="tipoSanquineo" value="#{funcionarioBean.funcionario.pessoa.inforAdicionais.tipoSanguineo}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Tipo Sanguíneo" />
+                                        <f:selectItem itemValue="O-" itemLabel="O-" />
+                                        <f:selectItem itemValue="O+" itemLabel="O+" />
+                                        <f:selectItem itemValue="A-" itemLabel="A-" />
+                                        <f:selectItem itemValue="A+" itemLabel="A+" />
+                                        <f:selectItem itemValue="B-" itemLabel="B-" />
+                                        <f:selectItem itemValue="AB-" itemLabel="AB-" />
+                                        <f:selectItem itemValue="AB+" itemLabel="AB+" />
+                                    </p:selectOneMenu>
+
+
+
+                                    <p:outputLabel value="RG:"/>
+                                    <p:outputLabel value="Orgão Emissor"/>
+                                    <p:outputLabel value="Expedição RG"/>
+                                    <p:outputLabel value="Naturalidade"/>
+
+                                    <p:inputText value="#{funcionarioBean.funcionario.pessoa.documento.rg}"/>
+                                    <p:inputText value="#{funcionarioBean.funcionario.pessoa.documento.orgaoEmissor}"/>
+                                    <p:calendar value="#{funcionarioBean.funcionario.pessoa.documento.dataEmissaoRg}" requiredMessage="Favor informa data" size="12" locale="pt_BR">
+                                    </p:calendar>
+                                    <p:inputText value="#{funcionarioBean.funcionario.pessoa.pessoaFisica.naturalidade}"/>
+
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel id="pnEndereco" header="Endereço">
+
+                                <h:panelGrid id="pnlEndereco" columns="1">
+
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <p:outputLabel for="txtCep" value="CEP:" />
+                                            <div class="col-xs-12 col-md-6">
+                                                <p:inputText id="txtCep" size="10" value="#{funcionarioBean.funcionario.pessoa.endereco.cep}">
+                                                    <p:ajax event="blur" listener="#{funcionarioBean.carregarEndereco()}"
+                                                            process="txtCep" update="pnlEndereco2"/>
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h:panelGrid id="pnlEndereco2" columns="3">
+
+                                        <p:outputLabel for="logradouro" value="Rua:" />
+                                        <p:outputLabel value="N.º" />
+                                        <p:outputLabel for="complemento" value="Complemento:" />
+
+                                        <p:inputText id="logradouro" maxlength="120" size="48"
+                                                     value="#{funcionarioBean.funcionario.pessoa.endereco.logradouro}" required="true"
+                                                     requiredMessage="O campo 'Rua' é obrigatório"/>
+                                        <p:inputText maxlength="5" size="6" value="#{funcionarioBean.funcionario.pessoa.endereco.numero}"/>
+                                        <p:inputText id="complemento" maxlength="11" size="30" value="#{funcionarioBean.funcionario.pessoa.endereco.complemento}"/>
+
+                                    </h:panelGrid>
+
+                                    <h:panelGrid id="pnlEndereco1" columns="4" columnClasses="grid" >
+                                        <p:outputLabel for="bairro" value="Bairro:" />
+                                        <p:outputLabel for="bairro" value="IBGE:" />
+                                        <p:outputLabel for="localidade" value="Cidade:" />
+                                        <p:outputLabel for="uf" value="UF" />
+
+                                        <p:inputText id="bairro" maxlength="120" size="37" value="#{funcionarioBean.funcionario.pessoa.endereco.bairro}" 
+                                                     required="true" requiredMessage="O campo 'Bairro' é obrigatório" />
+                                        <p:inputText id="ibge" size="6" value="#{funcionarioBean.funcionario.pessoa.endereco.ibge}"/>
+                                        <p:inputText id="localidade" maxlength="120" size="35" value="#{funcionarioBean.funcionario.pessoa.endereco.localidade}"/>
+                                        <p:inputText id="uf" maxlength="2" size="1" value="#{funcionarioBean.funcionario.pessoa.endereco.uf}"/>
+
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel header="Contato">
+                                <p:panelGrid id="pnlContato" columns="4" layout="grid" >
+
+                                    <p:outputLabel for="telefone" value="Tefefone "/>
+                                    <p:outputLabel for="telefones" value="Telefone 02: "/>
+                                    <p:outputLabel for="celular" value="Celular"/>
+                                    <p:outputLabel for="celulars" value="Celular"/>
+
+                                    <p:inputMask id="telefone" mask="(99)9999-9999" value="#{funcionarioBean.funcionario.pessoa.contato.fone}" size="16"/>
+                                    <p:inputMask id="telefones" mask="(99)9999-9999" value="#{funcionarioBean.funcionario.pessoa.contato.fone2}" size="16"/>
+                                    <p:inputMask id="celular" mask="(99)99999-9999" value="#{funcionarioBean.funcionario.pessoa.contato.celular}" size="18"/>
+                                    <p:inputMask id="celulars" mask="(99)99999-9999" value="#{funcionarioBean.funcionario.pessoa.contato.celular1}" size="18"/>
+                                </p:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="detalhe" title="Detalhes">
+
+                            <p:panel header="Filiação">
+                                <h:panelGrid id="pnlFiliacao" columns="2" >
+
+                                    <p:outputLabel for="mae" value="Mãe"/>
+
+                                    <p:outputLabel for="pai" value="Pai"/>
+
+                                    <p:inputText id="mae" value="#{funcionarioBean.funcionario.pessoa.inforAdicionais.nomeMae}" size="35"
+                                                 title="Nome da Mãe"/>
+
+                                    <p:inputText id="pai" value="#{funcionarioBean.funcionario.pessoa.inforAdicionais.nomePai}" size="35"
+                                                 title="Nome do Pai"/>
+
+                                    <p:outputLabel for="conjuge" value="Cônjuge"/>
+                                    <br></br>
+                                    <p:inputText id="conjuge" value="#{funcionarioBean.funcionario.pessoa.inforAdicionais.conjuge}" size="35"
+                                                 title="Conjuge"/>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel header="Dados Trabalho e Educação">
+                                <h:panelGrid columns="1" styleClass="semBorda" class="semBorda">
+
+                                    <p:outputLabel for="escolaridade" value="Escolaridade" title="Escolaridade"/>
+
+
+
+                                    <p:selectOneMenu id="escolaridade" value="#{funcionarioBean.funcionario.pessoa.pessoaFisica.grauEscolaridade}">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Informe escolaridade" />
+                                        <f:selectItem itemValue="Analfabeto" itemLabel="Analfabeto" />
+                                        <f:selectItem itemValue="Pré-escola" itemLabel="Pré-escola" />
+                                        <f:selectItem itemValue="Ensino Fundamental incompleto" itemLabel="Ensino fundamental incompleto" />
+                                        <f:selectItem itemValue="Ensino Fundamental completo" itemLabel="Ensino fundamental completo" />
+                                        <f:selectItem itemValue="Ensino Médio incompleto" itemLabel="Ensino médio incompleto" />
+                                        <f:selectItem itemValue="Ensino Médio completo" itemLabel="Ensino médio completo" />
+                                        <f:selectItem itemValue="Ensino Superior incompleto" itemLabel="Ensino Superior incompleto" />
+                                        <f:selectItem itemValue="Ensino Superior completo" itemLabel="Ensino Superior completo" />
+                                        <f:selectItem itemValue="Pós-graduado" itemLabel="Pós-graduado" />
+                                        <f:selectItem itemValue="Mestrado" itemLabel="Mestrado" />
+                                        <f:selectItem itemValue="Doutorado" itemLabel="Doutorado" />
+                                        <f:selectItem itemValue="Pós-Doutorado" itemLabel="Pós-Doutorado" />
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                    </p:tabView>
+                </h:panelGrid>
+
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Salvar" actionListener="#{funcionarioBean.salvar}"
+                                     update=":msg :formCadastro:pnlCad :formLista:TblLista">
+                        <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                    </p:commandButton>
+                    <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>
+                </h:panelGrid>
+
+
+            </h:form>
+
+        </p:dialog>
+    </ui:define>
+</ui:composition>

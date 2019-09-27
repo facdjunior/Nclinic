@@ -24,7 +24,7 @@ import br.com.nortesys.clinicplus.domain.Pessoa;
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.domain.Profissao;
 import br.com.nortesys.clinicplus.domain.TipoConvenio;
-import br.com.nortesys.clinicplus.service.ClienteService;
+
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
 import com.google.gson.Gson;
@@ -307,11 +307,11 @@ public class ClienteBean implements Serializable {
     public void novo() {
 
         cliente = new Cliente();
-        pessoa = new Pessoa();
+       // pessoa = new Pessoa();
         profissao = new Profissao();
         convenio = new Convenio();
         estadoCivil = new EstadoCivil();
-        pessoaFisica = new PessoaFisica();
+       // pessoaFisica = new PessoaFisica();
 
         ProfissaoDAO profissaoDAO = new ProfissaoDAO();
         profissaos = profissaoDAO.listar("Descricao");
@@ -403,11 +403,11 @@ public class ClienteBean implements Serializable {
                 if (resultadoCartao == null) {
                     this.cliente.getPessoa().getCartaoConvenio().setSequencia(1L);
                     this.cliente.getPessoa().getCartaoConvenio().setDataCadastro(new Date());
-                    this.cliente.getPessoa().getCartaoConvenio().setPessoa(pessoa);
+                   
                 } else {
                     this.cliente.getPessoa().getCartaoConvenio().setDataCadastro(new Date());
                     this.cliente.getPessoa().getCartaoConvenio().setSequencia(resultadoCartao.getSequencia() + 1L);
-                    this.cliente.getPessoa().getCartaoConvenio().setPessoa(pessoa);
+                    
                 }
 
             } catch (RuntimeException erro) {
@@ -476,6 +476,9 @@ public class ClienteBean implements Serializable {
 
             TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
             tipoConvenios = tipoConvenioDAO.listar("Descricao");
+            
+            ProfissaoDAO profissaoDAO = new ProfissaoDAO();
+            profissaos = profissaoDAO.listar("Descricao");
 
         } catch (Exception erro) {
 

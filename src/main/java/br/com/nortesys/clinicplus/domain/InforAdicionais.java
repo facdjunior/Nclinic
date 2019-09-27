@@ -55,6 +55,7 @@ public class InforAdicionais extends GenericDomain {
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
+    @Expose
     private Convenio convenio;
 
     public Convenio getConvenio() {

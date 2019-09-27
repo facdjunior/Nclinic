@@ -89,15 +89,15 @@ public class ClienteService {
         String saida = gson.toJson(cliente);
         return saida;
     }
-    
-     public Cliente buscarEnderecoPor(String urlJson){
-        
+
+    public Cliente buscarEnderecoPor(String urlJson) {
+
         System.out.println("Iniciou pesquisa....");
-        
+
         final GsonBuilder gsonBuilder = new GsonBuilder();
         final Gson gson = gsonBuilder.create();
         Gson g = new Gson();
-        
+
         Cliente retornoEndereco = gson.fromJson(urlJson, Cliente.class);
         return retornoEndereco;
     }

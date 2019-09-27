@@ -48,7 +48,7 @@ public class CartaoConvenio extends GenericDomain {
     @Expose
     private Date DataCadastro;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @Expose
     @JoinColumn(nullable = false)
     private Pessoa pessoa;
@@ -143,6 +143,7 @@ public class CartaoConvenio extends GenericDomain {
     }
 
     public CartaoConvenio() {
+        this.setPessoa(pessoa);
         convenio = new Convenio();
     }
 }

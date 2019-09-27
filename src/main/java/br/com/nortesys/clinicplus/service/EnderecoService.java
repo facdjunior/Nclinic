@@ -28,7 +28,7 @@ public class EnderecoService {
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         List<Endereco> enderecos = enderecoDAO.listar("codigo");
 
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(enderecos);
 
         return json;
@@ -42,7 +42,7 @@ public class EnderecoService {
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         Endereco endereco = enderecoDAO.buscar(codigo);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(endereco);
 
         return json;
@@ -52,7 +52,7 @@ public class EnderecoService {
     @POST
     public String salvar(String json) {
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         Endereco endereco = gson.fromJson(json, Endereco.class);
 
         EnderecoDAO enderecoDAO = new EnderecoDAO();
@@ -66,7 +66,7 @@ public class EnderecoService {
     @PUT
     public String editar(String json) {
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         Endereco endereco = gson.fromJson(json, Endereco.class);
 
         EnderecoDAO enderecoDAO = new EnderecoDAO();
@@ -86,7 +86,7 @@ public class EnderecoService {
         Endereco endereco = enderecoDAO.buscar(codigo);
         enderecoDAO.excluir(endereco);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String saida = gson.toJson(endereco);
         return saida;
     }

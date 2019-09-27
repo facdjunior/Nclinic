@@ -51,6 +51,8 @@ public class ClienteDAO extends GenericDAO<Cliente> {
             consulta.createAlias("p.contato", "c");
             consulta.createAlias("p.endereco", "e");
             consulta.createAlias("p.documento", "d");
+            consulta.createAlias("p.cartaoConvenio", "cc");
+            consulta.createAlias("p.inforAdicionais", "i");
 
             List<Cliente> resultado = consulta.list();
             return resultado;
@@ -71,6 +73,8 @@ public class ClienteDAO extends GenericDAO<Cliente> {
             consulta.createAlias("p.contato", "c");
             consulta.createAlias("p.endereco", "e");
             consulta.createAlias("p.documento", "d");
+            consulta.createAlias("p.cartaoConvenio", "cc");
+            consulta.createAlias("p.inforAdicionais", "i");
             consulta.add(Restrictions.idEq(codigo));
 
             Cliente resultado = (Cliente) consulta.uniqueResult();

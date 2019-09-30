@@ -2,21 +2,24 @@ package br.com.nortesys.clinicplus.domain;
 
 import com.google.gson.annotations.Expose;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
+
 import javax.persistence.TemporalType;
 
 /**
  *
  * @author Francisco Junior
  */
+@SuppressWarnings("serial")
+@Entity
 public class Funcionario extends GenericDomain{
     
     @Column(nullable = false)
@@ -29,7 +32,14 @@ public class Funcionario extends GenericDomain{
     @Expose
     private Date DataCadastro;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Temporal(TemporalType.DATE)
+    @Expose
+    private Date DataAdmissao;
+    
+    @Temporal(TemporalType.DATE)
+    private Date Demissao;
+    
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     @Expose
     private Pessoa pessoa;
@@ -71,8 +81,31 @@ public class Funcionario extends GenericDomain{
         this.tipoFuncionario = tipoFuncionario;
     }
     
+    public Date getDataAdmissao() {
+        return DataAdmissao;
+    }
+
+    public void setDataAdmissao(Date DataAdmissao) {
+        this.DataAdmissao = DataAdmissao;
+    }
+
+    public Date getDemissao() {
+        return Demissao;
+    }
+
+    public void setDemissao(Date Demissao) {
+        this.Demissao = Demissao;
+    }
+    
     public Funcionario(){
         
         pessoa = new Pessoa();
+        
+        this.pessoa.getContato().setPessoa(pessoa);
+        this.pessoa.getDocumento().setPessoa(pessoa);
+        this.pessoa.getEndereco().setPessoa(pessoa);
+        this.pessoa.getInforAdicionais().setPessoa(pessoa);
+                
     }
+    
 }

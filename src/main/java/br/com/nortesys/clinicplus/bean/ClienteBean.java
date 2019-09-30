@@ -437,7 +437,9 @@ public class ClienteBean implements Serializable {
                     cliente.setSequencia(resultadoCliente.getSequencia() + 1);
 
                 }
-                // dadosCliente();
+                ConvenioDAO convenioDAO = new ConvenioDAO();
+                convenioDAO.merge(convenio);
+                
                 clienteDAO.merge(cliente);
             } else {
 

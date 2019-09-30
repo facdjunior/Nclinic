@@ -12,7 +12,6 @@
 
         <h:form id="formLista">
 
-
             <p:panel header="Funcionarios cadastrados">
                 <p:dataTable id="TblLista" emptyMessage="Nenhum registro encontrado" 
                              paginator="true" value="#{funcionarioBean.funcionarios}" var="funcionario" 
@@ -29,8 +28,6 @@
 
                         </div>
                     </f:facet>
-
-
 
                     <p:column headerText="Nome" filterBy="#{funcionario.pessoa.nome}" sortBy="#{funcionario.pessoa.nome}">
                         <h:outputText value="#{funcionario.pessoa.nome}" />
@@ -142,7 +139,7 @@
                                                      converter="omnifaces.SelectItemsConverter"
                                                      value="#{funcionarioBean.funcionario.tipoFuncionario}">
                                         <f:selectItem noSelectionOption="true" itemLabel="Tipo funcionário" />
-                                        <f:selectItems value="#{funcionarioBean.tipoFuncionarios}" var="civil" itemValue="#{tipo}" itemLabel="#{tipo.descricao}" />
+                                        <f:selectItems value="#{funcionarioBean.tipoFuncionarios}" var="tpfuncionario" itemValue="#{tpfuncionario}" itemLabel="#{tpfuncionario.descricao}" />
                                     </p:selectOneMenu>
 
                                     <p:selectOneMenu id="tipoSanquineo" value="#{funcionarioBean.funcionario.pessoa.inforAdicionais.tipoSanguineo}">
@@ -155,8 +152,6 @@
                                         <f:selectItem itemValue="AB-" itemLabel="AB-" />
                                         <f:selectItem itemValue="AB+" itemLabel="AB+" />
                                     </p:selectOneMenu>
-
-
 
                                     <p:outputLabel value="RG:"/>
                                     <p:outputLabel value="Orgão Emissor"/>
@@ -182,7 +177,7 @@
                                             <div class="col-xs-12 col-md-6">
                                                 <p:inputText id="txtCep" size="10" value="#{funcionarioBean.funcionario.pessoa.endereco.cep}">
                                                     <p:ajax event="blur" listener="#{funcionarioBean.carregarEndereco()}"
-                                                            process="txtCep" update="pnlEndereco2"/>
+                                                            process="txtCep" update="pnlEndereco"/>
                                                 </p:inputText>
                                             </div>
                                         </div>
@@ -255,11 +250,11 @@
                             </p:panel>
 
                             <p:panel header="Dados Trabalho e Educação">
-                                <h:panelGrid columns="1" styleClass="semBorda" class="semBorda">
+                                <h:panelGrid columns="3" styleClass="semBorda" class="semBorda">
 
                                     <p:outputLabel for="escolaridade" value="Escolaridade" title="Escolaridade"/>
-
-
+                                    <p:outputLabel for="admissao" value="Data Admissão" title="Data Admissão"/>
+                                    <p:outputLabel for="demissao" value="Data Desligamento" title="Data Desligamento"/>
 
                                     <p:selectOneMenu id="escolaridade" value="#{funcionarioBean.funcionario.pessoa.pessoaFisica.grauEscolaridade}">
                                         <f:selectItem noSelectionOption="true" itemLabel="Informe escolaridade" />
@@ -277,13 +272,17 @@
                                         <f:selectItem itemValue="Pós-Doutorado" itemLabel="Pós-Doutorado" />
                                     </p:selectOneMenu>
 
+                                    <p:calendar id="admissao" value="#{funcionarioBean.funcionario.dataAdmissao}" requiredMessage="Favor informa data" size="12" locale="pt_BR">
+                                    </p:calendar>
+
+                                    <p:calendar id="demissao" value="#{funcionarioBean.funcionario.demissao}" requiredMessage="Favor informa data" size="15" locale="pt_BR">
+                                    </p:calendar>
+
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
-
                     </p:tabView>
                 </h:panelGrid>
-
 
                 <h:panelGrid columns="2">
                     <p:commandButton value="Salvar" actionListener="#{funcionarioBean.salvar}"
@@ -292,8 +291,6 @@
                     </p:commandButton>
                     <p:commandButton value="Fechar" oncomplete="PF('dlgCadastro').hide();"/>
                 </h:panelGrid>
-
-
             </h:form>
 
         </p:dialog>

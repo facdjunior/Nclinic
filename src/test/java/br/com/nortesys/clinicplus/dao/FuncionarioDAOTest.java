@@ -1,13 +1,15 @@
-
 package br.com.nortesys.clinicplus.dao;
 
 import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Contato;
+import br.com.nortesys.clinicplus.domain.Convenio;
 import br.com.nortesys.clinicplus.domain.Documento;
 import br.com.nortesys.clinicplus.domain.Endereco;
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
+import br.com.nortesys.clinicplus.domain.Funcionario;
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
+import br.com.nortesys.clinicplus.domain.TipoFuncionario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,13 +22,16 @@ import org.junit.Test;
  * @author Francisco
  */
 public class FuncionarioDAOTest {
-    
+
     @Test
     @Ignore
     public void salvar() throws ParseException {
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         EstadoCivil estadoCivil = estadoCivilDAO.buscar(1L);
+        
+        TipoFuncionarioDAO tipoFuncionarioDAO = new TipoFuncionarioDAO();
+        TipoFuncionario tipoFuncionario = tipoFuncionarioDAO.buscar(1L);
 
         PessoaFisica pessoaFisica = new PessoaFisica();
         PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
@@ -89,75 +94,77 @@ public class FuncionarioDAOTest {
 
         if (resultadoContato == null) {
 
-            contato.setCelular("(92)98395-0668");
-            contato.setDataCadastro(new Date());
-            contato.setFone("(92)3906-2716");
-         //   contato.setPessoa(pessoa);
-            contato.setSequencia(1L);
+            pessoa.getContato().setCelular("(92)98395-0668");
+            pessoa.getContato().setDataCadastro(new Date());
+            pessoa.getContato().setFone("(92)3906-2716");
+            pessoa.getContato().setPessoa(pessoa);
+            pessoa.getContato().setSequencia(1L);
 
         } else {
-            contato.setCelular("(92)98395-0668");
-            contato.setDataCadastro(new Date());
-            contato.setFone("(92)3906-2716");
-    //        contato.setPessoa(pessoa);
-            contato.setSequencia(resultadoContato.getSequencia() + 1);
+            pessoa.getContato().setCelular("(92)98395-0668");
+            pessoa.getContato().setDataCadastro(new Date());
+            pessoa.getContato().setFone("(92)3906-2716");
+            pessoa.getContato().setPessoa(pessoa);
+            pessoa.getContato().setSequencia(resultadoContato.getSequencia() + 1);
         }
-
-        pessoaDAO.salvar(pessoa);
-        contatoDAO.merge(contato);
 
         if (resultaEndereco == null) {
 
-            endereco.setAtivo(true);
-            endereco.setBairro("Monte das Oliveiras");
-            endereco.setLogradouro("Rua Muiratinga");
-            endereco.setCep("69093-129");
-            endereco.setSequencia(1L);
-            endereco.setComplemento("João teste Complemento");
-            endereco.setDataCadastro(new Date());
-            endereco.setNumero("310");
-            endereco.setPessoa(pessoa);
+            pessoa.getEndereco().setAtivo(true);
+            pessoa.getEndereco().setBairro("Monte das Oliveiras");
+            pessoa.getEndereco().setLogradouro("Rua Muiratinga");
+            pessoa.getEndereco().setCep("69093-129");
+            pessoa.getEndereco().setSequencia(1L);
+            pessoa.getEndereco().setComplemento("João teste Complemento");
+            pessoa.getEndereco().setDataCadastro(new Date());
+            pessoa.getEndereco().setNumero("310");
+            pessoa.getEndereco().setPessoa(pessoa);
 
         } else {
 
-            endereco.setAtivo(true);
-            endereco.setBairro("Monte das Oliveiras");
-            endereco.setLogradouro("Rua Muiratinga");
-            endereco.setCep("69093-129");
-            endereco.setSequencia(resultaEndereco.getSequencia() + 1);
-            endereco.setComplemento("João teste Complemento");
-            endereco.setDataCadastro(new Date());
-            endereco.setNumero("310");
-            
-            endereco.setPessoa(pessoa);
+            pessoa.getEndereco().setAtivo(true);
+            pessoa.getEndereco().setBairro("Monte das Oliveiras");
+            pessoa.getEndereco().setLogradouro("Rua Muiratinga");
+            pessoa.getEndereco().setCep("69093-129");
+            pessoa.getEndereco().setSequencia(resultaEndereco.getSequencia() + 1);
+            pessoa.getEndereco().setComplemento("João teste Complemento");
+            pessoa.getEndereco().setDataCadastro(new Date());
+            pessoa.getEndereco().setNumero("310");
+            pessoa.getEndereco().setPessoa(pessoa);
         }
-        enderecoDAO.merge(endereco);
+        //enderecoDAO.merge(endereco);
 
         if (resultadoDocumento == null) {
-            documento.setDataCadastro(new Date());
-            documento.setDescricao("405.076.621-30");
-           // documento.setPessoa(pessoa);
-            documento.setSequencia(1);
+            pessoa.getDocumento().setDataCadastro(new Date());
+            pessoa.getDocumento().setDescricao("405.076.621-30");
+            pessoa.getDocumento().setPessoa(pessoa);
+            pessoa.getDocumento().setSequencia(1);
         } else {
-            documento.setDataCadastro(new Date());
-            documento.setDescricao("405.076.621-30");
-           // documento.setPessoa(pessoa);
-            documento.setSequencia(resultadoDocumento.getSequencia() + 1);
+            pessoa.getDocumento().setDataCadastro(new Date());
+            pessoa.getDocumento().setDescricao("405.076.621-30");
+            pessoa.getDocumento().setPessoa(pessoa);
+            pessoa.getDocumento().setSequencia(resultadoDocumento.getSequencia() + 1);
         }
-        Cliente cliente = new Cliente();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente resultadoCliente = (Cliente) clienteDAO.listarSequencia();
+        Funcionario funcionario = new Funcionario();
+        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+        Funcionario resultadoFuncionario = (Funcionario) funcionarioDAO.listarSequencia();
 
-        if (resultadoCliente == null) {
-            cliente.setDataCadastro(new Date());
-            cliente.setPessoa(pessoa);
-            cliente.setSequencia(1);
+        if (resultadoFuncionario == null) {
+            funcionario.setDataCadastro(new Date());
+            funcionario.setPessoa(pessoa);
+            funcionario.setSequencia(1);
+            funcionario.setDataAdmissao(new Date());
+            funcionario.setTipoFuncionario(tipoFuncionario);
         } else {
-            cliente.setDataCadastro(new Date());
-            cliente.setPessoa(pessoa);
-            cliente.setSequencia(resultadoCliente.getSequencia() + 1);
+            funcionario.setDataCadastro(new Date());
+            funcionario.setPessoa(pessoa);
+            funcionario.setSequencia(resultadoFuncionario.getSequencia() + 1);
+            funcionario.setDataAdmissao(new Date());
+            funcionario.setTipoFuncionario(tipoFuncionario);
         }
-        clienteDAO.merge(cliente);
+        
+        
+        funcionarioDAO.merge(funcionario);
     }
 
     @Test
@@ -185,7 +192,7 @@ public class FuncionarioDAOTest {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro encontrados:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome()+ "Data Nascimento: "+cliente.getPessoa().getPessoaFisica().getDataNascimento());
+            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome() + "Data Nascimento: " + cliente.getPessoa().getPessoaFisica().getDataNascimento());
         }
     }
 
@@ -219,10 +226,10 @@ public class FuncionarioDAOTest {
             System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
 
             cliente.setDataCadastro(new Date());
-            
+
             System.out.println("Registro editado - Depois:");
             System.out.println(cliente.getCodigo() + " - " + cliente.getDataCadastro());
         }
     }
-    
+
 }

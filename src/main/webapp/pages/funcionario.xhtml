@@ -17,7 +17,7 @@
                              paginator="true" value="#{funcionarioBean.funcionarios}" var="funcionario" 
                              rows="10" paginatorPosition="bottom" reflow="true">
                     <f:facet name="footer">
-                        <div align="left">
+                        <div align="center">
 
 
                             <p:commandButton value="Novo" oncomplete="PF('dlgCadastro').show();" 
@@ -32,9 +32,9 @@
                     <p:column headerText="Nome" filterBy="#{funcionario.pessoa.nome}" sortBy="#{funcionario.pessoa.nome}">
                         <h:outputText value="#{funcionario.pessoa.nome}" />
                     </p:column>
-
-                    <p:column headerText="Cargo" filterBy="#{funcionario.pessoa.pessoaFisica.profissao.descricao}">
-                        <h:outputText value="#{funcionario.pessoa.pessoaFisica.profissao.descricao}" />
+                    
+                    <p:column headerText="Função" sortBy="#{funcionario.tipoFuncionario.descricao}" >
+                        <h:outputText value="#{funcionario.tipoFuncionario.descricao}" />
                     </p:column>
 
                     <p:column headerText="Opções">

@@ -253,7 +253,7 @@ public class FuncionarioBean implements Serializable {
     public void excluir(ActionEvent evento) {
 
         try {
-            funcionario = (Funcionario) evento.getComponent().getAttributes().get("estadoSelecionado");
+            funcionario = (Funcionario) evento.getComponent().getAttributes().get("funcionarioSelecionado");
 
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.excluir(funcionario);

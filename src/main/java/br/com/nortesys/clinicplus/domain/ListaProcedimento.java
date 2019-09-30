@@ -1,45 +1,37 @@
 package br.com.nortesys.clinicplus.domain;
 
-import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author Francisco Junior
- *
+ * @author Francisco
  */
 @SuppressWarnings("serial")
 @Entity
-public class Convenio extends GenericDomain {
-
-    @Column(unique = true, nullable = false)
-    @Expose
-    private Integer Sequencia;
-
-    @Column(length = 90, nullable = false)
-    @Expose
-    private String Descricao;
+public class ListaProcedimento extends GenericDomain {
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @Expose
-    private Date DataCadastro;
-    
-    @Column(length = 12)
-    @Expose
-    private String RegristroANS;
+    private Long Sequencia;
 
-    public Integer getSequencia() {
+    @Column(length = 190, nullable = false)
+    private String Descricao;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date DataCadastro;
+
+    @Column(length = 12)
+    private Long CodigoANS;
+
+    public Long getSequencia() {
         return Sequencia;
     }
 
-    public void setSequencia(Integer Sequencia) {
+    public void setSequencia(Long Sequencia) {
         this.Sequencia = Sequencia;
     }
 
@@ -59,16 +51,11 @@ public class Convenio extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public String getRegristroANS() {
-        return RegristroANS;
+    public Long getCodigoANS() {
+        return CodigoANS;
     }
 
-    public void setRegristroANS(String RegristroANS) {
-        this.RegristroANS = RegristroANS;
+    public void setCodigoANS(Long CodigoANS) {
+        this.CodigoANS = CodigoANS;
     }
-    
-    public Convenio() {
-
-    }
-
 }

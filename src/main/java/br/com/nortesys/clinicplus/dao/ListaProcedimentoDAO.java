@@ -3,16 +3,18 @@ package br.com.nortesys.clinicplus.dao;
 import br.com.nortesys.clinicplus.dao.GenericDAO;
 import br.com.nortesys.clinicplus.domain.ListaProcedimento;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author Francisco Junior
  */
-public class ListaProcedimentoDAO extends GenericDAO<ListaProcedimento>{
-    
+public class ListaProcedimentoDAO extends GenericDAO<ListaProcedimento> {
+
     @SuppressWarnings("unchecked")
     public ListaProcedimento listarSequencia() {
 
@@ -34,5 +36,6 @@ public class ListaProcedimentoDAO extends GenericDAO<ListaProcedimento>{
             sessao.close();
         }
     }
+
     
 }

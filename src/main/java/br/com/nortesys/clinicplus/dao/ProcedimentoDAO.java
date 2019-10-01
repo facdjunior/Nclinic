@@ -38,21 +38,24 @@ public class ProcedimentoDAO extends GenericDAO<Procedimento> {
         }
     }
     
-    public List<ListaProcedimento> listarProcedimento(String s)
-    {
-        Session sessao = HibernateUtil.getSessionFactory().openSession();
-        try
-        {
+    public ListaProcedimento buscarProcedimento(Long codigo) {
+
+          Session sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
             Criteria consulta = sessao.createCriteria(ListaProcedimento.class);
-            consulta.addOrder(Order.asc("Descricao"));
-            consulta.add(Restrictions.like("Descricao", s + "%"));
-            return consulta.list();
-        }finally
-        {
+
+            consulta.add(Restrictions.idEq(codigo));
+            ListaProcedimento resultado = (ListaProcedimento) consulta.uniqueResult();
+            
+            return resultado;
+            
+        } catch (RuntimeException erro) {
+            
+            throw erro;
+            
+        } finally {
             sessao.close();
         }
     }
-    
-}
+ }
 
-//https://respostas.guj.com.br/28523-autocomplete-com-primefaces-e-hibernate

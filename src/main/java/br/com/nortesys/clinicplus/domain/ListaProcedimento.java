@@ -25,7 +25,7 @@ public class ListaProcedimento extends GenericDomain {
     private Date DataCadastro;
 
     @Column(length = 12)
-    private Long CodigoANS;
+    private String CodigoANS;
 
     public Long getSequencia() {
         return Sequencia;
@@ -51,11 +51,13 @@ public class ListaProcedimento extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public Long getCodigoANS() {
+    public String getCodigoANS() {
         return CodigoANS;
     }
 
-    public void setCodigoANS(Long CodigoANS) {
+    public void setCodigoANS(String CodigoANS) {
         this.CodigoANS = CodigoANS;
     }
+
+    
 }

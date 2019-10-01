@@ -27,8 +27,8 @@
                         </p:commandButton>
 
                     </f:facet>
-                    <p:column headerText="Descrição" filterBy="#{procedimento.procedimento}" sortBy="#{procedimento.procedimento}">
-                        <h:outputText value="#{procedimento.procedimento}" />
+                    <p:column headerText="Descrição" filterBy="#{procedimento.listaProcedimento.descricao}" sortBy="#{procedimento.listaProcedimento.descricao}">
+                        <h:outputText value="#{procedimento.listaProcedimento.descricao}" />
                     </p:column>
 
                     <p:column headerText="Data Cadastro">
@@ -64,21 +64,51 @@
 
             </p:panel>
         </h:form>
-        <p:dialog header="Cadastro de tipo funcionario" widgetVar="dlgCadastro" 
+        <p:dialog header="Cadastro procedimento" widgetVar="dlgCadastro" 
                   draggable="false" resizable="false" modal="true" closable="false">
             <h:form id="formCadastro">
-                <h:panelGrid id="pnlCadastro" columns="2">
-                    <p:outputLabel value="Descrição"/>
-                    <p:inputText maxlength="45" size="30" value="#{procedimentoBean.procedimento.procedimento}"/>
+                <h:panelGrid id="pnlCadastro" columns="1">
 
-                    <p:outputLabel value="Registro ANS"/>
-                    <p:inputText maxlength="45" size="30" value="#{procedimentoBean.procedimento.codigoANS}"/>
 
-                    <p:outputLabel value="Min Length (3):" for="acMinLength" />
-                    <p:autoComplete id="acMinLength" minQueryLength="3" value="#{procedimentoBean.listaProcedimentos}" 
-                                    completeMethod="#{procedimentoBean.sugerirProcedimentos}" effect="fade" />
+                    <p:outputLabel value="Convênio" for="convenio" />
+                    <p:selectOneMenu id="convenio" filter="true" 
+                                     converter="omnifaces.SelectItemsConverter"
+                                     value="#{procedimentoBean.procedimento.convenio}" autoWidth="true">
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione uma profissão" />
+                        <f:selectItems value="#{procedimentoBean.convenios}" var="convenio"
+                                       itemValue="#{convenio}" itemLabel="#{convenio.descricao}" />
+                    </p:selectOneMenu>
 
-                   
+                    <p:outputLabel value="Procedimento" for="procedimento" />
+                    <p:selectOneMenu id="procedimento" filter="true" 
+                                     converter="omnifaces.SelectItemsConverter"
+                                     value="#{procedimentoBean.procedimento.listaProcedimento}" 
+                                     autoWidth="90" height="90">
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione uma profissão" />
+                        <f:selectItems value="#{procedimentoBean.listaProcedimentos}" var="procedimentos"
+                                       itemValue="#{procedimentos}" itemLabel="#{procedimentos.descricao}" />
+                        
+                    </p:selectOneMenu>
+
+                    <h:panelGrid id="pnlANS" columns="4" style="margin-bottom:10px" cellpadding="5">
+
+                        <p:outputLabel value="Código Procedimento"/>
+                        <p:inputText maxlength="45" size="25" value="#{procedimentoBean.procedimento.codigoProcedimento}"/>
+
+                    </h:panelGrid>
+                    <h:panelGrid id="pnlANS1" columns="6" style="margin-bottom:10px" cellpadding="5">
+
+                        <p:outputLabel for="valor" value="Valor Procedimento R$:"/>
+                        <p:inputText id="valor" value="#{procedimentoBean.procedimento.valorProcedimento}">
+                        <f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="eprodutokit" value="É produto Kit?"/>
+                        <p:selectBooleanCheckbox id="eprodutokit" value="#{procedimentoBean.procedimento.EProdutoKit}"/>
+
+                        <p:outputLabel for="esessao" value="É Sessão?"/>
+                        <p:selectBooleanCheckbox id="esessao" value="#{procedimentoBean.procedimento.ESessao}"/>
+                    </h:panelGrid>
 
                 </h:panelGrid>
                 <h:panelGrid columns="2">

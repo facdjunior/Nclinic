@@ -1,6 +1,8 @@
 package br.com.nortesys.clinicplus.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,21 +31,39 @@ public class Procedimento extends GenericDomain{
     @JoinColumn(nullable = false)
     private Convenio convenio;
     
-    @Column(nullable = false, length = 12)
-    private String CodigoANS;
-    
-    @Column(nullable = false, length = 190)
-    private String Procedimento;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private ListaProcedimento listaProcedimento;
     
     private Boolean ESessao;
     
     private Boolean EProdutoKit;
+    
     @Column(length = 12)
     private String CodigoProcedimento;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date DataAtualizacao;
+    
+    @Column(nullable = false, precision = 7, scale = 2)
+    private BigDecimal ValorProcedimento;
 
+    public BigDecimal getValorProcedimento() {
+        return ValorProcedimento;
+    }
+
+    public void setValorProcedimento(BigDecimal ValorProcedimento) {
+        this.ValorProcedimento = ValorProcedimento;
+    }
+    
+    public ListaProcedimento getListaProcedimento() {
+        return listaProcedimento;
+    }
+
+    public void setListaProcedimento(ListaProcedimento listaProcedimento) {
+        this.listaProcedimento = listaProcedimento;
+    }
+    
     public Long getSequencia() {
         return Sequencia;
     }
@@ -68,22 +88,6 @@ public class Procedimento extends GenericDomain{
         this.convenio = convenio;
     }
     
-    public String getCodigoANS() {
-        return CodigoANS;
-    }
-
-    public void setCodigoANS(String CodigoANS) {
-        this.CodigoANS = CodigoANS;
-    }
-
-    public String getProcedimento() {
-        return Procedimento;
-    }
-
-    public void setProcedimento(String Procedimento) {
-        this.Procedimento = Procedimento;
-    }
-
     public Boolean getESessao() {
         return ESessao;
     }
@@ -115,5 +119,6 @@ public class Procedimento extends GenericDomain{
     public void setDataAtualizacao(Date DataAtualizacao) {
         this.DataAtualizacao = DataAtualizacao;
     }
+    
     
 }

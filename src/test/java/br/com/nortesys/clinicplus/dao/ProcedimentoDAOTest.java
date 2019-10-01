@@ -40,15 +40,11 @@ public class ProcedimentoDAOTest {
 
                 procedimento.setSequencia(1L);
                 procedimento.setConvenio(convenio);
-                procedimento.setProcedimento(procedimentoSelecionado.getDescricao());
-                procedimento.setCodigoANS("10101012");
                 procedimento.setDataCadastro(new Date());
 
             } else {
                 procedimento.setSequencia(1L);
                 procedimento.setConvenio(convenio);
-                procedimento.setProcedimento(procedimentoSelecionado.getDescricao());
-                procedimento.setCodigoANS("10101012");
                 procedimento.setDataCadastro(new Date());
 
             }

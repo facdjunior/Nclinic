@@ -128,6 +128,9 @@ public class ProcedimentoBean implements Serializable {
             procedimentoDAO.merge(procedimento);
             Messages.addGlobalInfo("Registro Salvo com Sucesso");
             
+            novo();
+            listar();
+            
         } catch (RuntimeException erro) {
             
             Messages.addGlobalError("Erro ao tentar gravar registro!");

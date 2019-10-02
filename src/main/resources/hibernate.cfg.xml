@@ -14,15 +14,17 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.format_sql">true</property>
-
         <property name="hibernate.connection.autocommit">true</property>
+        
         <!-- Pool de Conexões -->
         <property name="hibernate.connection.pool_size">5</property>
+        
         <!-- Gerenciamento do Contexto das Sessões -->
         <property name="hibernate.current_session_context_class">thread</property>
     
         <!-- Cache de Segundo Nível -->
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+        
         <!-- Mostra as SQLs Geradas -->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
@@ -32,7 +34,6 @@
         <property name="hibernate.dbcp.initialSize">5</property>
         <property name="hibernate.dbcp.maxTotal">20</property>
         <property name="hibernate.dbcp.maxIdle">10</property>
-        
         <property name="hibernate.dbcp.minIdle">5</property>
         
        
@@ -48,17 +49,23 @@
         <mapping class="br.com.nortesys.clinicplus.domain.Funcionario"/>
         <mapping class="br.com.nortesys.clinicplus.domain.InforAdicionais"/>
         
+        <mapping class="br.com.nortesys.clinicplus.domain.LancamentoCaixa"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.LancamentoContasReceber"/>
         <mapping class="br.com.nortesys.clinicplus.domain.ListaProcedimento"/>
+        
+        <mapping class="br.com.nortesys.clinicplus.domain.ModalidadeLancamento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Pessoa"/>
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaFisica"/>
         
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaJuridica"/>
+        
         <mapping class="br.com.nortesys.clinicplus.domain.Procedimento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Profissao"/>
-        
         <mapping class="br.com.nortesys.clinicplus.domain.TipoConvenio"/>
+        
         <mapping class="br.com.nortesys.clinicplus.domain.TipoDocumento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoFuncionario"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.TipoLancamentos"/>
         
 
 

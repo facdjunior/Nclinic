@@ -1,37 +1,39 @@
-package br.com.nortesys.clinicplus.domain;
+package br.com.nortesys.clinicplus.domain.financeiro;
 
+import br.com.nortesys.clinicplus.domain.Cliente;
+import br.com.nortesys.clinicplus.domain.GenericDomain;
+import br.com.nortesys.clinicplus.domain.financeiro.TipoLancamentos;
 import java.math.BigDecimal;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
 @SuppressWarnings("serial")
 @Entity
-public class LancamentoCaixa extends GenericDomain{
+public class LancamentoContasReceber extends GenericDomain{
+    
     
     @Column(nullable = false)
     private Long Sequencia;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date DataCadastro;
-    
-    @Column(length = 120, nullable = false)
+    @Column(length = 190, nullable = false)
     private String Descricao;
     
     @OneToOne
     @JoinColumn(nullable = false)
-    private TipoLancamentos tipoLancamento;
+    private TipoLancamentos tipoLancamentos;
     
     @Column(nullable = false, precision = 7, scale = 2)
     private BigDecimal Valor;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Cliente cliente;
     
     @Column(length = 200)
     private String Observacao;
@@ -44,14 +46,6 @@ public class LancamentoCaixa extends GenericDomain{
         this.Sequencia = Sequencia;
     }
 
-    public Date getDataCadastro() {
-        return DataCadastro;
-    }
-
-    public void setDataCadastro(Date DataCadastro) {
-        this.DataCadastro = DataCadastro;
-    }
-
     public String getDescricao() {
         return Descricao;
     }
@@ -60,12 +54,12 @@ public class LancamentoCaixa extends GenericDomain{
         this.Descricao = Descricao;
     }
 
-    public TipoLancamentos getTipoLancamento() {
-        return tipoLancamento;
+    public TipoLancamentos getTipoLancamentos() {
+        return tipoLancamentos;
     }
 
-    public void setTipoLancamento(TipoLancamentos tipoLancamento) {
-        this.tipoLancamento = tipoLancamento;
+    public void setTipoLancamentos(TipoLancamentos tipoLancamentos) {
+        this.tipoLancamentos = tipoLancamentos;
     }
 
     public BigDecimal getValor() {
@@ -76,6 +70,14 @@ public class LancamentoCaixa extends GenericDomain{
         this.Valor = Valor;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public String getObservacao() {
         return Observacao;
     }
@@ -83,4 +85,7 @@ public class LancamentoCaixa extends GenericDomain{
     public void setObservacao(String Observacao) {
         this.Observacao = Observacao;
     }
+    
+    
+    
 }

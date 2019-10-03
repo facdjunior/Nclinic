@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/modelo.xhtml">
+
+    <ui:define name="conteudo">
+        <p:growl id="msg"/>
+        <h:form>
+            <p:schedule value="#{agendaBean.agendas}"/>    
+        </h:form>
+
+        <p:dialog header="Agendamento" draggable="false" closable="true" modal="true" resizable="false" visible="true">
+            <h:form>
+                <h:panelGrid title="Agendamento" columns="1">
+
+                    <p:outputLabel value="Funcionario "/>
+                    <p:selectOneMenu>
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Paciente"/>
+                    <p:autoComplete size="55">
+                    </p:autoComplete>
+
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Telefone"/>
+                        <p:outputLabel value="Celular"/>
+
+                        <p:inputMask mask="(99)9999-9999" size="24"/>
+                        <p:inputMask mask="(99)9999-9999" size="26"/>
+                    </h:panelGrid>
+                    
+                    
+                    <p:outputLabel value="Tipo atendimento "/>
+                    <p:selectOneMenu>
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Convenio "/>
+                    <p:selectOneMenu>
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel value="Procedimento"/>
+                    <p:selectOneMenu>
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
+                    </p:selectOneMenu>
+                    
+                    <p:editor height="200" width="400"  />
+                </h:panelGrid>
+            </h:form>
+
+        </p:dialog>
+
+
+
+    </ui:define>
+</ui:composition>
+

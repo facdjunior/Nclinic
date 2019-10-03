@@ -36,7 +36,6 @@
         <property name="hibernate.dbcp.maxIdle">10</property>
         <property name="hibernate.dbcp.minIdle">5</property>
         
-       
         <mapping class="br.com.nortesys.clinicplus.domain.CartaoConvenio"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Cliente"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Contato"/>
@@ -49,25 +48,26 @@
         <mapping class="br.com.nortesys.clinicplus.domain.Funcionario"/>
         <mapping class="br.com.nortesys.clinicplus.domain.InforAdicionais"/>
         
-        <mapping class="br.com.nortesys.clinicplus.domain.LancamentoCaixa"/>
-        <mapping class="br.com.nortesys.clinicplus.domain.LancamentoContasReceber"/>
         <mapping class="br.com.nortesys.clinicplus.domain.ListaProcedimento"/>
-        
-        <mapping class="br.com.nortesys.clinicplus.domain.ModalidadeLancamento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Pessoa"/>
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaFisica"/>
         
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaJuridica"/>
-        
         <mapping class="br.com.nortesys.clinicplus.domain.Procedimento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Profissao"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoConvenio"/>
         
         <mapping class="br.com.nortesys.clinicplus.domain.TipoDocumento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoFuncionario"/>
-        <mapping class="br.com.nortesys.clinicplus.domain.TipoLancamentos"/>
         
+        
+        <mapping class="br.com.nortesys.clinicplus.domain.financeiro.Caixa"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.financeiro.CaixaAberturaFechamento"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.financeiro.LancamentoCaixa"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.financeiro.LancamentoContasReceber"/>
 
-
+        <mapping class="br.com.nortesys.clinicplus.domain.financeiro.ModalidadeLancamento"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.financeiro.TipoLancamentos"/>
+        
     </session-factory>
 </hibernate-configuration>

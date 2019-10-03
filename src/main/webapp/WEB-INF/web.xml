@@ -77,7 +77,7 @@
     
     
     <welcome-file-list>
-        <welcome-file>pages/tipofuncionario.xhtml</welcome-file>
+        <welcome-file>pages/principal.xhtml</welcome-file>
     </welcome-file-list>
     
 </web-app>

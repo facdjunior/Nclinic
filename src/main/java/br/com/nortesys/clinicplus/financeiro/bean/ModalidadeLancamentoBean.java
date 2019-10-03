@@ -1,6 +1,6 @@
-package br.com.nortesys.clinicplus.bean;
+package br.com.nortesys.clinicplus.financeiro.bean;
 
-import br.com.nortesys.clinicplus.domain.ModalidadeLancamento;
+import br.com.nortesys.clinicplus.domain.financeiro.ModalidadeLancamento;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;

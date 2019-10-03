@@ -2,8 +2,8 @@ package br.com.nortesys.clinicplus.service;
 
 import br.com.nortesys.clinicplus.dao.ModalidadeLancamentoDAO;
 import br.com.nortesys.clinicplus.dao.TipoLancamentoDAO;
-import br.com.nortesys.clinicplus.domain.ModalidadeLancamento;
-import br.com.nortesys.clinicplus.domain.TipoLancamentos;
+import br.com.nortesys.clinicplus.domain.financeiro.ModalidadeLancamento;
+import br.com.nortesys.clinicplus.domain.financeiro.TipoLancamentos;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.Date;

@@ -1,6 +1,6 @@
 package br.com.nortesys.clinicplus.dao;
 
-import br.com.nortesys.clinicplus.domain.ModalidadeLancamento;
+import br.com.nortesys.clinicplus.domain.financeiro.ModalidadeLancamento;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

@@ -1,5 +1,6 @@
-package br.com.nortesys.clinicplus.domain;
+package br.com.nortesys.clinicplus.domain.financeiro;
 
+import br.com.nortesys.clinicplus.domain.GenericDomain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,23 +13,29 @@ import javax.persistence.TemporalType;
  */
 @SuppressWarnings("serial")
 @Entity
-public class ModalidadeLancamento extends GenericDomain{
+public class Caixa extends GenericDomain{
     
     @Column(nullable = false)
-    private Integer Sequencia;
+    private Long Sequencia;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
     
-    @Column(length = 90, nullable = false)
+    @Column(length = 3, nullable = false)
+    private String NumeroCaixa;
+    
+    @Column(length = 60, nullable = false)
     private String Descricao;
+    
+    @Column(nullable = false)
+    private Boolean Ativo;
 
-    public Integer getSequencia() {
+    public Long getSequencia() {
         return Sequencia;
     }
 
-    public void setSequencia(Integer Sequencia) {
+    public void setSequencia(Long Sequencia) {
         this.Sequencia = Sequencia;
     }
 
@@ -40,6 +47,14 @@ public class ModalidadeLancamento extends GenericDomain{
         this.DataCadastro = DataCadastro;
     }
 
+    public String getNumeroCaixa() {
+        return NumeroCaixa;
+    }
+
+    public void setNumeroCaixa(String NumeroCaixa) {
+        this.NumeroCaixa = NumeroCaixa;
+    }
+
     public String getDescricao() {
         return Descricao;
     }
@@ -47,7 +62,12 @@ public class ModalidadeLancamento extends GenericDomain{
     public void setDescricao(String Descricao) {
         this.Descricao = Descricao;
     }
-    
-    
-    
+
+    public Boolean getAtivo() {
+        return Ativo;
+    }
+
+    public void setAtivo(Boolean Ativo) {
+        this.Ativo = Ativo;
+    }
 }

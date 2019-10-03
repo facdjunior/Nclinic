@@ -1,8 +1,8 @@
-package br.com.nortesys.clinicplus.bean;
+package br.com.nortesys.clinicplus.financeiro.bean;
 
 import br.com.nortesys.clinicplus.dao.ModalidadeLancamentoDAO;
-import br.com.nortesys.clinicplus.domain.ModalidadeLancamento;
-import br.com.nortesys.clinicplus.domain.TipoLancamentos;
+import br.com.nortesys.clinicplus.domain.financeiro.ModalidadeLancamento;
+import br.com.nortesys.clinicplus.domain.financeiro.TipoLancamentos;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.Arrays;

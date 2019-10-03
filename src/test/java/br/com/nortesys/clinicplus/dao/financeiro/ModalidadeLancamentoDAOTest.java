@@ -1,6 +1,7 @@
-package br.com.nortesys.clinicplus.dao;
+package br.com.nortesys.clinicplus.dao.financeiro;
 
-import br.com.nortesys.clinicplus.domain.ModalidadeLancamento;
+import br.com.nortesys.clinicplus.dao.ModalidadeLancamentoDAO;
+import br.com.nortesys.clinicplus.domain.financeiro.ModalidadeLancamento;
 import java.util.Date;
 import java.util.List;
 import org.junit.Ignore;

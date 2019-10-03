@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
 public class ContatoDAOTest {
 

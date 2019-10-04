@@ -13,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -32,6 +33,8 @@ public class Funcionario extends GenericDomain{
     @Expose
     private Date DataCadastro;
     
+    
+    
     @Temporal(TemporalType.DATE)
     @Expose
     private Date DataAdmissao;
@@ -43,6 +46,9 @@ public class Funcionario extends GenericDomain{
     @JoinColumn(nullable = false)
     @Expose
     private Pessoa pessoa;
+    
+    @Transient
+    private String caminho;
     
     @OneToOne
     @JoinColumn(nullable = false)
@@ -96,6 +102,16 @@ public class Funcionario extends GenericDomain{
     public void setDemissao(Date Demissao) {
         this.Demissao = Demissao;
     }
+
+    public String getCaminho() {
+        return caminho;
+    }
+
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
+    }
+    
+    
     
     public Funcionario(){
         

@@ -12,6 +12,7 @@
     <ui:define name="conteudo">
         <p:growl id="msg"/>
         <h:form>
+            
             <p:schedule value="#{agendaBean.agendas}"/>    
         </h:form>
 
@@ -53,6 +54,7 @@
                         <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
                     </p:selectOneMenu>
                     
+                    <p:outputLabel value="Observação"/>
                     <p:editor height="200" width="400"  />
                 </h:panelGrid>
             </h:form>

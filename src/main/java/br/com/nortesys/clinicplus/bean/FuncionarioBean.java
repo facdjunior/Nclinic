@@ -21,7 +21,12 @@ import br.com.nortesys.clinicplus.domain.TipoFuncionario;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
 import com.sun.jersey.api.client.WebResource;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +36,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -221,6 +228,11 @@ public class FuncionarioBean implements Serializable {
 
     public void salvar() {
         try {
+            
+            if(funcionario.getCaminho()==null){
+                Messages.addGlobalError("Favor inserir foto");
+                return;
+            }
 
             dadosCliente();
 
@@ -235,14 +247,17 @@ public class FuncionarioBean implements Serializable {
                 funcionario.setDataCadastro(new Date());
             }
 
-            funcionarioDAO.merge(funcionario);
+            Funcionario funcionarioRetorno = funcionarioDAO.merge(funcionario);
+            Path origem = Paths.get(funcionario.getCaminho());
+            Path destino = Paths.get("D:/Curso/imagemProjeto/"+funcionarioRetorno.getCodigo()+ ".png");
+            Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 
             Messages.addGlobalInfo("Registro salvo com Sucesso");
 
             novo();
             listar();
 
-        } catch (RuntimeException erro) {
+        } catch (RuntimeException | IOException erro) {
 
             Messages.addGlobalError("Erro ao gravar Cadastro!");
             erro.printStackTrace();
@@ -257,11 +272,14 @@ public class FuncionarioBean implements Serializable {
 
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.excluir(funcionario);
+            
+            Path arquivo = Paths.get("D:/Curso/imagemProjeto/" +funcionario.getCodigo()+ ".png");
+            Files.deleteIfExists(arquivo);
 
             funcionarios = funcionarioDAO.listar();
 
             Messages.addGlobalInfo("Registro removido com sucesso");
-        } catch (RuntimeException erro) {
+        } catch (RuntimeException | IOException erro) {
             Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover registro");
             erro.printStackTrace();
         }
@@ -272,6 +290,7 @@ public class FuncionarioBean implements Serializable {
         try {
 
             funcionario = (Funcionario) evento.getComponent().getAttributes().get("funcionarioSelecionado");
+            funcionario.setCaminho("D:/Curso/imagemProjeto/" +funcionario.getCodigo()+ ".png");
 
             EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
             estadoCivils = estadoCivilDAO.listar();
@@ -335,5 +354,23 @@ public class FuncionarioBean implements Serializable {
                 .getEndereco().setUnidade(endereco.getUnidade());
 
         return this.endereco;
+    }
+    
+    public void upload(FileUploadEvent evento) {
+        try {
+            UploadedFile arquivoUpload = evento.getFile();
+            Path arquivoTemp = Files.createTempFile(null, null);
+
+            Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);
+            funcionario.setCaminho(arquivoTemp.toString());
+            
+            Messages.addGlobalInfo("Funcionario"+funcionario.getCaminho());
+            System.out.println(funcionario.getCaminho());
+            
+            
+        } catch (IOException erro) {
+            Messages.addGlobalError("Ocorreu um erro ao tentar realizar upload do arquivo");
+            erro.printStackTrace();
+        }
     }
 }

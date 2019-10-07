@@ -10,20 +10,58 @@
                 template="/templates/modelo.xhtml">
 
     <ui:define name="conteudo">
+
+        <style type="text/css">
+            .value {
+                font-weight: bold;
+            }
+
+            .ui-carousel {
+                margin-bottom: 20px;
+            }
+        </style>
+
         <p:growl id="msg"/>
         <h:form>
-            
-            <p:schedule value="#{agendaBean.agendas}"/>    
+            <br></br>
+            <h:panelGrid columns="1">
+
+                <p:outputLabel value="Funcionario "/>
+                <p:selectOneMenu>
+                    <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
+                </p:selectOneMenu>
+
+            </h:panelGrid>
+            <p:carousel value="#{funcionarioBean.funcionarios}" headerText="Responsive" var="car" itemStyle="text-align:center" responsive="true">
+                <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+                    <f:facet name="header">
+                        <p:graphicImage id="imagem" value="#{imagemBean.foto}" 
+                                        width="130px" style="align: right">
+                            <f:param name="caminho" value="#{funcionarioBean.funcionario.caminho}."/>
+                        </p:graphicImage>
+                    </f:facet>
+                    <h:outputText value="Id:" />
+                    <h:outputText value="#{car.codigo}" />
+
+                    <h:outputText value="Year" />
+                    <h:outputText value="#{car.pessoa.nome}" />
+
+                </p:panelGrid>
+                
+            </p:carousel>
+
+
+            <br></br>
+            <br></br><br></br>
+
+            <p:schedule value="#{agendaBean.agendas}" />    
         </h:form>
 
         <p:dialog header="Agendamento" draggable="false" closable="true" modal="true" resizable="false" visible="true">
             <h:form>
                 <h:panelGrid title="Agendamento" columns="1">
 
-                    <p:outputLabel value="Funcionario "/>
-                    <p:selectOneMenu>
-                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
-                    </p:selectOneMenu>
+
 
                     <p:outputLabel value="Paciente"/>
                     <p:autoComplete size="55">
@@ -36,8 +74,8 @@
                         <p:inputMask mask="(99)9999-9999" size="24"/>
                         <p:inputMask mask="(99)9999-9999" size="26"/>
                     </h:panelGrid>
-                    
-                    
+
+
                     <p:outputLabel value="Tipo atendimento "/>
                     <p:selectOneMenu>
                         <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
@@ -48,12 +86,12 @@
                     <p:selectOneMenu>
                         <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
                     </p:selectOneMenu>
-                    
+
                     <p:outputLabel value="Procedimento"/>
                     <p:selectOneMenu>
                         <f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario"/>
                     </p:selectOneMenu>
-                    
+
                     <p:outputLabel value="Observação"/>
                     <p:editor height="200" width="400"  />
                 </h:panelGrid>

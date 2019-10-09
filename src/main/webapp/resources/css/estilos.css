@@ -15,10 +15,17 @@
 }
 
 .divCabecalho{
-     padding-bottom: 5px; 
+    padding-bottom: 5px; 
 }
 .ui-widget, .ui-widget .ui-widget{
     font-size: 98%;
+}
+
+.emp1 .fc-event-inner{
+    background-color: blueviolet;
+}
+.emp2 .fc-event-inner{
+    background: #003399;
 }
 
 .buttonbar{
@@ -28,7 +35,7 @@
     margin:2px;
 }
 .ui-panelgrid {
-   border: none;  
+    border: none;  
 }
 .buttom
 {
@@ -36,6 +43,7 @@
     padding: 10px;
     font-family: Cambria;
     text-align: left;
- }
+}
+
 
 .semBorda tr, .semBorda td {     border: none; }

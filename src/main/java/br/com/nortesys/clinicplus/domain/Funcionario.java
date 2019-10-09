@@ -47,7 +47,7 @@ public class Funcionario extends GenericDomain{
     @Expose
     private Pessoa pessoa;
     
-    @Transient
+    
     private String caminho;
     
     @OneToOne

@@ -4,6 +4,7 @@ import br.com.nortesys.clinicplus.domain.Convenio;
 import br.com.nortesys.clinicplus.domain.TipoConvenio;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,7 +76,7 @@ public class TipoConvenioBean {
             WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/tipoconvenio");
             String json = caminho.request().get(String.class);
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             TipoConvenio[] vetor = gson.fromJson(json, TipoConvenio[].class);
 
             tipoConvenios = Arrays.asList(vetor);
@@ -93,10 +94,10 @@ public class TipoConvenioBean {
             convenio = new Convenio();
 
             Client cliente = ClientBuilder.newClient();
-            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/convenio");
+            WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/tipoconvenio");
             String json = caminho.request().get(String.class);
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             Convenio[] vetor = gson.fromJson(json, Convenio[].class);
 
             convenios = Arrays.asList(vetor);
@@ -114,7 +115,7 @@ public class TipoConvenioBean {
             Client cliente = ClientBuilder.newClient();
             WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/tipoconvenio");
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             String json = gson.toJson(tipoConvenio);
             caminho.request().post(Entity.json(json));
 

@@ -31,17 +31,20 @@
                 <p:panelGrid columns="2" style="width:100%;margin:0px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
                     <f:facet name="header">
 
-                        <p:commandLink update=":formCadastro" oncomplete="PF('dlgCadastro').show()">
-
-                            <f:setPropertyActionListener value="#{car}" target="#{funcionarioBean.funcionario}" />
-                            <p:graphicImage id="imagem" value="#{imagemBean.foto}" 
-                                            width="154px" height="172px" style="align: right">
-                                <f:param name="caminho" value="#{car.caminho}"/>
-
-                            </p:graphicImage>
-                        </p:commandLink>
 
                     </f:facet>
+
+                    <p:commandLink  oncomplete="PF('dlgCadastro1').show()" update=":formAgenda:pnlTeste">
+
+                        <f:setPropertyActionListener value="#{funcionario}" target="#{agendaBean.funcionarios}" />
+                        <h:outputText value="#{car.codigo}, #{car.pessoa.nome}" />
+                        <p:graphicImage id="imagem" value="#{imagemBean.foto}" 
+                                        width="154px" height="172px" style="align: right">
+                            <f:param name="caminho" value="#{car.caminho}"/>
+
+                        </p:graphicImage>
+                    </p:commandLink>
+
                 </p:panelGrid>
                 <b>Código: <h:outputText value=" #{car.codigo}" style="text-align: center; color: green; font-style: normal" /></b>
                 <br></br>
@@ -49,6 +52,19 @@
 
             </p:carousel>
 
+            <p:dialog header="Agendamentos" draggable="false" closable="true"  widgetVar="dlgCadastro1"
+                      modal="true" resizable="false" visible="false" >
+                <p:panelGrid id="pnlTeste" rendered="#{not empty car.codigo}">
+
+                    <h:panelGrid title="Agendamentos" columns="1">
+
+                        <p:outputLabel value="Paciente"/>
+                        <p:inputText size="35" value="#{agendaBean.funcionario.pessoa.nome}"/>
+
+                    </h:panelGrid>
+                </p:panelGrid>
+
+            </p:dialog>
 
             <br></br>
             <br></br><br></br>

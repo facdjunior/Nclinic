@@ -15,43 +15,44 @@ import javax.persistence.TemporalType;
  */
 @SuppressWarnings("serial")
 @Entity
-public class Agenda extends GenericDomain{
-    
+public class Agenda extends GenericDomain {
+
     @ManyToOne
     @JoinColumn(nullable = true)
     private Cliente cliente;
-    
-    @Temporal(TemporalType.DATE)
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataAtendimentoInicio;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date DataChamado;
-    
-    @Temporal(TemporalType.DATE)
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date DataAtendimentoFim;
-    
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Funcionario funcionario;
-    
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
     private Convenio convenio;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
     private TipoAtendimento tipoAtendimento;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
     private ListaProcedimento listaProcedimento;
-    
-    
+
     @Column(length = 90)
     private String Nome;
 
+    private Boolean DiaInteiro;
+
+  
     public ListaProcedimento getListaProcedimento() {
         return listaProcedimento;
     }
@@ -59,7 +60,7 @@ public class Agenda extends GenericDomain{
     public void setListaProcedimento(ListaProcedimento listaProcedimento) {
         this.listaProcedimento = listaProcedimento;
     }
-    
+
     public TipoAtendimento getTipoAtendimento() {
         return tipoAtendimento;
     }
@@ -67,7 +68,7 @@ public class Agenda extends GenericDomain{
     public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
         this.tipoAtendimento = tipoAtendimento;
     }
-    
+
     public String getNome() {
         return Nome;
     }
@@ -75,8 +76,6 @@ public class Agenda extends GenericDomain{
     public void setNome(String Nome) {
         this.Nome = Nome;
     }
-    
-    
 
     public Cliente getCliente() {
         return cliente;
@@ -128,5 +127,13 @@ public class Agenda extends GenericDomain{
 
     public void setFuncionario(Long func) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public boolean isDiaInteiro() {
+        return DiaInteiro;
+    }
+
+    public void setDiaInteiro(boolean diaInteiro) {
+        this.DiaInteiro = diaInteiro;
     }
 }

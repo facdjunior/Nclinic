@@ -22,8 +22,8 @@
                 <p:panelGrid columns="2" style="width:100%;margin:0px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
                     <f:facet name="header">
 
-                        <p:commandLink update=":formCadastro" oncomplete="PF('dlgCadastro1').show()">
-                            
+                        <p:commandLink update=":formCadastro" oncomplete="PF('dlgCadastro').show()">
+
                             <f:setPropertyActionListener value="#{car}" target="#{funcionarioBean.funcionario}" />
                             <p:graphicImage id="imagem" value="#{imagemBean.foto}" 
                                             width="154px" height="172px" style="align: right">
@@ -43,25 +43,9 @@
 
             <br></br>
             <br></br><br></br>
-
-            <p:schedule value="#{agendaBean.eventeModel}"  widgetVar="meuCalendario" id="schEvento" timeZone="America/Sao_Paulo">    
-                <p:ajax event="eventSelect" listener="#{agendaBean.quandoSelecionado}" update=":formCadastro" oncomplete="PF('dlgCadastro').show();"/>
-                <p:ajax event="dateSelect" listener="#{agendaBean.quandoNovo}" update=":formCadastro" oncomplete="PF('dlgCadastro').show();"/>
-                <p:ajax event="eventMove" listener="#{agendaBean.quandoMovido}" update="schEvento" />
-                <p:ajax event="eventResize" listener="#{agendaBean.onEventResize}" update="schEvento" />
-            </p:schedule>
-        </h:form>
-        
-        <p:dialog header="funcionario" draggable="false" closable="true" widgetVar="dlgCadastro1"
-            modal="true" resizable="false" visible="false">
-            <h:form id="formFuncionario">
-                
-                <p:outputLabel value="Codigo"/>
-                <p:inputText size="35" value="#{agendaBean.funcionario.codigo}"/>
-                
-            </h:form>          
+            <p:dataTable id="agenda" var="agenda" value=""
             
-        </p:dialog>
+        </h:form>
 
         <p:dialog header="Agendamento" draggable="false" closable="true"  widgetVar="dlgCadastro"
                   modal="true" resizable="false" visible="false" >

@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.ConvenioDAO;
 import br.com.nortesys.clinicplus.domain.Convenio;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -26,7 +27,7 @@ public class ConvenioService {
         ConvenioDAO convenioDAO = new ConvenioDAO();
         List<Convenio> convenios = convenioDAO.listar();
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(convenios);
 
         return json;
@@ -40,7 +41,7 @@ public class ConvenioService {
         ConvenioDAO convenioDAO = new ConvenioDAO();
         Convenio convenio = convenioDAO.buscar(codigo);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd-MM-YYYY").create();
         String json = gson.toJson(convenio);
 
         return json;
@@ -50,7 +51,8 @@ public class ConvenioService {
     @POST
     public String salvar(String json) {
 
-        Gson gson = new Gson();
+        
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         Convenio convenio = gson.fromJson(json, Convenio.class);
 
         ConvenioDAO convenioDAO = new ConvenioDAO();

@@ -14,11 +14,15 @@ import br.com.nortesys.clinicplus.domain.ListaProcedimento;
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import br.com.nortesys.clinicplus.domain.TipoAtendimento;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -47,6 +51,9 @@ public class AgendaBean implements Serializable {
     private List<Agenda> listaEvento;
 
     private ScheduleModel eventeModel;
+
+    private ScheduleEvent evts;
+    private List<ScheduleEvent> scheduleEvents;
 
     private List<Funcionario> funcionarios;
 
@@ -173,6 +180,28 @@ public class AgendaBean implements Serializable {
         this.funcionarios = funcionarios;
     }
 
+    public ScheduleEvent getEvts() {
+        return evts;
+    }
+
+    public void setEvts(ScheduleEvent evts) {
+        this.evts = evts;
+    }
+
+    public List<ScheduleEvent> getScheduleEvents() {
+        return scheduleEvents;
+    }
+
+    public void setScheduleEvents(List<ScheduleEvent> scheduleEvents) {
+        this.scheduleEvents = scheduleEvents;
+    }
+
+    public AgendaBean() {
+
+        eventeModel = new DefaultScheduleModel();
+        agenda = new Agenda();
+    }
+
     @PostConstruct
     public void inicializar() {
 
@@ -197,27 +226,32 @@ public class AgendaBean implements Serializable {
             Messages.addGlobalError("Erro ao listar agenda");
             erro.printStackTrace();;
         }
-        for (Agenda ag : listaEvento) {
 
+        for (Agenda ag : listaEvento) {
             DefaultScheduleEvent evt = new DefaultScheduleEvent();
 
-            evt.setEndDate(ag.getDataAtendimentoFim());
-            evt.setStartDate(ag.getDataAtendimentoInicio());
-            evt.setTitle(ag.getNome());
-            evt.setData(ag.getCodigo());
-            evt.setDescription(ag.getNome());
-            evt.setAllDay(true);
-            evt.setEditable(true);
-            
-            if(ag.getDataChamado()==null){
-                evt.setStyleClass("emp1");
-            }else if(ag.getDataChamado() !=null){
-                evt.setStyleClass("emp2");
-            }
+            if (evt.getId() == null) {
+                
+                evt.setEndDate(ag.getDataAtendimentoFim());
+                evt.setStartDate(ag.getDataAtendimentoInicio());
+                evt.setTitle(ag.getNome());
+                evt.setData(ag.getCodigo());
+                evt.setDescription(ag.getNome());
+                evt.setAllDay(false);
+                evt.setEditable(true);
 
-            eventeModel.addEvent(evt);
+                eventeModel.addEvent(evt);
+            } else {
+                eventeModel.updateEvent(evt);
+            }
+            
+            if (ag.getDataChamado() == null) {
+            evt.setStyleClass("emp1");
+        } else if (ag.getDataChamado() != null) {
+            evt.setStyleClass("emp2");
         }
 
+        }
     }
 
     public void quandoSelecionado(SelectEvent selectEvent) {
@@ -236,8 +270,8 @@ public class AgendaBean implements Serializable {
 
         ScheduleEvent event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
         agenda = new Agenda();
-        agenda.setDataAtendimentoInicio(new java.sql.Date(event.getStartDate().getTime()));
-        agenda.setDataAtendimentoFim(new java.sql.Date(event.getEndDate().getTime()));
+        agenda.setDataAtendimentoInicio((Date) event.getStartDate());
+        agenda.setDataAtendimentoFim((Date) event.getEndDate());
     }
 
     public void salvar() {
@@ -271,6 +305,7 @@ public class AgendaBean implements Serializable {
 
                 this.agenda.setFuncionario(funcionario);
                 eDao.merge(agenda);
+
                 inicializar();
                 Messages.addGlobalInfo("Registro salvo com sucesso");
             } catch (RuntimeException erro) {
@@ -281,11 +316,17 @@ public class AgendaBean implements Serializable {
         }
     }
 
-    public void quandoMovido(ScheduleEntryMoveEvent event) {
+    public void quandoMovido(ScheduleEntryMoveEvent mover) {
+
         for (Agenda ag : listaEvento) {
-            if (ag.getCodigo() == (Long) event.getScheduleEvent().getData()) {
+            if (ag.getCodigo() == (Long) mover.getScheduleEvent().getData()) {
+
+                mover.getDayDelta();
+                mover.getMinuteDelta();
+
                 agenda = ag;
                 eDao = new AgendaDAO();
+
                 try {
 
                     eDao.merge(agenda);
@@ -300,21 +341,23 @@ public class AgendaBean implements Serializable {
                 break;
             }
         }
+
     }
 
-    public void quandoRedimencionado(ScheduleEntryResizeEvent event) {
-
+    public void onEventResize(ScheduleEntryResizeEvent event) {
+        
         for (Agenda ag : listaEvento) {
             if (ag.getCodigo() == (Long) event.getScheduleEvent().getData()) {
+                
                 agenda = ag;
                 eDao = new AgendaDAO();
                 try {
-
+                    
                     eDao.merge(agenda);
                     Messages.addGlobalInfo("Registro atualizado com sucesso");
-
+                    
                     inicializar();
-
+                    
                 } catch (RuntimeException erro) {
                     Messages.addGlobalError("Erro ao Atualizar agenda");
                     erro.printStackTrace();
@@ -322,6 +365,6 @@ public class AgendaBean implements Serializable {
                 break;
             }
         }
-
+        
     }
 }

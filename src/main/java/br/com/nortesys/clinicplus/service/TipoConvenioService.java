@@ -1,10 +1,10 @@
 package br.com.nortesys.clinicplus.service;
 
-import br.com.nortesys.clinicplus.dao.ConvenioDAO;
+
 import br.com.nortesys.clinicplus.dao.TipoConvenioDAO;
-import br.com.nortesys.clinicplus.domain.Convenio;
 import br.com.nortesys.clinicplus.domain.TipoConvenio;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -28,7 +28,7 @@ public class TipoConvenioService {
         TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
         List<TipoConvenio> tipoConvenios = tipoConvenioDAO.listar("Descricao");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(tipoConvenios);
 
         return json;
@@ -52,7 +52,7 @@ public class TipoConvenioService {
     @POST
     public String salvar(String json) {
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         TipoConvenio tipoConvenio = gson.fromJson(json, TipoConvenio.class);
 
         TipoConvenioDAO tipoConvenioDAO = new TipoConvenioDAO();
@@ -60,6 +60,7 @@ public class TipoConvenioService {
 
         if (resultado == null) {
 
+        
             tipoConvenio.setSequencia(1);
             tipoConvenio.setDataCadastro(new Date());
             tipoConvenioDAO.merge(tipoConvenio);

@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.bean;
 import br.com.nortesys.clinicplus.domain.Convenio;
 import br.com.nortesys.clinicplus.service.ConvenioService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,7 +78,7 @@ public class ConvenioBean {
             Client cliente = ClientBuilder.newClient();
             WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/convenio");
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             String json = gson.toJson(convenio);
             caminho.request().post(Entity.json(json));
 

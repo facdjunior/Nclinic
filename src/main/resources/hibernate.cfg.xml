@@ -44,30 +44,29 @@
         <mapping class="br.com.nortesys.clinicplus.domain.Convenio"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Documento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Endereco"/>
-        
         <mapping class="br.com.nortesys.clinicplus.domain.EstadoCivil"/>
+        
         <mapping class="br.com.nortesys.clinicplus.domain.Funcionario"/>
         <mapping class="br.com.nortesys.clinicplus.domain.InforAdicionais"/>
-        
-        <mapping class="br.com.nortesys.clinicplus.domain.ListaProcedimento"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.RelProcedimentoConvenioAssociado"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Pessoa"/>
-        <mapping class="br.com.nortesys.clinicplus.domain.PessoaFisica"/>
         
+        <mapping class="br.com.nortesys.clinicplus.domain.PessoaFisica"/>
         <mapping class="br.com.nortesys.clinicplus.domain.PessoaJuridica"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Procedimento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Profissao"/>
-        <mapping class="br.com.nortesys.clinicplus.domain.TipoConvenio"/>
         
+        <mapping class="br.com.nortesys.clinicplus.domain.TipoConvenio"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoAtendimento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoDocumento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoFuncionario"/>
         
-        
+        <mapping class="br.com.nortesys.clinicplus.domain.ConvenioAssociado"/>
         <mapping class="br.com.nortesys.clinicplus.domain.financeiro.Caixa"/>
         <mapping class="br.com.nortesys.clinicplus.domain.financeiro.CaixaAberturaFechamento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.financeiro.LancamentoCaixa"/>
+        
         <mapping class="br.com.nortesys.clinicplus.domain.financeiro.LancamentoContasReceber"/>
-
         <mapping class="br.com.nortesys.clinicplus.domain.financeiro.ModalidadeLancamento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.financeiro.TipoLancamentos"/>
         

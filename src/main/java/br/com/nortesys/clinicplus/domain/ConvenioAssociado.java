@@ -8,24 +8,24 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
+
 @SuppressWarnings("serial")
 @Entity
-public class ListaProcedimento extends GenericDomain {
-
+public class ConvenioAssociado extends GenericDomain{
+    
     @Column(nullable = false)
     private Long Sequencia;
-
+    
     @Column(length = 190, nullable = false)
     private String Descricao;
-
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
-
-    @Column(length = 12)
-    private String CodigoANS;
+    
+    private boolean ECortesia;
 
     public Long getSequencia() {
         return Sequencia;
@@ -51,13 +51,11 @@ public class ListaProcedimento extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public String getCodigoANS() {
-        return CodigoANS;
+    public boolean isECortesia() {
+        return ECortesia;
     }
 
-    public void setCodigoANS(String CodigoANS) {
-        this.CodigoANS = CodigoANS;
+    public void setECortesia(boolean ECortesia) {
+        this.ECortesia = ECortesia;
     }
-
-    
 }

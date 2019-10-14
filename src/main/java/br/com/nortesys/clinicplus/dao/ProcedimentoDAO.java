@@ -1,7 +1,6 @@
 package br.com.nortesys.clinicplus.dao;
 
 import br.com.nortesys.clinicplus.dao.GenericDAO;
-import br.com.nortesys.clinicplus.domain.ListaProcedimento;
 import br.com.nortesys.clinicplus.domain.Procedimento;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 import java.util.List;
@@ -37,25 +36,6 @@ public class ProcedimentoDAO extends GenericDAO<Procedimento> {
             sessao.close();
         }
     }
+
     
-    public ListaProcedimento buscarProcedimento(Long codigo) {
-
-          Session sessao = HibernateUtil.getSessionFactory().openSession();
-        try {
-            Criteria consulta = sessao.createCriteria(ListaProcedimento.class);
-
-            consulta.add(Restrictions.idEq(codigo));
-            ListaProcedimento resultado = (ListaProcedimento) consulta.uniqueResult();
-            
-            return resultado;
-            
-        } catch (RuntimeException erro) {
-            
-            throw erro;
-            
-        } finally {
-            sessao.close();
-        }
-    }
- }
-
+}

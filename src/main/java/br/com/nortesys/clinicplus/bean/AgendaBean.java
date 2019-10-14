@@ -3,32 +3,36 @@ package br.com.nortesys.clinicplus.bean;
 import br.com.nortesys.clinicplus.dao.AgendaDAO;
 import br.com.nortesys.clinicplus.dao.ConvenioDAO;
 import br.com.nortesys.clinicplus.dao.FuncionarioDAO;
-import br.com.nortesys.clinicplus.dao.ListaProcedimentoDAO;
+import br.com.nortesys.clinicplus.dao.ProcedimentoDAO;
+import br.com.nortesys.clinicplus.dao.RelProcedimentoConvenioAssociadoDAO;
 
 import br.com.nortesys.clinicplus.dao.TipoAtendimentoDAO;
 import br.com.nortesys.clinicplus.domain.Agenda;
 import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Convenio;
+
 import br.com.nortesys.clinicplus.domain.Funcionario;
-import br.com.nortesys.clinicplus.domain.ListaProcedimento;
+import br.com.nortesys.clinicplus.domain.Procedimento;
 import br.com.nortesys.clinicplus.domain.Pessoa;
+import br.com.nortesys.clinicplus.domain.RelProcedimentoConvenioAssociado;
 import br.com.nortesys.clinicplus.domain.TipoAtendimento;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.ScheduleEntryMoveEvent;
+
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
+
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
@@ -41,15 +45,12 @@ import org.primefaces.model.ScheduleModel;
 public class AgendaBean implements Serializable {
 
     private Funcionario funcionario;
-
     private Agenda agenda;
 
     private Cliente cliente;
-
     private Pessoa pessoa;
 
     private List<Agenda> listaEvento;
-
     private ScheduleModel eventeModel;
 
     private ScheduleEvent evts;
@@ -59,28 +60,29 @@ public class AgendaBean implements Serializable {
 
     private TipoAtendimento tipoAtendimento;
     private List<TipoAtendimento> tipoAtendimentos;
-
     private Convenio convenio;
     private List<Convenio> convenios;
 
     private AgendaDAO eDao;
+    private Procedimento listaProcedimento;
+    private List<Procedimento> listaProcedimentos;
+    
+    private RelProcedimentoConvenioAssociado procedimento;
+    private  List<RelProcedimentoConvenioAssociado> procedimentos;
 
-    private ListaProcedimento listaProcedimento;
-    private List<ListaProcedimento> listaProcedimentos;
-
-    public ListaProcedimento getListaProcedimento() {
+    public Procedimento getListaProcedimento() {
         return listaProcedimento;
     }
 
-    public void setListaProcedimento(ListaProcedimento listaProcedimento) {
+    public void setListaProcedimento(Procedimento listaProcedimento) {
         this.listaProcedimento = listaProcedimento;
     }
 
-    public List<ListaProcedimento> getListaProcedimentos() {
+    public List<Procedimento> getListaProcedimentos() {
         return listaProcedimentos;
     }
 
-    public void setListaProcedimentos(List<ListaProcedimento> listaProcedimentos) {
+    public void setListaProcedimentos(List<Procedimento> listaProcedimentos) {
         this.listaProcedimentos = listaProcedimentos;
     }
 
@@ -215,7 +217,7 @@ public class AgendaBean implements Serializable {
         ConvenioDAO convenioDAO = new ConvenioDAO();
         convenios = convenioDAO.listar("Descricao");
 
-        ListaProcedimentoDAO listaProcedimentoDAO = new ListaProcedimentoDAO();
+        ProcedimentoDAO listaProcedimentoDAO = new ProcedimentoDAO();
         listaProcedimentos = listaProcedimentoDAO.listar("Descricao");
 
         try {
@@ -231,7 +233,7 @@ public class AgendaBean implements Serializable {
             DefaultScheduleEvent evt = new DefaultScheduleEvent();
 
             if (evt.getId() == null) {
-                
+
                 evt.setEndDate(ag.getDataAtendimentoFim());
                 evt.setStartDate(ag.getDataAtendimentoInicio());
                 evt.setTitle(ag.getNome());
@@ -244,12 +246,12 @@ public class AgendaBean implements Serializable {
             } else {
                 eventeModel.updateEvent(evt);
             }
-            
+
             if (ag.getDataChamado() == null) {
-            evt.setStyleClass("emp1");
-        } else if (ag.getDataChamado() != null) {
-            evt.setStyleClass("emp2");
-        }
+                evt.setStyleClass("emp1");
+            } else if (ag.getDataChamado() != null) {
+                evt.setStyleClass("emp2");
+            }
 
         }
     }
@@ -345,19 +347,19 @@ public class AgendaBean implements Serializable {
     }
 
     public void onEventResize(ScheduleEntryResizeEvent event) {
-        
+
         for (Agenda ag : listaEvento) {
             if (ag.getCodigo() == (Long) event.getScheduleEvent().getData()) {
-                
+
                 agenda = ag;
                 eDao = new AgendaDAO();
                 try {
-                    
+
                     eDao.merge(agenda);
                     Messages.addGlobalInfo("Registro atualizado com sucesso");
-                    
+
                     inicializar();
-                    
+
                 } catch (RuntimeException erro) {
                     Messages.addGlobalError("Erro ao Atualizar agenda");
                     erro.printStackTrace();
@@ -365,6 +367,22 @@ public class AgendaBean implements Serializable {
                 break;
             }
         }
-        
+    }
+    
+    public void popular() {
+        try {
+            AgendaDAO agendaDAO = new AgendaDAO();
+                    
+            if (convenio != null) {
+                RelProcedimentoConvenioAssociadoDAO procedimentoDAO = new RelProcedimentoConvenioAssociadoDAO();
+                procedimentos = agendaDAO.buscarPorConvenio(convenio.getCodigo());
+            } else {
+                procedimentos = new ArrayList<RelProcedimentoConvenioAssociado>();
+            }
+        } catch (RuntimeException erro) {
+
+            Messages.addGlobalError("Ocorreu um ero ao tentar filtrar as cidades");
+            erro.printStackTrace();
+        }
     }
 }

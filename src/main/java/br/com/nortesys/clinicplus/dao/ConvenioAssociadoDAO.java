@@ -1,34 +1,31 @@
 package br.com.nortesys.clinicplus.dao;
 
-import br.com.nortesys.clinicplus.dao.GenericDAO;
-import br.com.nortesys.clinicplus.domain.ListaProcedimento;
+import br.com.nortesys.clinicplus.domain.ConvenioAssociado;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
-import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author Francisco Junior
  */
-public class ListaProcedimentoDAO extends GenericDAO<ListaProcedimento> {
+public class ConvenioAssociadoDAO extends GenericDAO<ConvenioAssociado> {
 
     @SuppressWarnings("unchecked")
-    public ListaProcedimento listarSequencia() {
+    public ConvenioAssociado listarSequencia() {
 
         Session sessao = HibernateUtil.getSessionFactory().openSession();
 
         try {
 
-            Criteria consulta = sessao.createCriteria(ListaProcedimento.class);
+            Criteria consulta = sessao.createCriteria(ConvenioAssociado.class);
             consulta.addOrder(Order.desc("Sequencia"));
             consulta.setMaxResults(1);
 
-            ListaProcedimento listaProcedimento = (ListaProcedimento) consulta.uniqueResult();
+            ConvenioAssociado convenioAssociado = (ConvenioAssociado) consulta.uniqueResult();
 
-            return listaProcedimento;
+            return convenioAssociado;
 
         } catch (RuntimeException erro) {
             throw erro;
@@ -37,5 +34,4 @@ public class ListaProcedimentoDAO extends GenericDAO<ListaProcedimento> {
         }
     }
 
-    
 }

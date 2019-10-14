@@ -45,7 +45,7 @@ public class Agenda extends GenericDomain {
 
     @OneToOne
     @JoinColumn(nullable = false)
-    private ListaProcedimento listaProcedimento;
+    private Procedimento listaProcedimento;
 
     @Column(length = 90)
     private String Nome;
@@ -53,11 +53,11 @@ public class Agenda extends GenericDomain {
     private Boolean DiaInteiro;
 
   
-    public ListaProcedimento getListaProcedimento() {
+    public Procedimento getListaProcedimento() {
         return listaProcedimento;
     }
 
-    public void setListaProcedimento(ListaProcedimento listaProcedimento) {
+    public void setListaProcedimento(Procedimento listaProcedimento) {
         this.listaProcedimento = listaProcedimento;
     }
 

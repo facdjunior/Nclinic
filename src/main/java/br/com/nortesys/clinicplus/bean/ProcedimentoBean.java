@@ -1,11 +1,11 @@
 package br.com.nortesys.clinicplus.bean;
 
 import br.com.nortesys.clinicplus.dao.ConvenioDAO;
-import br.com.nortesys.clinicplus.dao.ListaProcedimentoDAO;
 import br.com.nortesys.clinicplus.dao.ProcedimentoDAO;
+import br.com.nortesys.clinicplus.dao.RelProcedimentoConvenioAssociadoDAO;
 import br.com.nortesys.clinicplus.domain.Convenio;
-import br.com.nortesys.clinicplus.domain.ListaProcedimento;
 import br.com.nortesys.clinicplus.domain.Procedimento;
+import br.com.nortesys.clinicplus.domain.RelProcedimentoConvenioAssociado;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,11 +28,11 @@ import org.omnifaces.util.Messages;
 @ViewScoped
 public class ProcedimentoBean implements Serializable {
 
-    private Procedimento procedimento;
-    private List<Procedimento> procedimentos;
+    private RelProcedimentoConvenioAssociado procedimento;
+    private List<RelProcedimentoConvenioAssociado> procedimentos;
 
-    private ListaProcedimento listaProcedimento;
-    private List<ListaProcedimento> listaProcedimentos;
+    private Procedimento listaProcedimento;
+    private List<Procedimento> listaProcedimentos;
 
     private Convenio convenio;
     private List<Convenio> convenios;
@@ -53,35 +53,35 @@ public class ProcedimentoBean implements Serializable {
         this.convenios = convenios;
     }
 
-    public Procedimento getProcedimento() {
+    public RelProcedimentoConvenioAssociado getProcedimento() {
         return procedimento;
     }
 
-    public void setProcedimento(Procedimento procedimento) {
+    public void setProcedimento(RelProcedimentoConvenioAssociado procedimento) {
         this.procedimento = procedimento;
     }
 
-    public List<Procedimento> getProcedimentos() {
+    public List<RelProcedimentoConvenioAssociado> getProcedimentos() {
         return procedimentos;
     }
 
-    public void setProcedimentos(List<Procedimento> procedimentos) {
+    public void setProcedimentos(List<RelProcedimentoConvenioAssociado> procedimentos) {
         this.procedimentos = procedimentos;
     }
 
-    public ListaProcedimento getListaProcedimento() {
+    public Procedimento getListaProcedimento() {
         return listaProcedimento;
     }
 
-    public void setListaProcedimento(ListaProcedimento listaProcedimento) {
+    public void setListaProcedimento(Procedimento listaProcedimento) {
         this.listaProcedimento = listaProcedimento;
     }
 
-    public List<ListaProcedimento> getListaProcedimentos() {
+    public List<Procedimento> getListaProcedimentos() {
         return listaProcedimentos;
     }
 
-    public void setListaProcedimentos(List<ListaProcedimento> listaProcedimentos) {
+    public void setListaProcedimentos(List<Procedimento> listaProcedimentos) {
         this.listaProcedimentos = listaProcedimentos;
     }
 
@@ -89,7 +89,7 @@ public class ProcedimentoBean implements Serializable {
     public void listar() {
         try {
 
-            ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
+            RelProcedimentoConvenioAssociadoDAO procedimentoDAO = new RelProcedimentoConvenioAssociadoDAO();
             procedimentos = procedimentoDAO.listar();
 
         } catch (RuntimeException erro) {
@@ -99,11 +99,11 @@ public class ProcedimentoBean implements Serializable {
     }
 
     public void novo() {
-        procedimento = new Procedimento();
-        listaProcedimento = new ListaProcedimento();
+        procedimento = new RelProcedimentoConvenioAssociado();
+        listaProcedimento = new Procedimento();
         convenio = new Convenio();
 
-        ListaProcedimentoDAO listaProcedimentoDAO = new ListaProcedimentoDAO();
+        ProcedimentoDAO listaProcedimentoDAO = new ProcedimentoDAO();
         listaProcedimentos = listaProcedimentoDAO.listar("Descricao");
 
         ConvenioDAO convenioDAO = new ConvenioDAO();
@@ -114,8 +114,8 @@ public class ProcedimentoBean implements Serializable {
         
         try {
             
-            ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
-            Procedimento resultadoProcedimento = procedimentoDAO.listarSequencia();
+            RelProcedimentoConvenioAssociadoDAO procedimentoDAO = new RelProcedimentoConvenioAssociadoDAO();
+            RelProcedimentoConvenioAssociado resultadoProcedimento = procedimentoDAO.listarSequencia();
             
             if(resultadoProcedimento==null){
                 procedimento.setSequencia(1L);
@@ -142,10 +142,7 @@ public class ProcedimentoBean implements Serializable {
 
         try {
 
-            ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO();
-            ListaProcedimento rest = procedimentoDAO.buscarProcedimento(this.procedimento.getListaProcedimento().getCodigo());
-
-            this.procedimento.getListaProcedimento().setCodigoANS(rest.getCodigoANS());
+            
 
         } catch (RuntimeException erro) {
 

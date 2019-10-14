@@ -56,10 +56,6 @@ public class PessoaFisica extends GenericDomain {
 
     private Character Tratamento;
 
-    @ManyToOne
-    @Expose(serialize = true)
-    private Profissao profissao;
-
     public String getIdade() {
         return idade;
     }
@@ -122,14 +118,6 @@ public class PessoaFisica extends GenericDomain {
 
     public void setGrauEscolaridade(String GrauEscolaridade) {
         this.GrauEscolaridade = GrauEscolaridade;
-    }
-
-    public Profissao getProfissao() {
-        return profissao;
-    }
-
-    public void setProfissao(Profissao profissao) {
-        this.profissao = profissao;
     }
 
     public Character getTratamento() {

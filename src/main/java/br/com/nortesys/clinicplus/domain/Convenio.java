@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -30,10 +33,14 @@ public class Convenio extends GenericDomain {
     @Temporal(TemporalType.TIMESTAMP)
     @Expose
     private Date DataCadastro;
-    
+
     @Column(length = 12)
     @Expose
     private String RegristroANS;
+
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Integer getSequencia() {
         return Sequencia;
@@ -65,6 +72,14 @@ public class Convenio extends GenericDomain {
 
     public void setRegristroANS(String RegristroANS) {
         this.RegristroANS = RegristroANS;
+    }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
     }
     
     public Convenio() {

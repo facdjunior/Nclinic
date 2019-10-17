@@ -38,6 +38,8 @@
         
         <mapping class="br.com.nortesys.clinicplus.domain.Agenda"/>    
         <mapping class="br.com.nortesys.clinicplus.domain.CartaoConvenio"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.Bairro"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.Cidade"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Cliente"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Contato"/>
         
@@ -45,6 +47,7 @@
         <mapping class="br.com.nortesys.clinicplus.domain.Documento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Endereco"/>
         <mapping class="br.com.nortesys.clinicplus.domain.EstadoCivil"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.Entidade"/>
         
         <mapping class="br.com.nortesys.clinicplus.domain.Funcionario"/>
         <mapping class="br.com.nortesys.clinicplus.domain.InforAdicionais"/>
@@ -56,10 +59,13 @@
         <mapping class="br.com.nortesys.clinicplus.domain.Procedimento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.Profissao"/>
         
+        <mapping class="br.com.nortesys.clinicplus.domain.TipoEndereco"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.TipoEntidade"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoConvenio"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoAtendimento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoDocumento"/>
         <mapping class="br.com.nortesys.clinicplus.domain.TipoFuncionario"/>
+        <mapping class="br.com.nortesys.clinicplus.domain.UF"/>
         
         <mapping class="br.com.nortesys.clinicplus.domain.ConvenioAssociado"/>
         <mapping class="br.com.nortesys.clinicplus.domain.financeiro.Caixa"/>

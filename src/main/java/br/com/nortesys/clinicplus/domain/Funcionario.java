@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -33,8 +34,6 @@ public class Funcionario extends GenericDomain{
     @Expose
     private Date DataCadastro;
     
-    
-    
     @Temporal(TemporalType.DATE)
     @Expose
     private Date DataAdmissao;
@@ -54,6 +53,10 @@ public class Funcionario extends GenericDomain{
     @JoinColumn(nullable = false)
     @Expose
     private TipoFuncionario tipoFuncionario;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
     
     public Integer getSequencia() {
         return Sequencia;
@@ -110,8 +113,14 @@ public class Funcionario extends GenericDomain{
     public void setCaminho(String caminho) {
         this.caminho = caminho;
     }
-    
-    
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
     
     public Funcionario(){
         

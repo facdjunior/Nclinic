@@ -54,7 +54,7 @@ public class FuncionarioDAOTest {
             pessoa.setNome("Sérgio André Nicolas Fogaça");
             pessoa.setDataCadastro(new Date());
             pessoa.setSequencia(1L);
-            pessoa.setPessoaFisica(pessoaFisica);
+            
 
             System.out.println("Registro Novo sem sequencia!");
 
@@ -63,7 +63,7 @@ public class FuncionarioDAOTest {
             pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
             pessoa.setNome("Bento Felipe Yago Figueiredo");
             pessoa.setDataCadastro(new Date());
-            pessoa.setPessoaFisica(pessoaFisica);
+            
 
         }
         if (resultadoPFisica == null) {
@@ -94,16 +94,16 @@ public class FuncionarioDAOTest {
 
         if (resultadoContato == null) {
 
-            pessoa.getContato().setCelular("(92)98395-0668");
+            
             pessoa.getContato().setDataCadastro(new Date());
-            pessoa.getContato().setFone("(92)3906-2716");
+            
             pessoa.getContato().setPessoa(pessoa);
             pessoa.getContato().setSequencia(1L);
 
         } else {
-            pessoa.getContato().setCelular("(92)98395-0668");
+            
             pessoa.getContato().setDataCadastro(new Date());
-            pessoa.getContato().setFone("(92)3906-2716");
+            
             pessoa.getContato().setPessoa(pessoa);
             pessoa.getContato().setSequencia(resultadoContato.getSequencia() + 1);
         }
@@ -111,7 +111,7 @@ public class FuncionarioDAOTest {
         if (resultaEndereco == null) {
 
             pessoa.getEndereco().setAtivo(true);
-            pessoa.getEndereco().setBairro("Monte das Oliveiras");
+//            pessoa.getEndereco().setBairro("Monte das Oliveiras");
             pessoa.getEndereco().setLogradouro("Rua Muiratinga");
             pessoa.getEndereco().setCep("69093-129");
             pessoa.getEndereco().setSequencia(1L);
@@ -123,7 +123,7 @@ public class FuncionarioDAOTest {
         } else {
 
             pessoa.getEndereco().setAtivo(true);
-            pessoa.getEndereco().setBairro("Monte das Oliveiras");
+//            pessoa.getEndereco().setBairro("Monte das Oliveiras");
             pessoa.getEndereco().setLogradouro("Rua Muiratinga");
             pessoa.getEndereco().setCep("69093-129");
             pessoa.getEndereco().setSequencia(resultaEndereco.getSequencia() + 1);
@@ -192,7 +192,7 @@ public class FuncionarioDAOTest {
             System.out.println("Nenhum registro encontrado");
         } else {
             System.out.println("Registro encontrados:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome() + "Data Nascimento: " + cliente.getPessoa().getPessoaFisica().getDataNascimento());
+            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome() + "Data Nascimento: " + cliente.getPessoa().getDataCadastro());
         }
     }
 

@@ -1,7 +1,9 @@
 package br.com.nortesys.clinicplus.dao;
 
+import br.com.nortesys.clinicplus.domain.Bairro;
 import br.com.nortesys.clinicplus.domain.Endereco;
 import br.com.nortesys.clinicplus.domain.Pessoa;
+import br.com.nortesys.clinicplus.domain.TipoEndereco;
 import java.util.Date;
 import java.util.List;
 import org.junit.Ignore;
@@ -9,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
 public class EnderecoDAOTest {
 
@@ -18,19 +20,26 @@ public class EnderecoDAOTest {
     public void salvar() {
 
         PessoaDAO pessoaDAO = new PessoaDAO();
-        Pessoa pessoa = pessoaDAO.buscar(21L);
+        Pessoa pessoa = pessoaDAO.buscar(16L);
+
+        BairroDAO bairroDAO = new BairroDAO();
+        Bairro bairro = bairroDAO.buscar(1L);
+        
+        TipoEnderecoDAO tipoEnderecoDAO = new TipoEnderecoDAO();
+        TipoEndereco tipoEndereco = tipoEnderecoDAO.buscar(1L);
 
         Endereco endereco = new Endereco();
 
         endereco.setAtivo(true);
-        endereco.setBairro("Porto Novo");
-        endereco.setLogradouro("Rua Mato Grosso I");
-        endereco.setCep("29155-430");
-        endereco.setSequencia(5L);
-        endereco.setComplemento("João teste Complemento");
+        endereco.setBairro(bairro);
+        endereco.setCep("68371-155");
+        endereco.setComplemento("entre 264 a 265");
         endereco.setDataCadastro(new Date());
-        endereco.setNumero("561");
-        
+        endereco.setLogradouro("Travessa Pedro Gomes");
+        endereco.setNumero("264");
+        endereco.setPessoa(pessoa);
+        endereco.setSequencia(1L);
+        endereco.setTipoEndereco(tipoEndereco);
 
         EnderecoDAO enderecoDAO = new EnderecoDAO();
         enderecoDAO.merge(endereco);
@@ -81,7 +90,7 @@ public class EnderecoDAOTest {
             System.out.println(endereco.getCodigo() + " - " + endereco.getLogradouro());
         }
     }
-    
+
     @Test
     @Ignore
     public void editar() {

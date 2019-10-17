@@ -1,69 +1,53 @@
 package br.com.nortesys.clinicplus.domain;
 
-import com.google.gson.annotations.Expose;
 import java.util.Date;
-import javax.persistence.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 /**
  *
  * @author Francisco Junior
  */
+
 @SuppressWarnings("serial")
 @Entity
-public class Documento extends GenericDomain {
-
-        
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
-    @Expose(serialize = false)
-    private Pessoa pessoa;
+public class Cidade extends GenericDomain{
+    
+    
+    private Long Sequencia;
+    
+    @Column(length = 90)
+    private String Descricao;
+    
+    private Integer CodigoIBGE;
     
     @OneToOne
     @JoinColumn(nullable = false)
-    @Expose
-    private TipoDocumento tipoDocumento;
+    private UF uf;
     
-    @Column(length = 20)
-    @Expose
-    private String Descricao;
-    
-    @Column(unique = true, nullable = false)
-    @Expose
-    private Integer Sequencia;
-
+    private Boolean Ativo;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @Expose
     private Date DataCadastro;
     
     @OneToOne
     @JoinColumn(nullable = false)
     private Entidade entidade;
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    public Long getSequencia() {
+        return Sequencia;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
+    public void setSequencia(Long Sequencia) {
+        this.Sequencia = Sequencia;
     }
 
     public String getDescricao() {
@@ -74,12 +58,28 @@ public class Documento extends GenericDomain {
         this.Descricao = Descricao;
     }
 
-    public Integer getSequencia() {
-        return Sequencia;
+    public Integer getCodigoIBGE() {
+        return CodigoIBGE;
     }
 
-    public void setSequencia(Integer Sequencia) {
-        this.Sequencia = Sequencia;
+    public void setCodigoIBGE(Integer CodigoIBGE) {
+        this.CodigoIBGE = CodigoIBGE;
+    }
+
+    public UF getUf() {
+        return uf;
+    }
+
+    public void setUf(UF uf) {
+        this.uf = uf;
+    }
+
+    public Boolean getAtivo() {
+        return Ativo;
+    }
+
+    public void setAtivo(Boolean Ativo) {
+        this.Ativo = Ativo;
     }
 
     public Date getDataCadastro() {
@@ -97,5 +97,4 @@ public class Documento extends GenericDomain {
     public void setEntidade(Entidade entidade) {
         this.entidade = entidade;
     }
-    
 }

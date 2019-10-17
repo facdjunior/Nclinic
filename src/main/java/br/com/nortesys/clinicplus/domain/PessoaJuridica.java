@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +34,10 @@ public class PessoaJuridica extends GenericDomain {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date DataCadastro;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Integer getSequencia() {
         return Sequencia;
@@ -64,4 +70,13 @@ public class PessoaJuridica extends GenericDomain {
     public void setDataCadastro(Date DataCadastro) {
         this.DataCadastro = DataCadastro;
     }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
 }

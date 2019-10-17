@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -18,9 +21,13 @@ public class EstadoCivil extends GenericDomain {
     @Column(length = 80, nullable = false)
     @Expose(serialize = true)
     private String Descricao;
-
+    
     @Expose(serialize = true)
     private Integer Sequencia;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -43,11 +50,23 @@ public class EstadoCivil extends GenericDomain {
         this.Sequencia = Sequencia;
     }
 
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
     public Date getDataCadastro() {
         return DataCadastro;
     }
 
     public void setDataCadastro(Date DataCadastro) {
         this.DataCadastro = DataCadastro;
+    }
+
+    public void setEntidade(Long entidade) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

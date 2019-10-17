@@ -2,6 +2,9 @@ package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,6 +27,10 @@ public class TipoContato extends GenericDomain{
     private boolean CampoObrigatorio;
     @Column(length = 80)
     private String Mascara;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public String getDescricao() {
         return Descricao;
@@ -72,4 +79,14 @@ public class TipoContato extends GenericDomain{
     public void setMascara(String Mascara) {
         this.Mascara = Mascara;
     }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
+    
 }

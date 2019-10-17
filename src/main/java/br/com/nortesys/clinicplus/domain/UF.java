@@ -3,9 +3,6 @@ package br.com.nortesys.clinicplus.domain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -13,23 +10,41 @@ import javax.persistence.TemporalType;
  *
  * @author Francisco Junior
  */
-@SuppressWarnings("Serial")
+
+@SuppressWarnings("serial")
 @Entity
-public class TipoAtendimento extends GenericDomain{
+public class UF extends GenericDomain{
+    
+    @Column(length = 90, nullable = false)
+    private String Descricao;
+    
+    @Column(length = 2)
+    private String UF;
     
     @Column(nullable = false)
     private Long Sequencia;
     
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
     private Date DataCadastro;
     
-    @Column(length = 90, nullable = false)
-    private String Descricao;
-    
-    @OneToOne
-    @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @Column(length = 2)
+    private String CodigoTISS_UF;
+
+    public String getDescricao() {
+        return Descricao;
+    }
+
+    public void setDescricao(String Descricao) {
+        this.Descricao = Descricao;
+    }
+
+    public String getUF() {
+        return UF;
+    }
+
+    public void setUF(String UF) {
+        this.UF = UF;
+    }
 
     public Long getSequencia() {
         return Sequencia;
@@ -47,22 +62,11 @@ public class TipoAtendimento extends GenericDomain{
         this.DataCadastro = DataCadastro;
     }
 
-    public String getDescricao() {
-        return Descricao;
+    public String getCodigoTISS_UF() {
+        return CodigoTISS_UF;
     }
 
-    public void setDescricao(String Descricao) {
-        this.Descricao = Descricao;
+    public void setCodigoTISS_UF(String CodigoTISS_UF) {
+        this.CodigoTISS_UF = CodigoTISS_UF;
     }
-
-    public Entidade getEntidade() {
-        return entidade;
-    }
-
-    public void setEntidade(Entidade entidade) {
-        this.entidade = entidade;
-    }
-    
-    
-    
 }

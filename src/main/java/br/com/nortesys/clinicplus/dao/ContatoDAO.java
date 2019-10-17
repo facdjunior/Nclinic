@@ -8,7 +8,7 @@ import org.hibernate.criterion.Order;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
 public class ContatoDAO extends GenericDAO<Contato> {
 

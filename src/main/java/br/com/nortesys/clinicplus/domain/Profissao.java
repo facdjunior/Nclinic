@@ -3,9 +3,9 @@ package br.com.nortesys.clinicplus.domain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,19 +19,23 @@ public class Profissao extends GenericDomain {
 
     @Column(unique = true, nullable = false)
     private Integer Sequencia;
-    
+
     @Column(length = 120, nullable = false)
     private String Descricao;
-    
+
     @Column(length = 20, nullable = false)
     private String CBO;
-    
+
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date DataCadastro;
-    
+
     @Column(length = 80)
     private String ConselhoProfissional;
+
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Integer getSequencia() {
         return Sequencia;
@@ -72,7 +76,13 @@ public class Profissao extends GenericDomain {
     public void setConselhoProfissional(String ConselhoProfissional) {
         this.ConselhoProfissional = ConselhoProfissional;
     }
-    
-    
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
 
 }

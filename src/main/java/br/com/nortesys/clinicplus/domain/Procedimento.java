@@ -3,6 +3,9 @@ package br.com.nortesys.clinicplus.domain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -52,6 +55,10 @@ public class Procedimento extends GenericDomain {
     private boolean ELaudo;
     
     private boolean EAtestado;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Long getSequencia() {
         return Sequencia;
@@ -173,6 +180,12 @@ public class Procedimento extends GenericDomain {
         this.EAtestado = EAtestado;
     }
 
+    public Entidade getEntidade() {
+        return entidade;
+    }
 
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
 
 }

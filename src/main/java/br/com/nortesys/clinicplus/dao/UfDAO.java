@@ -1,6 +1,6 @@
 package br.com.nortesys.clinicplus.dao;
 
-import br.com.nortesys.clinicplus.domain.PessoaJuridica;
+import br.com.nortesys.clinicplus.domain.UF;
 import br.com.nortesys.clinicplus.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -8,24 +8,24 @@ import org.hibernate.criterion.Order;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
-public class PessoaJuridicaDAO extends GenericDAO<PessoaJuridica>{
+public class UfDAO extends GenericDAO<UF>{
     
     @SuppressWarnings("unchecked")
-    public PessoaJuridica listarSequencia() {
+    public UF listarSequencia() {
 
         Session sessao = HibernateUtil.getSessionFactory().openSession();
 
         try {
 
-            Criteria consulta = sessao.createCriteria(PessoaJuridica.class);
+            Criteria consulta = sessao.createCriteria(UF.class);
             consulta.addOrder(Order.desc("Sequencia"));
             consulta.setMaxResults(1);
 
-            PessoaJuridica pessoaJuridica = (PessoaJuridica) consulta.uniqueResult();
+            UF uf = (UF) consulta.uniqueResult();
 
-            return pessoaJuridica;
+            return uf;
 
         } catch (RuntimeException erro) {
             throw erro;
@@ -33,4 +33,5 @@ public class PessoaJuridicaDAO extends GenericDAO<PessoaJuridica>{
             sessao.close();
         }
     }
+    
 }

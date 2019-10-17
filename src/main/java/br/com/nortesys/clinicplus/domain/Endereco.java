@@ -2,12 +2,13 @@ package br.com.nortesys.clinicplus.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -15,8 +16,9 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
+
 @SuppressWarnings("serial")
 @Entity
 public class Endereco extends GenericDomain {
@@ -24,48 +26,63 @@ public class Endereco extends GenericDomain {
     @Column(nullable = false)
     @Expose
     private Long Sequencia;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false)
+    private Bairro bairro;
+
     @Expose
     private Boolean Ativo;
+
+    @SerializedName("Descricao")
+    @Expose
+    private String logradouro;
+
+    @SerializedName("cep")
+    @Expose
+    private String cep;
+
+    @Column(length = 120)
+    @Expose(serialize = false)
+    private String PontoReferencia;
+
+    @Column(length = 160)
+    @Expose(serialize = false)
+    private String LinkEndereco;
+
+    @Expose(serialize = false)
+    private Boolean Principal;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    @Expose(serialize = false)
+    private TipoEndereco tipoEndereco;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     @Expose
     private Date DataCadastro;
 
+    @Column(length = 200)
+    @Expose(serialize = false)
+    private String Observacao;
+
+    @SerializedName("complemento")
+    @Expose
+    private String numero;
+
+    @SerializedName("complemento")
+    @Expose
+    private String complemento;
+
     @OneToOne
     @JoinColumn(nullable = false)
     @Expose(serialize = false)
     private Pessoa pessoa;
-
-    @SerializedName("cep")
-    @Expose
-    private String cep;
-    @SerializedName("logradouro")
-    @Expose
-    private String logradouro;
-    @SerializedName("complemento")
-    @Expose
-    private String complemento;
-    @SerializedName("bairro")
-    @Expose
-    private String bairro;
-    @SerializedName("localidade")
-    @Expose
-    private String localidade;
-    @SerializedName("uf")
-    @Expose
-    private String uf;
-    @SerializedName("unidade")
-    @Expose
-    private String unidade;
-    @SerializedName("ibge")
-    @Expose
-    private String ibge;
-    @SerializedName("gia")
-    @Expose
-    private String gia;
-
-    private String numero;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Long getSequencia() {
         return Sequencia;
@@ -73,6 +90,14 @@ public class Endereco extends GenericDomain {
 
     public void setSequencia(Long Sequencia) {
         this.Sequencia = Sequencia;
+    }
+
+    public Bairro getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(Bairro bairro) {
+        this.bairro = bairro;
     }
 
     public Boolean getAtivo() {
@@ -83,20 +108,12 @@ public class Endereco extends GenericDomain {
         this.Ativo = Ativo;
     }
 
-    public Date getDataCadastro() {
-        return DataCadastro;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setDataCadastro(Date DataCadastro) {
-        this.DataCadastro = DataCadastro;
-    }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public String getCep() {
@@ -107,68 +124,52 @@ public class Endereco extends GenericDomain {
         this.cep = cep;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public String getPontoReferencia() {
+        return PontoReferencia;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setPontoReferencia(String PontoReferencia) {
+        this.PontoReferencia = PontoReferencia;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public String getLinkEndereco() {
+        return LinkEndereco;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setLinkEndereco(String LinkEndereco) {
+        this.LinkEndereco = LinkEndereco;
     }
 
-    public String getBairro() {
-        return bairro;
+    public Boolean getPrincipal() {
+        return Principal;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setPrincipal(Boolean Principal) {
+        this.Principal = Principal;
     }
 
-    public String getLocalidade() {
-        return localidade;
+    public TipoEndereco getTipoEndereco() {
+        return tipoEndereco;
     }
 
-    public void setLocalidade(String localidade) {
-        this.localidade = localidade;
+    public void setTipoEndereco(TipoEndereco tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
     }
 
-    public String getUf() {
-        return uf;
+    public Date getDataCadastro() {
+        return DataCadastro;
     }
 
-    public void setUf(String uf) {
-        this.uf = uf;
+    public void setDataCadastro(Date DataCadastro) {
+        this.DataCadastro = DataCadastro;
     }
 
-    public String getUnidade() {
-        return unidade;
+    public String getObservacao() {
+        return Observacao;
     }
 
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
-    }
-
-    public String getIbge() {
-        return ibge;
-    }
-
-    public void setIbge(String ibge) {
-        this.ibge = ibge;
-    }
-
-    public String getGia() {
-        return gia;
-    }
-
-    public void setGia(String gia) {
-        this.gia = gia;
+    public void setObservacao(String Observacao) {
+        this.Observacao = Observacao;
     }
 
     public String getNumero() {
@@ -179,4 +180,28 @@ public class Endereco extends GenericDomain {
         this.numero = numero;
     }
 
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
 }

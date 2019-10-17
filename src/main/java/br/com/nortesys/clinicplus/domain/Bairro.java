@@ -1,56 +1,50 @@
 package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author Francisco Junior 2019-08-23
- *
+ * @author Francisco
  */
 @SuppressWarnings("serial")
 @Entity
-public class TipoDocumento extends GenericDomain {
+public class Bairro extends GenericDomain{
     
-    
-    @Column(nullable = false)
-    private Boolean PessoaFisica;
-
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String Descricao;
-
-    private Boolean Ativo;
-
-    @Column(unique = true, nullable = false)
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false)
+    private Cidade cidade;
+    
     private Long Sequencia;
-
+    
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
     private Date DataCadastro;
-
-    @Column(nullable = false, length = 80)
-    private String TipoDado;
+    
+    private Boolean Ativo;
     
     @OneToOne
     @JoinColumn(nullable = false)
     private Entidade entidade;
 
-    public Boolean getPessoaFisica() {
-        return PessoaFisica;
+    public Entidade getEntidade() {
+        return entidade;
     }
 
-    public void setPessoaFisica(Boolean PessoaFisica) {
-        this.PessoaFisica = PessoaFisica;
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
     }
-
+    
     public String getDescricao() {
         return Descricao;
     }
@@ -59,12 +53,12 @@ public class TipoDocumento extends GenericDomain {
         this.Descricao = Descricao;
     }
 
-    public Boolean getAtivo() {
-        return Ativo;
+    public Cidade getCidade() {
+        return cidade;
     }
 
-    public void setAtivo(Boolean Ativo) {
-        this.Ativo = Ativo;
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
     public Long getSequencia() {
@@ -83,22 +77,11 @@ public class TipoDocumento extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public String getTipoDado() {
-        return TipoDado;
+    public Boolean getAtivo() {
+        return Ativo;
     }
 
-    public void setTipoDado(String TipoDado) {
-        this.TipoDado = TipoDado;
+    public void setAtivo(Boolean Ativo) {
+        this.Ativo = Ativo;
     }
-
-    public Entidade getEntidade() {
-        return entidade;
-    }
-
-    public void setEntidade(Entidade entidade) {
-        this.entidade = entidade;
-    }
-    
-    
-    
 }

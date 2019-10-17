@@ -1,5 +1,6 @@
 package br.com.nortesys.clinicplus.dao;
 
+import br.com.nortesys.clinicplus.domain.Entidade;
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
 import java.util.Date;
 import java.util.List;
@@ -19,10 +20,12 @@ public class EstadoCivilDAOTest {
 
             EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
             EstadoCivil estadoCivil = new EstadoCivil();
-
+            
+                     
             EstadoCivil resultado = (EstadoCivil) estadoCivilDAO.listarSequencia();
 
             if (resultado == null) {
+                
                 estadoCivil.setSequencia(1);
                 estadoCivil.setDescricao("Casado");
                 estadoCivil.setDataCadastro(new Date());

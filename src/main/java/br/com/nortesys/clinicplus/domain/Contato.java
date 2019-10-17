@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
@@ -21,25 +22,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class Contato extends GenericDomain {
 
-    @Column(unique = false, nullable = false)
+   @Column(unique = false, nullable = false)
     @Expose
     private Long Sequencia;
-
-    @Column(length = 14)
-    @Expose
-    private String Celular;
-
-    @Column(length = 14)
-    @Expose
-    private String Celular1;
-
-    @Column(length = 13)
-    @Expose
-    private String fone;
-
-    @Column(length = 13)
-    @Expose
-    private String fone2;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -50,6 +35,10 @@ public class Contato extends GenericDomain {
     @JoinColumn(nullable = false)
     @Expose(serialize = false)
     private Pessoa pessoa;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -67,38 +56,6 @@ public class Contato extends GenericDomain {
         this.Sequencia = Sequencia;
     }
 
-    public String getCelular() {
-        return Celular;
-    }
-
-    public void setCelular(String Celular) {
-        this.Celular = Celular;
-    }
-
-    public String getCelular1() {
-        return Celular1;
-    }
-
-    public void setCelular1(String Celular1) {
-        this.Celular1 = Celular1;
-    }
-
-    public String getFone() {
-        return fone;
-    }
-
-    public void setFone(String fone) {
-        this.fone = fone;
-    }
-
-    public String getFone2() {
-        return fone2;
-    }
-
-    public void setFone2(String fone2) {
-        this.fone2 = fone2;
-    }
-
     public Date getDataCadastro() {
         return DataCadastro;
     }
@@ -107,6 +64,14 @@ public class Contato extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
     public Contato() {
 
         this.setPessoa(pessoa);

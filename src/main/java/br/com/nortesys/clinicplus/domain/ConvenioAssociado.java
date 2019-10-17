@@ -3,6 +3,9 @@ package br.com.nortesys.clinicplus.domain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,6 +29,10 @@ public class ConvenioAssociado extends GenericDomain{
     private Date DataCadastro;
     
     private boolean ECortesia;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Long getSequencia() {
         return Sequencia;
@@ -58,4 +65,13 @@ public class ConvenioAssociado extends GenericDomain{
     public void setECortesia(boolean ECortesia) {
         this.ECortesia = ECortesia;
     }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
 }

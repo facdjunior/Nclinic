@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -61,6 +62,10 @@ public class CartaoConvenio extends GenericDomain {
     @Expose
     @JoinColumn(nullable = false)
     private TipoConvenio tipoConvenio;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Convenio getConvenio() {
         return convenio;
@@ -145,5 +150,13 @@ public class CartaoConvenio extends GenericDomain {
     public CartaoConvenio() {
         this.setPessoa(pessoa);
         convenio = new Convenio();
+    }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
     }
 }

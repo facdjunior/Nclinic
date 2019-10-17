@@ -334,18 +334,7 @@ public class ClienteBean implements Serializable {
         if (cliente.getCodigo() == null) {
 
             try {
-                PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
-                PessoaFisica resultadoPessoaFisica = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
-
-                if (resultadoPessoaFisica == null) {
-                    this.cliente.getPessoa().getPessoaFisica().setSequencia(1);
-                    this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
-
-                } else {
-                    this.cliente.getPessoa().getPessoaFisica().setSequencia(resultadoPessoaFisica.getSequencia() + 1);
-                    this.cliente.getPessoa().getPessoaFisica().setDataCadastro(new Date());
-                }
-
+                
                 PessoaDAO pessoaDAO = new PessoaDAO();
                 Pessoa resultadoPesssoa = (Pessoa) pessoaDAO.listarSequencia();
 
@@ -520,14 +509,9 @@ public class ClienteBean implements Serializable {
         System.out.println(JSON);
         this.cliente.getPessoa().getEndereco().setCep(endereco.getCep());
         this.cliente.getPessoa().getEndereco().setComplemento(endereco.getComplemento());
-        this.cliente.getPessoa().getEndereco().setGia(endereco.getGia());
-        this.cliente.getPessoa().getEndereco().setIbge(endereco.getIbge());
-        this.cliente.getPessoa().getEndereco().setLocalidade(endereco.getLocalidade());
         this.cliente.getPessoa().getEndereco().setLogradouro(endereco.getLogradouro());
-        this.cliente.getPessoa().getEndereco().setBairro(endereco.getBairro());
         this.cliente.getPessoa().getEndereco().setNumero(endereco.getNumero());
-        this.cliente.getPessoa().getEndereco().setUf(endereco.getUf());
-        this.cliente.getPessoa().getEndereco().setUnidade(endereco.getUnidade());
+        
 
         return this.endereco;
 

@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -55,6 +57,10 @@ public class PessoaFisica extends GenericDomain {
     private String GrauEscolaridade;
 
     private Character Tratamento;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public String getIdade() {
         return idade;
@@ -126,5 +132,13 @@ public class PessoaFisica extends GenericDomain {
 
     public void setTratamento(Character Tratamento) {
         this.Tratamento = Tratamento;
+    }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
     }
 }

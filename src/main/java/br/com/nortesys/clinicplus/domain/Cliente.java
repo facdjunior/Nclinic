@@ -9,6 +9,7 @@ import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import javax.persistence.SequenceGenerator;
@@ -42,6 +43,10 @@ public class Cliente extends GenericDomain {
     @Expose(serialize = true)
     private String Observacao;
     
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
+    
     public String getObservacao() {
         return Observacao;
     }
@@ -74,6 +79,14 @@ public class Cliente extends GenericDomain {
         this.pessoa = pessoa;
     }
 
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
     public Cliente() {
         this.pessoa = new Pessoa();
 

@@ -3,10 +3,13 @@ package br.com.nortesys.clinicplus.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -27,11 +30,11 @@ public class RelProcedimentoConvenioAssociado extends GenericDomain{
     @Column(nullable = false)
     private Date DataCadastro;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private ConvenioAssociado convenioAssociado;
     
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Procedimento procedimento;
     
@@ -39,6 +42,10 @@ public class RelProcedimentoConvenioAssociado extends GenericDomain{
     
     @Column(nullable = false, precision = 7, scale = 2)
     private BigDecimal Valor;
+    
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Entidade entidade;
 
     public Long getSequencia() {
         return Sequencia;
@@ -87,4 +94,13 @@ public class RelProcedimentoConvenioAssociado extends GenericDomain{
     public void setValor(BigDecimal Valor) {
         this.Valor = Valor;
     }
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+    
 }

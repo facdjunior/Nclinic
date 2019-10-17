@@ -4,9 +4,12 @@ import br.com.nortesys.clinicplus.domain.Cliente;
 import br.com.nortesys.clinicplus.domain.Contato;
 import br.com.nortesys.clinicplus.domain.Documento;
 import br.com.nortesys.clinicplus.domain.Endereco;
+import br.com.nortesys.clinicplus.domain.Entidade;
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
+import br.com.nortesys.clinicplus.domain.InformacaoAdicional;
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import br.com.nortesys.clinicplus.domain.PessoaFisica;
+import br.com.nortesys.clinicplus.domain.PessoaJuridica;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,24 +19,27 @@ import org.junit.Test;
 
 /**
  *
- * @author Francisco
+ * @author Francisco Junior
  */
-public class ClienteDAOTest {
+public class EntidadeDAOTest {
 
     @Test
-    @Ignore
+    //@Ignore
     public void salvar() throws ParseException {
+
+        Entidade entidade = new Entidade();
+        EntidadeDAO entidadeDAO = new EntidadeDAO();
+        Entidade resultadoEntidade = (Entidade) entidadeDAO.listarSequencia();
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         EstadoCivil estadoCivil = estadoCivilDAO.buscar(1L);
 
-        PessoaFisica pessoaFisica = new PessoaFisica();
-        PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
-
-        PessoaFisica resultadoPFisica = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
+        PessoaJuridica pessoaJuridica = new PessoaJuridica();
+        PessoaJuridicaDAO pessoaJuridicaDAO = new PessoaJuridicaDAO();
+        PessoaJuridica resultadoPJuridica = (PessoaJuridica) pessoaJuridicaDAO.listarSequencia();
 
         PessoaDAO pessoaDAO = new PessoaDAO();
-        Pessoa pessoa = pessoaDAO.buscar(1L);
+        Pessoa pessoa = new Pessoa();
         Pessoa resultadoPessoa = (Pessoa) pessoaDAO.listarSequencia();
 
         Endereco endereco = new Endereco();
@@ -45,12 +51,11 @@ public class ClienteDAOTest {
         Documento resultadoDocumento = (Documento) documentoDAO.listarSequencia();
 
         if (resultadoPessoa == null) {
-
-            pessoa.setNome("Sérgio André Nicolas Fogaça");
+            pessoa.setCodigo(entidade.getCodigo()+pessoa.getCodigo());
+            pessoa.setNome("NORTESYS DESENVOLVIMENTO DE SISTEMAS");
             pessoa.setDataCadastro(new Date());
             pessoa.setSequencia(1L);
-            
-
+            System.out.println("teste:"+pessoa.getCodigo());
             System.out.println("Registro Novo sem sequencia!");
 
         } else {
@@ -58,29 +63,41 @@ public class ClienteDAOTest {
             pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
             pessoa.setNome("Bento Felipe Yago Figueiredo");
             pessoa.setDataCadastro(new Date());
-            
 
         }
-        if (resultadoPFisica == null) {
-
-            String data = "21/04/1950";
-            pessoaFisica.setDataCadastro(new Date());
-            pessoaFisica.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(data));
-            pessoaFisica.setEstadoCivil(estadoCivil);
-            pessoaFisica.setGrauEscolaridade("2º Grau");
-            pessoaFisica.setNaturalidade("Manaus");
-            pessoaFisica.setSequencia(1);
-            pessoaFisica.setSexo('F');
+        if (resultadoPJuridica == null) {
+            pessoaJuridica.setCodigo(entidade.getCodigo() +pessoaJuridica.getCodigo());
+            pessoaJuridica.setDataCadastro(new Date());
+            pessoaJuridica.setEntidade(entidade);
+            pessoaJuridica.setRazao("NORTESYS DESENVOLVIMENTO DE SISTEMAS LTDA-ME");
+            pessoaJuridica.setSequencia(1);
+            
         } else {
-
-            String data = "21/04/1950";
-            pessoaFisica.setDataCadastro(new Date());
-            pessoaFisica.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(data));
-            pessoaFisica.setEstadoCivil(estadoCivil);
-            pessoaFisica.setGrauEscolaridade("2º Grau");
-            pessoaFisica.setNaturalidade("Manaus");
-            pessoaFisica.setSequencia(resultadoPFisica.getSequencia() + 1);
-            pessoaFisica.setSexo('F');
+            
+            pessoaJuridica.setCodigo(entidade.getCodigo()+pessoaJuridica.getCodigo());
+            pessoaJuridica.setDataCadastro(new Date());
+            pessoaJuridica.setEntidade(entidade);
+            pessoaJuridica.setRazao("NORTESYS DESENVOLVIMENTO DE SISTEMAS LTDA-ME");
+            pessoaJuridica.setSequencia(resultadoPJuridica.getSequencia() + 1);
+        }
+        
+        InformacaoAdicional inforAdicional = new InformacaoAdicional();
+        InformacaoAdicionalDAO inforAdicionaisDAO = new InformacaoAdicionalDAO();
+        InformacaoAdicional resultadoInfor = (InformacaoAdicional) inforAdicionaisDAO.listarSequencia();
+        
+        if(resultadoInfor == null){
+            inforAdicional.setCodigo(entidade.getCodigo() +inforAdicional.getCodigo());
+            inforAdicional.setEntidade(entidade);
+            inforAdicional.setDataCadastro(new Date());
+            inforAdicional.setDescricao("");
+            inforAdicional.setPessoa(pessoa);
+            inforAdicional.setSequencia(1L);
+        }else{
+            inforAdicional.setCodigo(entidade.getCodigo() +inforAdicional.getCodigo());
+            inforAdicional.setDataCadastro(new Date());
+            inforAdicional.setDescricao("");
+            inforAdicional.setPessoa(pessoa);
+            inforAdicional.setSequencia(resultadoInfor.getCodigo() + 1L);
         }
 
         Contato contato = new Contato();
@@ -89,52 +106,51 @@ public class ClienteDAOTest {
 
         if (resultadoContato == null) {
 
-
             contato.setDataCadastro(new Date());
-
-            //   contato.setPessoa(pessoa);
             contato.setSequencia(1L);
 
         } else {
 
             contato.setDataCadastro(new Date());
 
-            //        contato.setPessoa(pessoa);
+
             contato.setSequencia(resultadoContato.getSequencia() + 1);
         }
 
         pessoaDAO.merge(pessoa);
+
         contatoDAO.merge(contato);
 
-        if (resultaEndereco == null) {
+        if (resultaEndereco
+                == null) {
 
             endereco.setAtivo(true);
-//            endereco.setBairro("Monte das Oliveiras");
             endereco.setLogradouro("Rua Muiratinga");
             endereco.setCep("69093-129");
             endereco.setSequencia(1L);
             endereco.setComplemento("João teste Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("310");
-            
+
             endereco.setPessoa(pessoa);
 
         } else {
 
             endereco.setAtivo(true);
-//            endereco.setBairro("Monte das Oliveiras");
             endereco.setLogradouro("Rua Muiratinga");
             endereco.setCep("69093-129");
             endereco.setSequencia(resultaEndereco.getSequencia() + 1);
             endereco.setComplemento("João teste Complemento");
             endereco.setDataCadastro(new Date());
             endereco.setNumero("310");
-            
+
             endereco.setPessoa(pessoa);
         }
+
         enderecoDAO.merge(endereco);
 
-        if (resultadoDocumento == null) {
+        if (resultadoDocumento
+                == null) {
             documento.setDataCadastro(new Date());
             documento.setDescricao("405.076.621-30");
             // documento.setPessoa(pessoa);
@@ -158,71 +174,7 @@ public class ClienteDAOTest {
             cliente.setPessoa(pessoa);
             cliente.setSequencia(resultadoCliente.getSequencia() + 1);
         }
+
         clienteDAO.merge(cliente);
-    }
-
-    @Test
-    @Ignore
-    public void listar() {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        List<Cliente> resultado = clienteDAO.listar("codigo");
-
-        System.out.println("Total de Registros Encontrados: " + resultado.size());
-
-        for (Cliente cliente : resultado) {
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome()+ cliente.getPessoa().getDataCadastro());
-        }
-    }
-
-    @Test
-    @Ignore
-    public void buscar() {
-        //Long codigo = 3L;
-
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.buscar(1L);
-
-        if (cliente == null) {
-            System.out.println("Nenhum registro encontrado");
-        } else {
-            System.out.println("Registro encontrados:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome() + "Data Nascimento: " + cliente.getPessoa().getDataCadastro());
-        }
-    }
-
-    @Test
-    @Ignore
-    public void excluir() {
-        Long codigo = 3L;
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.buscar(codigo);
-
-        if (cliente == null) {
-            System.out.println("Nenhum registro encontrado");
-        } else {
-            clienteDAO.excluir(cliente);
-            System.out.println("Registro removido:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
-        }
-    }
-
-    @Test
-    @Ignore
-    public void editar() {
-        Long codigo = 1L;
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.buscar(codigo);
-
-        if (cliente == null) {
-            System.out.println("Nenhum registro encontrado");
-        } else {
-            System.out.println("Registro editado - Antes:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getPessoa().getNome());
-
-            cliente.setDataCadastro(new Date());
-
-            System.out.println("Registro editado - Depois:");
-            System.out.println(cliente.getCodigo() + " - " + cliente.getDataCadastro());
-        }
     }
 }

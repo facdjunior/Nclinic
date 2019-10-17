@@ -24,9 +24,10 @@ public class TipoDocumentoDAOTest {
 
             if (resultado == null) {
                 tipoDocumento.setSequencia(1l);
-                tipoDocumento.setDescricao("RG");
+                tipoDocumento.setDescricao("CPF");
                 tipoDocumento.setAtivo(true);
-                tipoDocumento.setTipo("RG");
+                tipoDocumento.setTipoDado("CPF");
+                tipoDocumento.setPessoaFisica(true);
                 tipoDocumento.setDataCadastro(new Date());
 
                 tipoDocumentoDAO.merge(tipoDocumento);
@@ -35,7 +36,8 @@ public class TipoDocumentoDAOTest {
             tipoDocumento.setSequencia(resultado.getSequencia() + 1);
             tipoDocumento.setDescricao("Número de matrícula");
             tipoDocumento.setAtivo(true);
-            tipoDocumento.setTipo("Número de matrícula");
+            tipoDocumento.setTipoDado("Número de matrícula");
+            tipoDocumento.setPessoaFisica(true);
             tipoDocumento.setDataCadastro(new Date());
 
             tipoDocumentoDAO.merge(tipoDocumento);
@@ -81,7 +83,7 @@ public class TipoDocumentoDAOTest {
     @Test
     @Ignore
     public void excluir() {
-        Long codigo = 2L;
+        Long codigo = 7L;
         TipoDocumentoDAO tipoDocumentoDAO = new TipoDocumentoDAO();
         TipoDocumento tipoDocumento = tipoDocumentoDAO.buscar(codigo);
 
@@ -97,7 +99,7 @@ public class TipoDocumentoDAOTest {
     @Test
     @Ignore
     public void editar() {
-        Long codigo = 1L;
+        Long codigo = 3L;
         TipoDocumentoDAO tipoDocumentoDAO = new TipoDocumentoDAO();
         TipoDocumento tipoDocumento = tipoDocumentoDAO.buscar(codigo);
 
@@ -107,7 +109,8 @@ public class TipoDocumentoDAOTest {
             System.out.println("Registro editado - Antes:");
             System.out.println(tipoDocumento.getCodigo() + " - " + tipoDocumento.getDescricao());
 
-            tipoDocumento.setDescricao("UNIMED INTER CAMBIO");
+            tipoDocumento.setPessoaFisica(true);
+            tipoDocumento.setAtivo(true);
             tipoDocumento.setDataCadastro(new Date());
             tipoDocumentoDAO.merge(tipoDocumento);
 

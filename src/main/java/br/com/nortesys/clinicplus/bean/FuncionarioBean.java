@@ -1,22 +1,20 @@
 package br.com.nortesys.clinicplus.bean;
 
-import br.com.nortesys.clinicplus.dao.CartaoConvenioDAO;
-import br.com.nortesys.clinicplus.dao.ClienteDAO;
 import br.com.nortesys.clinicplus.dao.ContatoDAO;
 import br.com.nortesys.clinicplus.dao.DocumentoDAO;
 import br.com.nortesys.clinicplus.dao.EnderecoDAO;
 import br.com.nortesys.clinicplus.dao.EstadoCivilDAO;
 import br.com.nortesys.clinicplus.dao.FuncionarioDAO;
+
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
-import br.com.nortesys.clinicplus.dao.PessoaFisicaDAO;
 import br.com.nortesys.clinicplus.dao.TipoFuncionarioDAO;
 import br.com.nortesys.clinicplus.domain.Contato;
 import br.com.nortesys.clinicplus.domain.Documento;
 import br.com.nortesys.clinicplus.domain.Endereco;
+
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
 import br.com.nortesys.clinicplus.domain.Funcionario;
 import br.com.nortesys.clinicplus.domain.Pessoa;
-import br.com.nortesys.clinicplus.domain.PessoaFisica;
 import br.com.nortesys.clinicplus.domain.TipoFuncionario;
 import br.com.nortesys.clinicplus.service.ServicoEndereco;
 
@@ -25,18 +23,19 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
+
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -156,18 +155,7 @@ public class FuncionarioBean implements Serializable {
         if (funcionario.getCodigo() == null) {
 
             try {
-                PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
-                PessoaFisica resultadoPessoaFisica = (PessoaFisica) pessoaFisicaDAO.listarSequencia();
-
-                if (resultadoPessoaFisica == null) {
-                    this.funcionario.getPessoa().getPessoaFisica().setSequencia(1);
-                    this.funcionario.getPessoa().getPessoaFisica().setDataCadastro(new Date());
-
-                } else {
-                    this.funcionario.getPessoa().getPessoaFisica().setSequencia(resultadoPessoaFisica.getSequencia() + 1);
-                    this.funcionario.getPessoa().getPessoaFisica().setDataCadastro(new Date());
-                }
-
+                
                 PessoaDAO pessoaDAO = new PessoaDAO();
                 Pessoa resultadoPesssoa = (Pessoa) pessoaDAO.listarSequencia();
 
@@ -329,29 +317,12 @@ public class FuncionarioBean implements Serializable {
         this.funcionario.getPessoa()
                 .getEndereco().setComplemento(endereco.getComplemento());
 
-        this.funcionario.getPessoa()
-                .getEndereco().setGia(endereco.getGia());
-
-        this.funcionario.getPessoa()
-                .getEndereco().setIbge(endereco.getIbge());
-
-        this.funcionario.getPessoa()
-                .getEndereco().setLocalidade(endereco.getLocalidade());
-
+       
         this.funcionario.getPessoa()
                 .getEndereco().setLogradouro(endereco.getLogradouro());
 
         this.funcionario.getPessoa()
-                .getEndereco().setBairro(endereco.getBairro());
-
-        this.funcionario.getPessoa()
                 .getEndereco().setNumero(endereco.getNumero());
-
-        this.funcionario.getPessoa()
-                .getEndereco().setUf(endereco.getUf());
-
-        this.funcionario.getPessoa()
-                .getEndereco().setUnidade(endereco.getUnidade());
 
         return this.endereco;
     }

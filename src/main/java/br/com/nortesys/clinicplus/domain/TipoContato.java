@@ -2,6 +2,8 @@ package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,7 +32,8 @@ public class TipoContato extends GenericDomain{
     
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @Embedded
+    private Empresa entidade;
 
     public String getDescricao() {
         return Descricao;
@@ -80,11 +83,11 @@ public class TipoContato extends GenericDomain{
         this.Mascara = Mascara;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
     

@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import javax.persistence.JoinColumn;
@@ -37,8 +39,9 @@ public class Contato extends GenericDomain {
     private Pessoa pessoa;
     
     @OneToOne
-    @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @JoinColumn(nullable = true)
+    @Embedded
+    private Empresa entidade;
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -64,16 +67,17 @@ public class Contato extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
     
     public Contato() {
 
         this.setPessoa(pessoa);
+        this.setEntidade(entidade);
     }
 }

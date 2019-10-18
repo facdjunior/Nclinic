@@ -25,17 +25,18 @@ public class InformacaoAdicionalDAO extends GenericDAO<InformacaoAdicional>{
             consulta.addOrder(Order.desc("Sequencia"));
             consulta.setMaxResults(1);
 
-            InformacaoAdicional inforAdicional = (InformacaoAdicional) consulta.uniqueResult();
+            InformacaoAdicional informacaoAdicional = (InformacaoAdicional) consulta.uniqueResult();
 
-           
-            return inforAdicional;
+            if (consulta == null) {
+                informacaoAdicional.setSequencia(1L);
+            }
+            return informacaoAdicional;
 
         } catch (RuntimeException erro) {
             throw erro;
         } finally {
             sessao.close();
         }
-
     }
     
 }

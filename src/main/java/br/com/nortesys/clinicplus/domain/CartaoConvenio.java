@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -24,6 +25,8 @@ public class CartaoConvenio extends GenericDomain {
     @Column(nullable = false)
     @Expose
     private Long Sequencia;
+    @EmbeddedId
+    private EmpresaID empresaID;
 
     @Column(length = 90)
     @Expose
@@ -65,7 +68,17 @@ public class CartaoConvenio extends GenericDomain {
     
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    private Empresa entidade;
+
+    public EmpresaID getEmpresaID() {
+        return empresaID;
+    }
+
+    public void setEmpresaID(EmpresaID empresaID) {
+        this.empresaID = empresaID;
+    }
+    
+    
 
     public Convenio getConvenio() {
         return convenio;
@@ -152,11 +165,11 @@ public class CartaoConvenio extends GenericDomain {
         convenio = new Convenio();
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
 }

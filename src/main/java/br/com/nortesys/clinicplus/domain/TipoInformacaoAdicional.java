@@ -2,6 +2,7 @@ package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -11,6 +12,8 @@ import javax.persistence.TemporalType;
  *
  * @author Francisco Junior
  */
+@SuppressWarnings("serial")
+@Entity
 public class TipoInformacaoAdicional extends GenericDomain{
     
     @Column(nullable = false, length = 80)
@@ -20,7 +23,7 @@ public class TipoInformacaoAdicional extends GenericDomain{
     
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    private Empresa entidade;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -55,11 +58,11 @@ public class TipoInformacaoAdicional extends GenericDomain{
         this.Ativo = Ativo;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
 

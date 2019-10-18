@@ -1,15 +1,17 @@
 package br.com.nortesys.clinicplus.domain;
 
-
 import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
-
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,8 +25,12 @@ public class GenericDomain implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Expose(serialize = true)
     private Long codigo;
+
+
     
     
+    
+
     public Long getCodigo() {
         return codigo;
     }
@@ -32,6 +38,8 @@ public class GenericDomain implements Serializable {
     public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
+
+   
     
 
     @Override

@@ -1,6 +1,6 @@
 package br.com.nortesys.clinicplus.dao;
 
-import br.com.nortesys.clinicplus.domain.Entidade;
+import br.com.nortesys.clinicplus.domain.Empresa;
 import br.com.nortesys.clinicplus.domain.EstadoCivil;
 import java.util.Date;
 import java.util.List;

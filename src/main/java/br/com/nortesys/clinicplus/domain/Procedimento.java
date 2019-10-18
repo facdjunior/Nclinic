@@ -2,6 +2,8 @@ package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -26,16 +28,16 @@ public class Procedimento extends GenericDomain {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
-    
+
     private boolean ESessao;
-    
+
     private boolean Ativo;
-    
+
     private boolean EProdutoKit;
 
     @Column(length = 12)
     private String NumeracaoProcedimento;
-    
+
     @Column(length = 12)
     private String NumeracaoTuss;
 
@@ -43,22 +45,23 @@ public class Procedimento extends GenericDomain {
     private Date DataAtualizacao;
 
     private boolean EExame;
-    
+
     @Column(length = 190)
     private String MensagemSMS;
-    
+
     @Column(length = 250)
     private String MensagemEmail;
-    
+
     private Long QuantidadeDiasEnviarMensagemMarketing;
-    
+
     private boolean ELaudo;
-    
+
     private boolean EAtestado;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @Embedded
+    private Empresa entidade;
 
     public Long getSequencia() {
         return Sequencia;
@@ -180,11 +183,11 @@ public class Procedimento extends GenericDomain {
         this.EAtestado = EAtestado;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
 

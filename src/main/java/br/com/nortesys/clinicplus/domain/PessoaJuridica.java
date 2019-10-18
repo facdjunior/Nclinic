@@ -3,6 +3,8 @@ package br.com.nortesys.clinicplus.domain;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,7 +39,8 @@ public class PessoaJuridica extends GenericDomain {
     
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @Embedded
+    private Empresa entidade;
 
     public Integer getSequencia() {
         return Sequencia;
@@ -71,11 +74,11 @@ public class PessoaJuridica extends GenericDomain {
         this.DataCadastro = DataCadastro;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
     

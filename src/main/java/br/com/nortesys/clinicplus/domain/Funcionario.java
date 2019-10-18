@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -56,7 +58,8 @@ public class Funcionario extends GenericDomain{
     
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @Embedded
+    private Empresa entidade;
     
     public Integer getSequencia() {
         return Sequencia;
@@ -114,11 +117,11 @@ public class Funcionario extends GenericDomain{
         this.caminho = caminho;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
     

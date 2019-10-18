@@ -3,6 +3,8 @@ package br.com.nortesys.clinicplus.domain;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -27,7 +29,8 @@ public class EstadoCivil extends GenericDomain {
     
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @Embedded
+    private Empresa entidade;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -50,11 +53,11 @@ public class EstadoCivil extends GenericDomain {
         this.Sequencia = Sequencia;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
     

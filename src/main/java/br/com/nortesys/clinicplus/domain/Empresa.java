@@ -1,11 +1,16 @@
 
 package br.com.nortesys.clinicplus.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -17,7 +22,9 @@ import javax.persistence.TemporalType;
  */
 @SuppressWarnings("serial")
 @Entity
-public class Entidade extends GenericDomain{
+
+public class Empresa extends GenericDomain{
+    
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
@@ -639,6 +646,9 @@ public class Entidade extends GenericDomain{
         this.ChaveParceiro = ChaveParceiro;
     }
     
+    public Empresa(){
+        
+    }  
     
     
 }

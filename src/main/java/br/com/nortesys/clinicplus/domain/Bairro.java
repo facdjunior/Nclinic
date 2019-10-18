@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.domain;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,18 +33,9 @@ public class Bairro extends GenericDomain{
     private Date DataCadastro;
     
     private Boolean Ativo;
+   
+
     
-    @OneToOne
-    @JoinColumn(nullable = false)
-    private Entidade entidade;
-
-    public Entidade getEntidade() {
-        return entidade;
-    }
-
-    public void setEntidade(Entidade entidade) {
-        this.entidade = entidade;
-    }
     
     public String getDescricao() {
         return Descricao;

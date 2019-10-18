@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
@@ -61,8 +63,9 @@ public class Pessoa extends GenericDomain {
     private CartaoConvenio cartaoConvenio;
     
     @OneToOne
-    @JoinColumn(nullable = false)
-    private Entidade entidade;
+    @JoinColumn(nullable = true)
+    @Embedded
+    private Empresa entidade;
 
     public CartaoConvenio getCartaoConvenio() {
         return cartaoConvenio;
@@ -144,11 +147,11 @@ public class Pessoa extends GenericDomain {
         this.inforAdicionais = inforAdicionais;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
     
@@ -161,6 +164,10 @@ public class Pessoa extends GenericDomain {
         this.endereco = new Endereco();
         this.inforAdicionais = new InformacaoAdicional();
         this.cartaoConvenio = new CartaoConvenio();
+        this.entidade = new Empresa();
+      
+        
+        
         
         
 

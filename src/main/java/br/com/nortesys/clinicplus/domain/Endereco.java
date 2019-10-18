@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -80,9 +82,7 @@ public class Endereco extends GenericDomain {
     @Expose(serialize = false)
     private Pessoa pessoa;
     
-    @OneToOne
-    @JoinColumn(nullable = false)
-    private Entidade entidade;
+    
 
     public Long getSequencia() {
         return Sequencia;
@@ -196,12 +196,6 @@ public class Endereco extends GenericDomain {
         this.pessoa = pessoa;
     }
 
-    public Entidade getEntidade() {
-        return entidade;
-    }
-
-    public void setEntidade(Entidade entidade) {
-        this.entidade = entidade;
-    }
+   
     
 }

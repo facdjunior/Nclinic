@@ -35,7 +35,7 @@ public class Profissao extends GenericDomain {
 
     @OneToOne
     @JoinColumn(nullable = false)
-    private Entidade entidade;
+    private Empresa entidade;
 
     public Integer getSequencia() {
         return Sequencia;
@@ -77,11 +77,11 @@ public class Profissao extends GenericDomain {
         this.ConselhoProfissional = ConselhoProfissional;
     }
 
-    public Entidade getEntidade() {
+    public Empresa getEntidade() {
         return entidade;
     }
 
-    public void setEntidade(Entidade entidade) {
+    public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
 

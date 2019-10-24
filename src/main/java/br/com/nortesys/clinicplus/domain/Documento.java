@@ -5,9 +5,10 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
@@ -23,9 +24,9 @@ import javax.persistence.TemporalType;
 public class Documento extends GenericDomain {
 
         
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    @Expose(serialize = false)
+    @Expose(serialize = true, deserialize = false)
     private Pessoa pessoa;
     
     @OneToOne
@@ -41,15 +42,14 @@ public class Documento extends GenericDomain {
     @Expose
     private Integer Sequencia;
 
-    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     @Expose
     private Date DataCadastro;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    @EmbeddedId
+    @Expose(serialize = true, deserialize = false)
     private Empresa entidade;
 
     public Pessoa getPessoa() {

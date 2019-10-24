@@ -14,7 +14,7 @@ import org.junit.Test;
 public class ConvenioDAOTest {
 
     @Test
-    //@Ignore
+    @Ignore
     public void salvar() {
         try {
 
@@ -69,7 +69,7 @@ public class ConvenioDAOTest {
         //Long codigo = 3L;
 
         ConvenioDAO convenioDAO = new ConvenioDAO();
-        Convenio convenio = convenioDAO.buscar(1L);
+        Convenio convenio = convenioDAO.buscar(11L);
 
         if (convenio == null) {
             System.out.println("Nenhum registro encontrado");

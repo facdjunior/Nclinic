@@ -27,7 +27,7 @@ public class ConvenioService {
         ConvenioDAO convenioDAO = new ConvenioDAO();
         List<Convenio> convenios = convenioDAO.listar();
 
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(convenios);
 
         return json;
@@ -41,7 +41,7 @@ public class ConvenioService {
         ConvenioDAO convenioDAO = new ConvenioDAO();
         Convenio convenio = convenioDAO.buscar(codigo);
 
-        Gson gson = new GsonBuilder().setDateFormat("dd-MM-YYYY").create();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(convenio);
 
         return json;
@@ -52,7 +52,7 @@ public class ConvenioService {
     public String salvar(String json) {
 
         
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         Convenio convenio = gson.fromJson(json, Convenio.class);
 
         ConvenioDAO convenioDAO = new ConvenioDAO();

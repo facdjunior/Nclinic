@@ -18,6 +18,7 @@ public class TipoContato extends GenericDomain{
     
     @Column(length = 80, nullable = false)
     private String Descricao;
+    
     @Column(nullable = false)
     private Long Sequencia;
     @Temporal(TemporalType.TIMESTAMP)
@@ -32,7 +33,6 @@ public class TipoContato extends GenericDomain{
     
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
 
     public String getDescricao() {

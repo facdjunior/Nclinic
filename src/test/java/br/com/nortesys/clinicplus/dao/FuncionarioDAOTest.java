@@ -29,7 +29,7 @@ public class FuncionarioDAOTest {
 
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         EstadoCivil estadoCivil = estadoCivilDAO.buscar(1L);
-        
+
         TipoFuncionarioDAO tipoFuncionarioDAO = new TipoFuncionarioDAO();
         TipoFuncionario tipoFuncionario = tipoFuncionarioDAO.buscar(1L);
 
@@ -54,7 +54,6 @@ public class FuncionarioDAOTest {
             pessoa.setNome("Sérgio André Nicolas Fogaça");
             pessoa.setDataCadastro(new Date());
             pessoa.setSequencia(1L);
-            
 
             System.out.println("Registro Novo sem sequencia!");
 
@@ -63,7 +62,6 @@ public class FuncionarioDAOTest {
             pessoa.setSequencia(resultadoPessoa.getSequencia() + 1);
             pessoa.setNome("Bento Felipe Yago Figueiredo");
             pessoa.setDataCadastro(new Date());
-            
 
         }
         if (resultadoPFisica == null) {
@@ -94,16 +92,15 @@ public class FuncionarioDAOTest {
 
         if (resultadoContato == null) {
 
-            
             pessoa.getContato().setDataCadastro(new Date());
-            
+
             pessoa.getContato().setPessoa(pessoa);
             pessoa.getContato().setSequencia(1L);
 
         } else {
-            
+
             pessoa.getContato().setDataCadastro(new Date());
-            
+
             pessoa.getContato().setPessoa(pessoa);
             pessoa.getContato().setSequencia(resultadoContato.getSequencia() + 1);
         }
@@ -162,8 +159,7 @@ public class FuncionarioDAOTest {
             funcionario.setDataAdmissao(new Date());
             funcionario.setTipoFuncionario(tipoFuncionario);
         }
-        
-        
+
         funcionarioDAO.merge(funcionario);
     }
 

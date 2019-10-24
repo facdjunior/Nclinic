@@ -22,17 +22,14 @@ import javax.persistence.TemporalType;
 public class Contatos extends GenericDomain {
 
     @Column(unique = false, nullable = false)
-    @Expose
     private Long Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @Expose
     private Date DataCadastro;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-    @Expose(serialize = false)
     private Pessoa pessoa;
 
     public Pessoa getPessoa() {

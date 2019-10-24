@@ -1,5 +1,6 @@
 package br.com.nortesys.clinicplus.domain;
 
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,8 +22,7 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("serial")
 @Entity
 public class TipoDocumento extends GenericDomain {
-    
-    
+
     @Column(nullable = false)
     private Boolean PessoaFisica;
 
@@ -40,10 +40,9 @@ public class TipoDocumento extends GenericDomain {
 
     @Column(nullable = false, length = 80)
     private String TipoDado;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
 
     public Boolean getPessoaFisica() {
@@ -101,7 +100,5 @@ public class TipoDocumento extends GenericDomain {
     public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
-    
-    
-    
+
 }

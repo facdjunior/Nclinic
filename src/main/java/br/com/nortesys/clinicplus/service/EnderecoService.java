@@ -34,7 +34,7 @@ public class EnderecoService {
         return json;
     }
 
-    //http://localhost:8080/ClinicPlus/clinic/tipoconvenio/endereco
+    //http://localhost:8080/ClinicPlus/clinic/endereco
     @GET
     @Path("{codigo}")
     public String buscar(@PathParam("codigo") Long codigo) {

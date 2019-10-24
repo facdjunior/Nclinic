@@ -2,47 +2,39 @@ package br.com.nortesys.clinicplus.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 /**
  *
  * @author Francisco Junior
  */
-
 @SuppressWarnings("serial")
 @Entity
-public class Cidade extends GenericDomain{
-    
-    
+public class Cidade extends GenericDomain {
+
     private Long Sequencia;
-    
+
     @Column(length = 90)
     private String Descricao;
-    
+
     private Integer CodigoIBGE;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
     private UF uf;
-    
+
     private Boolean Ativo;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
 
     public Long getSequencia() {

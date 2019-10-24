@@ -31,7 +31,6 @@ public class TipoAtendimento extends GenericDomain{
     
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
 
     public Long getSequencia() {

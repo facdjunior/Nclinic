@@ -27,7 +27,7 @@ public class EstadoCivilService {
         EstadoCivilDAO estadoCivilDAO = new EstadoCivilDAO();
         List<EstadoCivil> estadoCivils = estadoCivilDAO.listar("Descricao");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(estadoCivils);
 
         return json;
@@ -74,7 +74,7 @@ public class EstadoCivilService {
         return jsonSaida;
     }
 
-    //http://localhost:8080/ClinicPlus/rest/estadoCivil/
+    //http://localhost:8080/ClinicPlus/clinic/estadoCivil/
     @PUT
     public String editar(String json) {
 

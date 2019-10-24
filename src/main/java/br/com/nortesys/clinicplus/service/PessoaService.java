@@ -1,6 +1,5 @@
 package br.com.nortesys.clinicplus.service;
 
-
 import br.com.nortesys.clinicplus.dao.PessoaDAO;
 import br.com.nortesys.clinicplus.domain.Pessoa;
 import com.google.gson.Gson;
@@ -26,8 +25,7 @@ public class PessoaService {
 
         PessoaDAO pessoaDAO = new PessoaDAO();
         List<Pessoa> pessoas = pessoaDAO.listar("Nome");
-
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(pessoas);
 
         return json;
@@ -41,7 +39,7 @@ public class PessoaService {
         PessoaDAO pessoaDAO = new PessoaDAO();
         Pessoa pessoa = pessoaDAO.buscar(codigo);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(pessoa);
 
         return json;
@@ -51,7 +49,7 @@ public class PessoaService {
     @POST
     public String salvar(String json) {
 
-        Gson gson = new Gson();
+       Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         Pessoa pessoa = gson.fromJson(json, Pessoa.class);
 
         PessoaDAO pessoaDAO = new PessoaDAO();
@@ -65,7 +63,7 @@ public class PessoaService {
     @PUT
     public String editar(String json) {
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         Pessoa pessoa = gson.fromJson(json, Pessoa.class);
 
         PessoaDAO pessoaDAO = new PessoaDAO();
@@ -85,7 +83,7 @@ public class PessoaService {
         Pessoa pessoa = pessoaDAO.buscar(codigo);
         pessoaDAO.excluir(pessoa);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         String saida = gson.toJson(pessoa);
         return saida;
     }

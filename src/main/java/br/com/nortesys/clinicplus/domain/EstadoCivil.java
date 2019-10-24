@@ -21,20 +21,17 @@ import javax.persistence.TemporalType;
 public class EstadoCivil extends GenericDomain {
 
     @Column(length = 80, nullable = false)
-    @Expose(serialize = true)
     private String Descricao;
     
-    @Expose(serialize = true)
+    
     private Integer Sequencia;
     
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @Expose(serialize = true)
     private Date DataCadastro;
 
     public String getDescricao() {

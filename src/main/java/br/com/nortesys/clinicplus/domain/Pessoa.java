@@ -1,18 +1,15 @@
 package br.com.nortesys.clinicplus.domain;
 
 import com.google.gson.annotations.Expose;
-import java.awt.image.BufferedImage;
 import java.util.Date;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -27,7 +24,7 @@ import javax.persistence.TemporalType;
 public class Pessoa extends GenericDomain {
 
     @Column(length = 120, nullable = false)
-    @Expose
+    @Expose(serialize = true, deserialize = false)
     private String Nome;
 
     @Column(unique = true, nullable = true)
@@ -38,35 +35,41 @@ public class Pessoa extends GenericDomain {
     @JoinColumn(nullable = false)
     @Expose
     private Date DataCadastro;
-
-    @Expose(serialize = true)
+    @Expose
     private Boolean PessoaFisica;
-
+    @Expose
     private String imagem;
+    
+    @Expose
+    private Long CodigoImagem;
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Expose(serialize = true)
     private Contato contato;
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Expose(serialize = true)
     private Endereco endereco;
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Expose(serialize = true)
     private Documento documento;
-    
+
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private InformacaoAdicional inforAdicionais;
-    
+
     @OneToOne(mappedBy = "pessoa")
     private CartaoConvenio cartaoConvenio;
-    
+
     @OneToOne
     @JoinColumn(nullable = true)
-    @Embedded
     private Empresa entidade;
 
+    public Long getCodigoImagem() {
+        return CodigoImagem;
+    }
+
+    public void setCodigoImagem(Long CodigoImagem) {
+        this.CodigoImagem = CodigoImagem;
+    }
+    
     public CartaoConvenio getCartaoConvenio() {
         return cartaoConvenio;
     }
@@ -74,7 +77,7 @@ public class Pessoa extends GenericDomain {
     public void setCartaoConvenio(CartaoConvenio cartaoConvenio) {
         this.cartaoConvenio = cartaoConvenio;
     }
-    
+
     public Contato getContato() {
         return contato;
     }
@@ -154,9 +157,7 @@ public class Pessoa extends GenericDomain {
     public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
-    
-    
-    
+
     public Pessoa() {
 
         this.documento = new Documento();
@@ -165,11 +166,6 @@ public class Pessoa extends GenericDomain {
         this.inforAdicionais = new InformacaoAdicional();
         this.cartaoConvenio = new CartaoConvenio();
         this.entidade = new Empresa();
-      
-        
-        
-        
-        
 
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
@@ -21,15 +22,11 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("serial")
 @Entity
 public class CartaoConvenio extends GenericDomain {
-    
+
     @Column(nullable = false)
-    @Expose
     private Long Sequencia;
-    @EmbeddedId
-    private EmpresaID empresaID;
 
     @Column(length = 90)
-    @Expose
     private String TipoPlano;
 
     @Column(length = 90)
@@ -37,48 +34,31 @@ public class CartaoConvenio extends GenericDomain {
     private String Acomodacao;
 
     @Column(length = 30)
-    @Expose
     private String NumeroCartaoConvenio;
 
     @Temporal(TemporalType.DATE)
-    @Expose
     private Date DataVinculo;
 
     @Temporal(TemporalType.DATE)
-    @Expose
     private Date DataValidade;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Expose
     private Date DataCadastro;
 
-    @OneToOne
-    @Expose
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Pessoa pessoa;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Expose
     private Convenio convenio;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Expose
     @JoinColumn(nullable = false)
     private TipoConvenio tipoConvenio;
-    
-    @OneToOne
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Empresa entidade;
-
-    public EmpresaID getEmpresaID() {
-        return empresaID;
-    }
-
-    public void setEmpresaID(EmpresaID empresaID) {
-        this.empresaID = empresaID;
-    }
-    
-    
 
     public Convenio getConvenio() {
         return convenio;

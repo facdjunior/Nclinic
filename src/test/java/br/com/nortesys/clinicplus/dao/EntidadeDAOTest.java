@@ -25,7 +25,7 @@ import org.junit.Test;
 public class EntidadeDAOTest {
 
     @Test
-    //@Ignore
+    @Ignore
     public void salvar() throws ParseException {
 
         EmpresaDAO entidadeDAO = new EmpresaDAO();

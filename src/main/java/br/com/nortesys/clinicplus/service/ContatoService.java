@@ -3,6 +3,7 @@ package br.com.nortesys.clinicplus.service;
 import br.com.nortesys.clinicplus.dao.ContatoDAO;
 import br.com.nortesys.clinicplus.domain.Contato;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,7 +26,7 @@ public class ContatoService {
         ContatoDAO contatoDAO = new ContatoDAO();
         List<Contato> contatos = contatoDAO.listar("codigo");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contatos);
 
         return json;

@@ -20,69 +20,53 @@ import javax.persistence.TemporalType;
  *
  * @author Francisco Junior
  */
-
 @SuppressWarnings("serial")
 @Entity
 public class Endereco extends GenericDomain {
 
     @Column(nullable = false)
-    @Expose
     private Long Sequencia;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Bairro bairro;
 
-    @Expose
     private Boolean Ativo;
 
     @SerializedName("Descricao")
-    @Expose
     private String logradouro;
 
     @SerializedName("cep")
-    @Expose
     private String cep;
 
     @Column(length = 120)
-    @Expose(serialize = false)
     private String PontoReferencia;
 
     @Column(length = 160)
-    @Expose(serialize = false)
     private String LinkEndereco;
 
-    @Expose(serialize = false)
     private Boolean Principal;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
-    @Expose(serialize = false)
     private TipoEndereco tipoEndereco;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @Expose
     private Date DataCadastro;
 
     @Column(length = 200)
-    @Expose(serialize = false)
     private String Observacao;
 
-    @SerializedName("complemento")
-    @Expose
+    @SerializedName("numero")
+
     private String numero;
 
-    @SerializedName("complemento")
-    @Expose
     private String complemento;
 
     @OneToOne
     @JoinColumn(nullable = false)
-    @Expose(serialize = false)
     private Pessoa pessoa;
-    
-    
 
     public Long getSequencia() {
         return Sequencia;
@@ -196,6 +180,4 @@ public class Endereco extends GenericDomain {
         this.pessoa = pessoa;
     }
 
-   
-    
 }

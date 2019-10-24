@@ -23,11 +23,7 @@ public class TipoFuncionario extends GenericDomain {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date DataCadastro;
-    /*
-    @OneToOne(mappedBy = "tipofuncionario", fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false)
-    private Funcionario funcionario;
-*/
+
     public String getDescricao() {
         return Descricao;
     }

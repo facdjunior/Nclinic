@@ -28,26 +28,21 @@ public class Cliente extends GenericDomain {
 
     @Column(nullable = false)
     @SequenceGenerator(name = "Sequencia", initialValue = 1)
-    @Expose(serialize = true)
     private Integer Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @Expose(serialize = true)
     private Date DataCadastro;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-    @Expose(serialize = true)
     private Pessoa pessoa;
     
     @Column(length = 200)
-    @Expose(serialize = true)
     private String Observacao;
     
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
     
     public String getObservacao() {

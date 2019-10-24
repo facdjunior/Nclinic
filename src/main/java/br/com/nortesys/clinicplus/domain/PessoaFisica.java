@@ -25,16 +25,13 @@ public class PessoaFisica extends GenericDomain {
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    @Expose(serialize = true)
     private Date DataNascimento;
 
     @Column(nullable = false)
-    @Expose(serialize = true)
     private Integer Sequencia;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = true)
-    @Expose(serialize = true)
     private Date DataCadastro;
 
     @Transient
@@ -42,26 +39,21 @@ public class PessoaFisica extends GenericDomain {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @Expose(serialize = true)
     private EstadoCivil estadoCivil;
 
     @Column(length = 1)
-    @Expose(serialize = true)
     private Character Sexo;
 
     @Column(length = 25)
-    @Expose(serialize = true)
     private String Naturalidade;
 
     @Column(length = 30)
-    @Expose(serialize = true)
     private String GrauEscolaridade;
 
     private Character Tratamento;
     
     @OneToOne
     @JoinColumn(nullable = false)
-    @EmbeddedId
     private Empresa entidade;
 
     public String getIdade() {

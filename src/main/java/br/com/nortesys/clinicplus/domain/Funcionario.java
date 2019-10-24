@@ -24,43 +24,36 @@ import javax.persistence.Transient;
  */
 @SuppressWarnings("serial")
 @Entity
-public class Funcionario extends GenericDomain{
-    
+public class Funcionario extends GenericDomain {
+
     @Column(nullable = false)
     @SequenceGenerator(name = "Sequencia", initialValue = 1)
-    @Expose
     private Integer Sequencia;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @Expose
     private Date DataCadastro;
-    
+
     @Temporal(TemporalType.DATE)
-    @Expose
     private Date DataAdmissao;
-    
+
     @Temporal(TemporalType.DATE)
     private Date Demissao;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-    @Expose
     private Pessoa pessoa;
-    
-    
+
     private String caminho;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
-    @Expose
     private TipoFuncionario tipoFuncionario;
-    
+
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
-    
+
     public Integer getSequencia() {
         return Sequencia;
     }
@@ -92,7 +85,7 @@ public class Funcionario extends GenericDomain{
     public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
         this.tipoFuncionario = tipoFuncionario;
     }
-    
+
     public Date getDataAdmissao() {
         return DataAdmissao;
     }
@@ -124,16 +117,16 @@ public class Funcionario extends GenericDomain{
     public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
-    
-    public Funcionario(){
-        
+
+    public Funcionario() {
+
         pessoa = new Pessoa();
-        
+
         this.pessoa.getContato().setPessoa(pessoa);
         this.pessoa.getDocumento().setPessoa(pessoa);
         this.pessoa.getEndereco().setPessoa(pessoa);
         this.pessoa.getInforAdicionais().setPessoa(pessoa);
-                
+
     }
-    
+
 }

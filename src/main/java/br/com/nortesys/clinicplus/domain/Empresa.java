@@ -1,7 +1,6 @@
-
 package br.com.nortesys.clinicplus.domain;
 
-import java.io.Serializable;
+import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
@@ -10,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -23,139 +23,180 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("serial")
 @Entity
 
-public class Empresa extends GenericDomain{
-    
-    
-    @OneToOne(cascade = CascadeType.ALL)
+public class Empresa extends GenericDomain {
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
+    @Expose
     private Pessoa pessoa;
-    
+
     @Column(length = 80)
+    @Expose
     private String ChaveMaster;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
+    @Expose
     private TipoEntidade tipoEntidade;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
+    @Expose
     private Date DataCadastro;
-    
+    @Expose
     private Long CodigoImagemLogoTipo;
-    
+    @Expose
     private Long Sequencia;
-    
+    @Expose
     private Long CodigoCNES;
-    
+    @Expose
     private Boolean EOptanteSimplesNacional;
-    
+    @Expose
     private Long InscricaoMunicipal;
-    
+    @Expose
     private Long InscricaoEstadual;
-    
+    @Expose
     private Boolean PossuiIncentivoFiscal;
-    
+    @Expose
     private Long CodigoRegimeEspecialTributacao;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal AliquotaSimples;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal ISSRetido;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal PISS;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal COFINS;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal IRRF;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal CSLL;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal INSS;
-    
+    @Expose
     private Boolean EmitirNFSe;
+    @Expose
     private Long NumeroRPSInicial;
+    @Expose
     private Long NumeroLoteInicial;
-    
+
     @Column(length = 9)
+    @Expose
     private String CodigoTributarioMunicipal;
+    @Expose
     private Boolean PossuiISSRetido;
+    @Expose
     private Long CodigoExigibilidadeISS;
-    
+
     @Column(precision = 4, scale = 2)
+    @Expose
     private BigDecimal AliquotaISS;
+    @Expose
     private String Certificado;
+    @Expose
     private Boolean EAmbienteProducao;
+    @Expose
     private Boolean ECritptografadoSLL;
+    @Expose
     private Boolean EEnviarEmailAposEmissao;
+    @Expose
     private Boolean HabilitarHorarioDeVerao;
+    @Expose
     private Boolean UsandoHorarioDeVerao;
+    @Expose
     private Long CodigoRelatorioDANFE;
+    @Expose
     private Long CodigoRelatorioPadrao;
+    @Expose
     private Long QuantidadeCopiasDANFE;
+    @Expose
     private Long EReiniciarServicos;
+    @Expose
     private Boolean UploadNuvem;
+    @Expose
     private Boolean ImprimirAposEmissao;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
+    @Expose
     private Date DataUltimaSincronizacao;
-    
+
     @Column(length = 250)
+    @Expose
     private String JustificativaEntradaContigencia;
-    
+
     @Column(length = 350)
+    @Expose
     private String TokenNFSe;
-    
+    @Expose
     private Boolean EEnviarEmailDestinatario;
+    @Expose
     private Long PortaServidor;
-    
+
     @Column(length = 250)
+    @Expose
     private String OutrosEmails;
-    
+
     @Column(length = 50)
+    @Expose
     private String SenhaEmail;
-    
+
     @Column(length = 100)
+    @Expose
     private String ServidorSMTP;
-    
+
     @Column(length = 50)
+    @Expose
     private String AssuntoEmail;
-    
+
     @Column(length = 250)
+    @Expose
     private String ConteudoCorpoEmail;
-    
+
     @Column(length = 150)
+    @Expose
     private String InformacaoImpressoraPadrao;
-    
+    @Expose
     private Boolean EInicializarServicontcomWindows;
-    
+    @Expose
     private Boolean EServicontPrincipal;
-    
+    @Expose
     private Boolean EEmitirSemCertificado;
-    
+
     @Column(length = 50)
+    @Expose
     private String CodigoServico;
-    
+    @Expose
     private Long CodigoLocalPrestacaoServico;
-    
+    @Expose
     private Long CodigoIncentivadorCultural;
-    
+    @Expose
     private Long CodigoStatusRPS;
-    
+    @Expose
     private Long CodigoRecolhimentoImposto;
-    
+    @Expose
     private Long CodigoFormaTributacaoISS;
-    
+    @Expose
     private Long CodigoServicoViasPublicas;
-    
+
     @Column(length = 150)
+    @Expose
     private String ChaveAcesso;
-    
+
     @Column(length = 150)
+    @Expose
     private String ChaveParceiro;
 
     public Pessoa getPessoa() {
@@ -645,10 +686,8 @@ public class Empresa extends GenericDomain{
     public void setChaveParceiro(String ChaveParceiro) {
         this.ChaveParceiro = ChaveParceiro;
     }
-    
-    public Empresa(){
-        
-    }  
-    
-    
+
+    public Empresa() {
+
+    }
 }

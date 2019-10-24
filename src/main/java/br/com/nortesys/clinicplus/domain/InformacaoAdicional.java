@@ -32,18 +32,21 @@ public class InformacaoAdicional extends GenericDomain {
     private TipoInformacaoAdicional tipoInformacaoAdicional;
     
     @Column(nullable = false)
+    @Expose
     private Long Sequencia;
             
     @OneToOne
     @JoinColumn(nullable = false)
-    @EmbeddedId
+    @Expose
     private Empresa entidade;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
+    @Expose
     private Date DataCadastro;
     
     @Column(length = 80)
+    @Expose
     private String Descricao;
 
     public Pessoa getPessoa() {

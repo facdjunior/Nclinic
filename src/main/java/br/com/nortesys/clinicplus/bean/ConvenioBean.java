@@ -57,7 +57,7 @@ public class ConvenioBean {
             WebTarget caminho = cliente.target("http://127.0.0.1:8080/ClinicPlus/clinic/convenio");
             String json = caminho.request().get(String.class);
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             Convenio[] vetor = gson.fromJson(json, Convenio[].class);
 
             convenios = Arrays.asList(vetor);

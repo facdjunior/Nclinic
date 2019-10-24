@@ -6,11 +6,9 @@ import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
@@ -24,7 +22,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Contato extends GenericDomain {
 
-   @Column(unique = false, nullable = false)
+    @Column(unique = false, nullable = false)
     @Expose
     private Long Sequencia;
 
@@ -35,12 +33,12 @@ public class Contato extends GenericDomain {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-    @Expose(serialize = false)
+    @Expose
     private Pessoa pessoa;
-    
+
     @OneToOne
     @JoinColumn(nullable = true)
-    @Embedded
+    @Expose
     private Empresa entidade;
 
     public Pessoa getPessoa() {
@@ -74,7 +72,7 @@ public class Contato extends GenericDomain {
     public void setEntidade(Empresa entidade) {
         this.entidade = entidade;
     }
-    
+
     public Contato() {
 
         this.setPessoa(pessoa);

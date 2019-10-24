@@ -32,7 +32,6 @@ public class TipoEndereco extends GenericDomain{
     
     @OneToOne
     @JoinColumn(nullable = false)
-    @Embedded
     private Empresa entidade;
 
     public String getDescricao() {
